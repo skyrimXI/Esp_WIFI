@@ -125,9 +125,13 @@ void page_RootMenu(void){
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
-        case 2: currPage = SUB_MENU3;   break;
-        case 3: currPage = TEST_MENU1;  break;
-        case 4: currPage = TEST_MENU2;  break;
+        case 2: currPage = SUB_MENU2;   break;
+        case 3: currPage = SUB_MENU3;   break;
+        case 4: currPage = SCAN_MENU;   break;
+        case 5: currPage = TEST_MENU1;  break;
+        case 6: currPage = TEST_MENU2;  break;
+        case 7: currPage = MY_MENU1;    break;
+        case 8: currPage = MY_MENU2;    break;
         case 9: ESP.restart();          break;
       }
       updateDisplay = true;
