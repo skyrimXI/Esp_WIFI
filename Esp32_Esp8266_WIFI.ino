@@ -8,7 +8,6 @@ Button* DOWN = NULL;
 Button* RIGHT = NULL;
 Button* LEFT = NULL;
 Button* ACCEPT = NULL;
-
 TFT_eSPI tft;
 //=======================================Global Variables==========================================//
 int test;                                    //This is for SUB_MENU2 
@@ -27,14 +26,12 @@ void setup() {
   RIGHT = new ButtonPullup(14);             //Creat a button named RIGHT and its connected to P14
   LEFT = new ButtonPullup(27);              //Creat a button named LEFT and its connected to P27
   ACCEPT = new ButtonPullup(25);               //Creat a button named OK and its connected to P25
-
   tft.begin();                              //Initialize TFT
   tft.setRotation(4);                       //Rotation of tft
   tft.fillScreen(TFT_BLACK);                //Background Of tft
   tft.setTextSize(1);                       //Text Size
   tft.startWrite();                         // Begin manual display update
 }
-
 //===================================================================================================//
 //||                                             VoidLoop                                          ||//
 //==================================================================================================//
@@ -52,7 +49,6 @@ void loop(){
     case MY_MENU3:     page_MyMenu3(); break;
   }
 }
-
 //====================================================================================//
 //||                                    ROOT_MENU = MAIN_MENU                       ||// 
 //====================================================================================//             
@@ -102,45 +98,32 @@ void page_RootMenu(void){
     tft.startWrite();
 //=============================Update buttons=======================//
     UP->update();
+    isUpButtonPressed = UP->clicked();
     DOWN->update();
+    isDownButtonPressed = DOWN->clicked();
     RIGHT->update();
     LEFT->update();
     ACCEPT->update();
-
+    isAcceptButtonPressed = ACCEPT->clicked();
 //========================UP button handling========================//
-    isUpButtonPressed = UP->clicked();
     if (isUpButtonPressed && !wasUpButtonPressed) {
-      wasUpButtonPressed = true;
-    }
-    if (!isUpButtonPressed && wasUpButtonPressed) {
-      wasUpButtonPressed = false;
       root_pos--;
       if (root_pos < 1) {
         root_pos =9;
       }
       updateDisplay = true;
-    }
+        }
 //======================DOWN button handling========================//
-    isDownButtonPressed = DOWN->clicked();
     if (isDownButtonPressed && !wasDownButtonPressed) {
-      wasDownButtonPressed = true;
-    }
-    if (!isDownButtonPressed && wasDownButtonPressed) {
-      wasDownButtonPressed = false;
       root_pos++;
       if (root_pos > 9) {
         root_pos = 1;
       }
-      updateDisplay = true;
-    }  
-//====================ACCEPT button handling=========================//
-    isAcceptButtonPressed = ACCEPT->clicked();
-    if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
-      wasAcceptButtonPressed = true;
-    }
-    if (!isAcceptButtonPressed && wasAcceptButtonPressed) {
-      wasAcceptButtonPressed = false;
-      switch (root_pos) {
+      updateDisplay = true;  
+        }  
+//==========================ACCEPT BUTTON HANDLING==============//
+        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
         case 2: currPage = SUB_MENU3;   break;
         case 3: currPage = TEST_MENU1;  break;
@@ -149,10 +132,14 @@ void page_RootMenu(void){
       }
       updateDisplay = true;
     }
-    while (millis() - loopStartMs < 25) {
+      while (millis() - loopStartMs < 25) {
       delay(20);
     }
-    tft.endWrite();   
+    tft.endWrite();
+    wasUpButtonPressed = isUpButtonPressed;
+    wasDownButtonPressed = isDownButtonPressed;
+    wasAcceptButtonPressed = isAcceptButtonPressed;
+    delay(10);  
   }
 }
 
