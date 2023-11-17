@@ -141,26 +141,16 @@ void page_RootMenu(void){
     if (!isAcceptButtonPressed && wasAcceptButtonPressed) {
       wasAcceptButtonPressed = false;
       switch (root_pos) {
-        case 1:
-        currPage = SUB_MENU1;  // Change the current page to SUB_MENU1
-          break;
-        case 2:
-        currPage = SUB_MENU3;  // Change the current page to SUB_MENU3
-          break;
-        case 3:
-          currPage = TEST_MENU1;  // Change the current page to TEST_MENU1
-          break;
-        case 4:
-          currPage = TEST_MENU2;  // Change the current page to TEST_MENU2
-          break;
-        case 9:
-          ESP.restart();
-          break;
+        case 1: currPage = SUB_MENU1;   break;
+        case 2: currPage = SUB_MENU3;   break;
+        case 3: currPage = TEST_MENU1;  break;
+        case 4: currPage = TEST_MENU2;  break;
+        case 9: ESP.restart();          break;
       }
       updateDisplay = true;
     }
     while (millis() - loopStartMs < 25) {
-      delay(2);
+      delay(20);
     }
     tft.endWrite();   
   }
