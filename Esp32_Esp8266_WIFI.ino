@@ -80,19 +80,17 @@ void page_RootMenu(void){
   tft.setCursor(0, 40);
   if (root_pos == 2) {  tft.print("|>> "); tft.println("SNIFFER");} else {  tft.println("     SNIFFER");}
   tft.setCursor(0, 50);
-  if (root_pos == 3) {  tft.print("|>> ");  tft.println("ATTACK");} else { tft.println("     ATTACK");}
+  if (root_pos == 3) {  tft.print("|>> ");  tft.println("ATTACKs");} else { tft.println("     ATTACK");}
   tft.setCursor(0, 60);
-  if (root_pos == 4) {  tft.print("|>> ");  tft.println("WAR DRIVE");} else {  tft.println("     WAR DRIVER");}
+  if (root_pos == 4) {  tft.print("|>> ");  tft.println("HOTSPOT");} else {  tft.println("     HOTSPOT");}
   tft.setCursor(0, 70);
-  if (root_pos == 5) {  tft.print("|>> ");  tft.println("PACKET MONITOR");} else {  tft.println("     PACKET MONITOR");}
+  if (root_pos == 5) {  tft.print("|>> ");  tft.println("WAR DRIVE");} else {  tft.println("     WAR DRIVE");}
   tft.setCursor(0, 80);
   if (root_pos == 6) {  tft.print("|>> ");  tft.println("SIGNAL STRENTGH");} else {  tft.println("     SIGNAL STRENTGH");}
   tft.setCursor(0, 90);
-  if (root_pos == 7) {  tft.print("|>> ");  tft.println("PMKID CAPTURE");} else {  tft.println("     PMKID CAPTURE");}
+  if (root_pos == 7) {  tft.print("|>> ");  tft.println("PACKET MONITOR");} else {  tft.println("     PACKET MONITOR");}
   tft.setCursor(0, 100);
-  if (root_pos == 8) {  tft.print("|>> ");  tft.println("HOTSPOT");} else {  tft.println("     HOTSPOT");}
-  tft.setCursor(0, 110);
-  if (root_pos == 9) {  tft.print("|>> ");  tft.println("REBOOT");} else {  tft.println("     REBOOT");}
+  if (root_pos == 8) {  tft.print("|>> ");  tft.println("REBOOT");} else {  tft.println("     REBOOT");}
       updateDisplay = false;
     }
     tft.startWrite();
@@ -109,14 +107,14 @@ void page_RootMenu(void){
     if (isUpButtonPressed && !wasUpButtonPressed) {
       root_pos--;
       if (root_pos < 1) {
-        root_pos =9;
+        root_pos =8;
       }
       updateDisplay = true;
         }
 //======================DOWN button handling========================//
     if (isDownButtonPressed && !wasDownButtonPressed) {
       root_pos++;
-      if (root_pos > 9) {
+      if (root_pos > 8) {
         root_pos = 1;
       }
       updateDisplay = true;  
@@ -131,8 +129,7 @@ void page_RootMenu(void){
         case 5: currPage = TEST_MENU1;  break;
         case 6: currPage = TEST_MENU2;  break;
         case 7: currPage = MY_MENU1;    break;
-        case 8: currPage = MY_MENU2;    break;
-        case 9: ESP.restart();          break;
+        case 8: ESP.restart();          break;
       }
       updateDisplay = true;
     }
@@ -227,12 +224,176 @@ void page_SubMenu1(void){
   }
 }
 //====================================================================================//
+//||                                    Submenu2 = SNIFF OPTIO                       ||// 
+//====================================================================================//
 void page_SubMenu2(void){
-
+  boolean updateDisplay = true;
+  boolean staticElementsDrawn = false;
+  uint32_t loopStartMs;
+  int sub_pos = 1;
+  boolean isUpButtonPressed = false;
+  boolean wasUpButtonPressed = false;
+  boolean isDownButtonPressed = false;
+  boolean wasDownButtonPressed = false;
+  boolean isAcceptButtonPressed = false;
+  boolean wasAcceptButtonPressed = false;
+    while (currPage == SUB_MENU2) {
+    loopStartMs = millis();
+    if (!staticElementsDrawn) {
+    tft.fillScreen(TFT_BLACK);
+    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.setCursor(10, 10);
+    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.print("SNIFFER");
+    staticElementsDrawn = true; 
+  }
+  if (updateDisplay) { 
+  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setCursor(0, 30);
+  if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
+  tft.setCursor(0, 40);
+  if (sub_pos == 2) {  tft.print("|>> "); tft.println("BEACON SNIFF");} else {  tft.println("     BEACON SNIFF");}
+  tft.setCursor(0, 50);
+  if (sub_pos == 3) {  tft.print("|>> ");  tft.println("PROBE SNIFF");} else { tft.println("     PROBE SNIFF");}
+  tft.setCursor(0, 60);
+  if (sub_pos ==4 ) {  tft.print("|>> ");  tft.println("PMKID");} else { tft.println("     PMKID");}
+  tft.setCursor(0, 70);
+  if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("RAW SNIFF");} else { tft.println("     RAW SNIFF");}
+  
+    }
+    tft.startWrite();
+//=============================Update buttons=======================//
+    UP->update();
+    isUpButtonPressed = UP->clicked();
+    DOWN->update();
+    isDownButtonPressed = DOWN->clicked();
+    RIGHT->update();
+    LEFT->update();
+    ACCEPT->update();
+    isAcceptButtonPressed = ACCEPT->clicked();
+//========================UP button handling========================//
+    if (isUpButtonPressed && !wasUpButtonPressed) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =5;
+      }
+      updateDisplay = true;
+        }
+//======================DOWN button handling========================//
+    if (isDownButtonPressed && !wasDownButtonPressed) {
+      sub_pos++;
+      if (sub_pos > 5) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }  
+//==========================ACCEPT BUTTON HANDLING==============//
+        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        switch (sub_pos) {
+        case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
+        case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
+        case 3: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PROBE FRAME
+        case 4: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PMKID
+        case 5: currPage = SUB_MENU3;   break;    //CODE TO SNIFF RAW FILEs (PCAP)
+      }
+      updateDisplay = true;
+    }
+      while (millis() - loopStartMs < 25) {
+      delay(20);
+    }
+    tft.endWrite();
+    wasUpButtonPressed = isUpButtonPressed;
+    wasDownButtonPressed = isDownButtonPressed;
+    wasAcceptButtonPressed = isAcceptButtonPressed;
+    delay(10);  
+  }
 }
 //====================================================================================//
 void page_SubMenu3(void){
-
+  boolean updateDisplay = true;
+  boolean staticElementsDrawn = false;
+  uint32_t loopStartMs;
+  int sub_pos = 1;
+  boolean isUpButtonPressed = false;
+  boolean wasUpButtonPressed = false;
+  boolean isDownButtonPressed = false;
+  boolean wasDownButtonPressed = false;
+  boolean isAcceptButtonPressed = false;
+  boolean wasAcceptButtonPressed = false;
+    while (currPage == SUB_MENU3) {
+    loopStartMs = millis();
+    if (!staticElementsDrawn) {
+    tft.fillScreen(TFT_BLACK);
+    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.setCursor(10, 10);
+    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.print("ATTACKs");
+    staticElementsDrawn = true; 
+  }
+  if (updateDisplay) { 
+  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
+  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.setCursor(0, 30);
+  if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
+  tft.setCursor(0, 40);
+  if (sub_pos == 2) {  tft.print("|>> "); tft.println("DEAUTH");} else {  tft.println("     DEAUTH");}
+  tft.setCursor(0, 50);
+  if (sub_pos == 3) {  tft.print("|>> ");  tft.println("PHISHING");} else { tft.println("     PHISHING");}
+  tft.setCursor(0, 60);
+  if (sub_pos ==4 ) {  tft.print("|>> ");  tft.println("MITM");} else { tft.println("     MITM");}
+  tft.setCursor(0, 70);
+  if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("BEACON FLOOD");} else { tft.println("     BEACON FLOOD");}
+  tft.setCursor(0, 80);
+  if (sub_pos ==6 ) {  tft.print("|>> ");  tft.println("PROBE FLOOD");} else { tft.println("     PROBE FLOOD");}
+  
+    }
+    tft.startWrite();
+//=============================Update buttons=======================//
+    UP->update();
+    isUpButtonPressed = UP->clicked();
+    DOWN->update();
+    isDownButtonPressed = DOWN->clicked();
+    RIGHT->update();
+    LEFT->update();
+    ACCEPT->update();
+    isAcceptButtonPressed = ACCEPT->clicked();
+//========================UP button handling========================//
+    if (isUpButtonPressed && !wasUpButtonPressed) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =6;
+      }
+      updateDisplay = true;
+        }
+//======================DOWN button handling========================//
+    if (isDownButtonPressed && !wasDownButtonPressed) {
+      sub_pos++;
+      if (sub_pos > 6) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }  
+//==========================ACCEPT BUTTON HANDLING==============//
+        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        switch (sub_pos) {
+        case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
+        case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
+        case 3: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PROBE FRAME
+        case 4: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PMKID
+        case 5: currPage = SUB_MENU3;   break;    //CODE TO SNIFF RAW FILEs (PCAP)
+      }
+      updateDisplay = true;
+    }
+      while (millis() - loopStartMs < 25) {
+      delay(20);
+    }
+    tft.endWrite();
+    wasUpButtonPressed = isUpButtonPressed;
+    wasDownButtonPressed = isDownButtonPressed;
+    wasAcceptButtonPressed = isAcceptButtonPressed;
+    delay(10);  
+  }
 }
 //====================================================================================//
 void page_ScanMenu(void){
