@@ -177,6 +177,7 @@ void page_SubMenu1(void){
   if (sub_pos == 2) {  tft.print("|>> "); tft.println("SCAN FOR APs");} else {  tft.println("     SCAN FOR APs");}
   tft.setCursor(0, 50);
   if (sub_pos == 3) {  tft.print("|>> ");  tft.println("SCAN STATIONs");} else { tft.println("     SCAN STATIONs");}
+  updateDisplay = false;
     }
     tft.startWrite();
 //=============================Update buttons=======================//
@@ -224,7 +225,7 @@ void page_SubMenu1(void){
   }
 }
 //====================================================================================//
-//||                                    Submenu2 = SNIFF OPTIO                       ||// 
+//||                                    Submenu2 = SNIFF OPTION                       ||// 
 //====================================================================================//
 void page_SubMenu2(void){
   boolean updateDisplay = true;
@@ -260,7 +261,7 @@ void page_SubMenu2(void){
   if (sub_pos ==4 ) {  tft.print("|>> ");  tft.println("PMKID");} else { tft.println("     PMKID");}
   tft.setCursor(0, 70);
   if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("RAW SNIFF");} else { tft.println("     RAW SNIFF");}
-  
+  updateDisplay = false;
     }
     tft.startWrite();
 //=============================Update buttons=======================//
@@ -309,7 +310,9 @@ void page_SubMenu2(void){
     delay(10);  
   }
 }
-//====================================================================================//
+//=========================================================================================================//
+//||                                    Submenu3 = ATTACKs OPTION                                        ||// 
+//=========================================================================================================//
 void page_SubMenu3(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
@@ -346,7 +349,7 @@ void page_SubMenu3(void){
   if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("BEACON FLOOD");} else { tft.println("     BEACON FLOOD");}
   tft.setCursor(0, 80);
   if (sub_pos ==6 ) {  tft.print("|>> ");  tft.println("PROBE FLOOD");} else { tft.println("     PROBE FLOOD");}
-  
+  updateDisplay = false;
     }
     tft.startWrite();
 //=============================Update buttons=======================//
