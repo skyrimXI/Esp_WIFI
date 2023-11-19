@@ -25,7 +25,7 @@ void setup() {
   DOWN = new ButtonPullup(33);              //Creat a button named DOWN and its connected to P33
   RIGHT = new ButtonPullup(14);             //Creat a button named RIGHT and its connected to P14
   LEFT = new ButtonPullup(27);              //Creat a button named LEFT and its connected to P27
-  ACCEPT = new ButtonPullup(25);               //Creat a button named OK and its connected to P25
+  ACCEPT = new ButtonPullup(25);            //Creat a button named OK and its connected to P25
   tft.begin();                              //Initialize TFT
   tft.setRotation(4);                       //Rotation of tft
   tft.fillScreen(TFT_BLACK);                //Background Of tft
@@ -80,7 +80,7 @@ void page_RootMenu(void){
   tft.setCursor(0, 40);
   if (root_pos == 2) {  tft.print("|>> "); tft.println("SNIFFER");} else {  tft.println("     SNIFFER");}
   tft.setCursor(0, 50);
-  if (root_pos == 3) {  tft.print("|>> ");  tft.println("ATTACKs");} else { tft.println("     ATTACK");}
+  if (root_pos == 3) {  tft.print("|>> ");  tft.println("ATTACKs");} else { tft.println("     ATTACKs");}
   tft.setCursor(0, 60);
   if (root_pos == 4) {  tft.print("|>> ");  tft.println("HOTSPOT");} else {  tft.println("     HOTSPOT");}
   tft.setCursor(0, 70);
