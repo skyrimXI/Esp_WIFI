@@ -1,6 +1,8 @@
 #include <SimpleButton.h>
 #include <TFT_eSPI.h>
-
+#include <WiFi.h>
+#include <esp_wifi.h>
+#include <SimpleList.h>
 //======================================Button & TFT ==============================================//
 using namespace simplebutton;
 Button* UP = NULL;
@@ -12,10 +14,39 @@ TFT_eSPI tft;
 //=======================================Global Variables==========================================//
 int test;                                    //This is for SUB_MENU2 
 uint8_t root_pos = 1;
-//====================================MENUs-Items=================================================//
-enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;         //holds which page is currently selected
+class NetworkData { // Class to store network data
+public:
+  String ssid;
+  String mac;
+  int rssi;
+  int channel;
+  int encryptionType;
+};
+SimpleList<NetworkData> scannedNetworks; 
 
+//====================================MENUs-Items=================================================//
+enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
+enum pageType currPage = ROOT_MENU;         //holds which page is currently selected
+//=================================================================================//
+//||                      ScanNetwork & Add Data to List                         ||//
+//================================================================================//
+void scanNetworks() {
+  scannedNetworks.clear(); // Clear the existing list of scanned networks
+  int networksFound = WiFi.scanNetworks(); // Scan for Wi-Fi networks
+  if (networksFound == -1) { // Check if scanning was successful
+    Serial.println("Failed to scan networks.");
+    return;
+  }
+  for (int i = 0; i < networksFound; ++i) { // Retrieve and add network data to the list
+    NetworkData data;
+    data.ssid = WiFi.SSID(i);
+    data.mac = WiFi.BSSIDstr(i);
+    data.rssi = WiFi.RSSI(i);
+    data.channel = WiFi.channel(i);
+    data.encryptionType = WiFi.encryptionType(i);
+    scannedNetworks.add(data);
+  }
+}
 //=================================================================================================//
 //||                                        VoidSetUP                                            ||//
 //=================================================================================================//
@@ -47,6 +78,14 @@ void loop(){
     case MY_MENU1:     page_MyMenu1(); break;
     case MY_MENU2:     page_MyMenu2(); break;
     case MY_MENU3:     page_MyMenu3(); break;
+    case MY_MENU4:     page_MyMenu4(); break;
+    case MY_MENU5:     page_MyMenu5(); break;
+    case MY_MENU6:     page_MyMenu6(); break;
+    case MY_MENU7:     page_MyMenu7(); break;
+    case MY_MENU8:     page_MyMenu8(); break;
+    case MY_MENU9:     page_MyMenu9(); break;
+    case MY_MENU10:    page_MyMenu10(); break;
+    case MY_MENU11:    page_MyMenu11(); break;
   }
 }
 //====================================================================================//
@@ -209,8 +248,12 @@ void page_SubMenu1(void){
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
-        case 2: currPage = SUB_MENU2;   break;    //CODE TO SCAN FOR APs
-        case 3: currPage = SUB_MENU3;   break;    //CODE TO SCAN FOR STATION
+        case 2:
+          scanNetworks(); 
+          currPage = MY_MENU2;                    //CODE TO SCAN FOR APs
+          break;    
+        case 3: currPage = MY_MENU3;             //CODE TO SCAN FOR STATION
+          break;    
       }
       updateDisplay = true;
     }
@@ -416,9 +459,205 @@ void page_MyMenu1(void){
 }
 //====================================================================================//
 void page_MyMenu2(void){
+   boolean updateDisplay = true;
+  boolean staticElementsDrawn = false;
+  uint32_t loopStartMs;
+  int sub_pos = 0;
+  boolean isUpButtonPressed = false;
+  boolean wasUpButtonPressed = false;
+  boolean isDownButtonPressed = false;
+  boolean wasDownButtonPressed = false;
+  boolean isAcceptButtonPressed = false;
+  boolean wasAcceptButtonPressed = false;
+  while (currPage == MY_MENU2) {
+    loopStartMs = millis();
+    delay(25);
+    if (!staticElementsDrawn) {
+    tft.fillScreen(TFT_BLACK);
+    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.setCursor(8, 8);
+    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.print("SSIDs");
+    staticElementsDrawn = true; // Set the flag to indicate that static elements have been drawn
+  }
+    if (updateDisplay) {
+      tft.fillRect(0, 30, 160, 98, TFT_BLACK);
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setCursor(5, 30);
+      if (sub_pos == 0) {
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+        tft.print("|>> ");
+        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.println("BACK");
+      } else {
+        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+        tft.print("     BACK");
+      }
+
+      if (scannedNetworks.size() == 0) {
+        tft.setCursor(5, 40);
+        tft.setTextColor(0xE800, TFT_BLACK);
+        tft.println("No Network Found");
+      } else {
+        for (int i = 0; i < scannedNetworks.size(); i++) {
+          tft.setCursor(5, 40 + i * 10);
+          if (sub_pos == i + 1) {
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.print("|>> ");
+            tft.setTextColor(TFT_YELLOW  , TFT_BLACK);
+            tft.println(  scannedNetworks.get(i).ssid);
+          } else {
+            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.print("     ");
+            tft.println(  scannedNetworks.get(i).ssid);
+          }
+         
+        }
+      }
+      updateDisplay = false;
+    }
+    tft.startWrite(); 
+    UP->update();
+    DOWN->update();
+    ACCEPT->update();
+//===============================Up button handing============================//
+    isUpButtonPressed = UP->clicked();
+    if (isUpButtonPressed && !wasUpButtonPressed) {
+      wasUpButtonPressed = true;
+    }
+    if (!isUpButtonPressed && wasUpButtonPressed) {
+      wasUpButtonPressed = false;
+      sub_pos--;
+      if (sub_pos < 0) {
+        sub_pos = scannedNetworks.size();
+      }
+      updateDisplay = true;
+    }
+//==============================Down Button handling===========================//
+    isDownButtonPressed = DOWN->clicked();
+    if (isDownButtonPressed && !wasDownButtonPressed) {
+      wasDownButtonPressed = true;
+    }
+    if (!isDownButtonPressed && wasDownButtonPressed) {
+      wasDownButtonPressed = false;
+      sub_pos++;
+      if (sub_pos > scannedNetworks.size()) {
+        sub_pos = 0;
+      }
+      updateDisplay = true;
+    }
+test = sub_pos;
+//================================Accept Button Handling============================//
+isAcceptButtonPressed = ACCEPT->clicked();
+if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+  wasAcceptButtonPressed = true;
+}
+if (!isAcceptButtonPressed && wasAcceptButtonPressed) {
+  wasAcceptButtonPressed = false;
+  if (sub_pos == 0){
+    currPage = SUB_MENU1;
+    WiFi.scanDelete();
+  } else {
+    if (sub_pos > 0 && sub_pos <= scannedNetworks.size()) {
+    currPage = MY_MENU3;
+  }
+  }
+  updateDisplay = true;
+}
+     while (millis() - loopStartMs < 25) {
+      delay(10);
+    }
+  }
+} 
+
+//====================================================================================//
+void page_MyMenu3(void){
+  boolean updateDisplay = true;
+  boolean staticElementsDrawn = false;
+  boolean isUpButtonPressed = false;
+  boolean wasUpButtonPressed = false;
+  boolean isDownButtonPressed = false;
+  boolean wasDownButtonPressed = false;
+  boolean isAcceptButtonPressed = false;
+  boolean wasAcceptButtonPressed = false;
+while (currPage == MY_MENU3){
+    if (!staticElementsDrawn) {
+    tft.fillScreen(TFT_BLACK);
+    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.setCursor(8, 8);
+    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.print("INFORMATION");
+    staticElementsDrawn = true; // Set the flag to indicate that static elements have been drawn
+  }
+    if (updateDisplay){
+      tft.fillRect(0, 30, 160, 98, TFT_BLACK);
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setCursor(10, 30);
+      tft.println("SSID: " + scannedNetworks.get(test - 1).ssid);
+      tft.setCursor(10, 40);
+      tft.println("MAC: " + scannedNetworks.get(test - 1).mac);
+      tft.setCursor(10, 50);
+      tft.println("Encryption Type: " + String(scannedNetworks.get(test - 1).encryptionType));
+      tft.setCursor(10, 60);
+      tft.println("Channel: " + String(scannedNetworks.get(test - 1).channel));
+      tft.setCursor(10, 70);
+      tft.println("RSSI: " + String(scannedNetworks.get(test - 1).rssi));
+      updateDisplay = false; 
+     }
+    UP->update();
+    isUpButtonPressed = UP->clicked();
+    DOWN->update();
+    isDownButtonPressed = DOWN->clicked();
+    ACCEPT->update();
+    isAcceptButtonPressed = ACCEPT->clicked();
+//=======================UP BUTTON HANDLING=====================//
+        if (isUpButtonPressed && !wasUpButtonPressed) {
+          currPage = SUB_MENU1; //Back to 2nd Menu
+        }
+//=======================DOWN BUTTON HANDING====================//
+        if (isDownButtonPressed && !wasDownButtonPressed) {
+          currPage = SUB_MENU1; //Back to 2nd Menu
+        }
+//==========================ACCEPT BUTTON HANDLING==============//
+        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+          updateDisplay = true; //update just Display
+      return;
+        }
+    wasUpButtonPressed = isUpButtonPressed;
+    wasDownButtonPressed = isDownButtonPressed;
+    wasAcceptButtonPressed = isAcceptButtonPressed;
+    delay(10);
+    }
+}
+//====================================================================================//
+void page_MyMenu4(void){
 
 }
 //====================================================================================//
-void page_MyMenu3(void){
+void page_MyMenu5(void){
+
+}
+//====================================================================================//
+void page_MyMenu6(void){
+
+}
+//====================================================================================//
+void page_MyMenu7(void){
+
+}
+//====================================================================================//
+void page_MyMenu8(void){
+
+}
+//====================================================================================//
+void page_MyMenu9(void){
+
+}
+//====================================================================================//
+void page_MyMenu10(void){
+
+}
+//====================================================================================//
+void page_MyMenu11(void){
 
 }
