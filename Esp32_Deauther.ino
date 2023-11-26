@@ -612,11 +612,11 @@ while (currPage == MY_MENU3){
     isAcceptButtonPressed = ACCEPT->clicked();
 //=======================UP BUTTON HANDLING=====================//
         if (isUpButtonPressed && !wasUpButtonPressed) {
-          currPage = SUB_MENU1; //Back to 2nd Menu
+          currPage = MY_MENU2; //Back to 2nd Menu
         }
 //=======================DOWN BUTTON HANDING====================//
         if (isDownButtonPressed && !wasDownButtonPressed) {
-          currPage = SUB_MENU1; //Back to 2nd Menu
+          currPage = MY_MENU2; //Back to 2nd Menu
         }
 //==========================ACCEPT BUTTON HANDLING==============//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
