@@ -52,13 +52,13 @@ void scanNetworks() {
 //=================================================================================================//
 void setup() {
   Serial.begin(115200);                     //SERIAL SETUP
-  UP = new ButtonPullup(32);                //Creat a button named UP and its connected to P32
-  DOWN = new ButtonPullup(33);              //Creat a button named DOWN and its connected to P33
-  RIGHT = new ButtonPullup(14);             //Creat a button named RIGHT and its connected to P14
-  LEFT = new ButtonPullup(27);              //Creat a button named LEFT and its connected to P27
+  UP = new ButtonPullup(27);            //Creat a button named UP and its connected to P32
+  DOWN = new ButtonPullup(14);          //Creat a button named DOWN and its connected to P33
+  RIGHT = new ButtonPullup(33);        //Creat a button named RIGHT and its connected to P14
+  LEFT = new ButtonPullup(32);        //Creat a button named LEFT and its connected to P27
   ACCEPT = new ButtonPullup(25);            //Creat a button named OK and its connected to P25
   tft.begin();                              //Initialize TFT
-  tft.setRotation(4);                       //Rotation of tft
+  tft.setRotation(3);                    //Rotation of tft
   tft.fillScreen(TFT_BLACK);                //Background Of tft
   tft.setTextSize(1);                       //Text Size
   tft.startWrite();                         // Begin manual display update
@@ -208,7 +208,7 @@ void page_SubMenu1(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
+  tft.fillRect(0, 30, 128, 100, TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 30);
   if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
@@ -249,7 +249,7 @@ void page_SubMenu1(void){
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
         case 2:
-          scanNetworks(); 
+          scanNetworks();
           currPage = MY_MENU2;                    //CODE TO SCAN FOR APs
           break;    
         case 3: currPage = MY_MENU3;             //CODE TO SCAN FOR STATION
