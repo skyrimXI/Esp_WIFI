@@ -26,18 +26,18 @@ SimpleList<NetworkData> scannedNetworks;
 
 //====================================MENUs-Items=================================================//
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;         //holds which page is currently selected
+enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
 //=================================================================================//
 //||                      ScanNetwork & Add Data to List                         ||//
 //================================================================================//
 void scanNetworks() {
-  scannedNetworks.clear(); // Clear the existing list of scanned networks
-  int networksFound = WiFi.scanNetworks(); // Scan for Wi-Fi networks
-  if (networksFound == -1) { // Check if scanning was successful
+  scannedNetworks.clear();                                // Clear the existing list of scanned networks
+  int networksFound = WiFi.scanNetworks();                // Scan for Wi-Fi networks
+  if (networksFound == -1) {                              // Check if scanning was successful
     Serial.println("Failed to scan networks.");
     return;
   }
-  for (int i = 0; i < networksFound; ++i) { // Retrieve and add network data to the list
+  for (int i = 0; i < networksFound; ++i) {               // Retrieve and add network data to the list
     NetworkData data;
     data.ssid = WiFi.SSID(i);
     data.mac = WiFi.BSSIDstr(i);
@@ -52,13 +52,13 @@ void scanNetworks() {
 //=================================================================================================//
 void setup() {
   Serial.begin(115200);                     //SERIAL SETUP
-  UP = new ButtonPullup(27);            //Creat a button named UP and its connected to P32
-  DOWN = new ButtonPullup(14);          //Creat a button named DOWN and its connected to P33
-  RIGHT = new ButtonPullup(33);        //Creat a button named RIGHT and its connected to P14
-  LEFT = new ButtonPullup(32);        //Creat a button named LEFT and its connected to P27
+  UP = new ButtonPullup(27);                //Creat a button named UP and its connected to P32
+  DOWN = new ButtonPullup(14);              //Creat a button named DOWN and its connected to P33
+  RIGHT = new ButtonPullup(33);             //Creat a button named RIGHT and its connected to P14
+  LEFT = new ButtonPullup(32);              //Creat a button named LEFT and its connected to P27
   ACCEPT = new ButtonPullup(25);            //Creat a button named OK and its connected to P25
   tft.begin();                              //Initialize TFT
-  tft.setRotation(3);                    //Rotation of tft
+  tft.setRotation(3);                       //Rotation of tft
   tft.fillScreen(TFT_BLACK);                //Background Of tft
   tft.setTextSize(1);                       //Text Size
   tft.startWrite();                         // Begin manual display update
@@ -252,7 +252,7 @@ void page_SubMenu1(void){
           scanNetworks();
           currPage = MY_MENU2;                    //CODE TO SCAN FOR APs
           break;    
-        case 3: currPage = MY_MENU3;             //CODE TO SCAN FOR STATION
+        case 3: currPage = MY_MENU3;              //CODE TO SCAN FOR STATION
           break;    
       }
       updateDisplay = true;
