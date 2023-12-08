@@ -105,31 +105,103 @@ void page_RootMenu(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(10, 10);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("MENUs");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 30);
-  if (root_pos == 1) {  tft.print("|>> ");  tft.println("SCAN");} else {  tft.println("     SCAN");}
-  tft.setCursor(0, 40);
-  if (root_pos == 2) {  tft.print("|>> "); tft.println("SNIFFER");} else {  tft.println("     SNIFFER");}
-  tft.setCursor(0, 50);
-  if (root_pos == 3) {  tft.print("|>> ");  tft.println("ATTACKs");} else { tft.println("     ATTACKs");}
-  tft.setCursor(0, 60);
-  if (root_pos == 4) {  tft.print("|>> ");  tft.println("HOTSPOT");} else {  tft.println("     HOTSPOT");}
-  tft.setCursor(0, 70);
-  if (root_pos == 5) {  tft.print("|>> ");  tft.println("WAR DRIVE");} else {  tft.println("     WAR DRIVE");}
-  tft.setCursor(0, 80);
-  if (root_pos == 6) {  tft.print("|>> ");  tft.println("SIGNAL STRENTGH");} else {  tft.println("     SIGNAL STRENTGH");}
+  if (root_pos == 1) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);  
+    tft.println("SCAN");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     SCAN");
+    }
+  tft.setCursor(0, 42);
+  if (root_pos == 2) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFA28, TFT_WHITE);
+    tft.println("SNIFFER");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);  
+      tft.println("     SNIFFER");
+      }
+  tft.setCursor(0, 54);
+  if (root_pos == 3) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.println("ATTACKs");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     ATTACKs");
+      }
+  tft.setCursor(0, 66);
+  if (root_pos == 4) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.println("HOTSPOT");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     HOTSPOT");
+      }
+  tft.setCursor(0, 78);
+  if (root_pos == 5) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.println("WAR DRIVE");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     WAR DRIVE");
+      }
   tft.setCursor(0, 90);
-  if (root_pos == 7) {  tft.print("|>> ");  tft.println("PACKET MONITOR");} else {  tft.println("     PACKET MONITOR");}
-  tft.setCursor(0, 100);
-  if (root_pos == 8) {  tft.print("|>> ");  tft.println("REBOOT");} else {  tft.println("     REBOOT");}
+  if (root_pos == 6) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 89, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.println("SIGNAL STRENTGH");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     SIGNAL STRENTGH");
+      }
+  tft.setCursor(0, 102);
+  if (root_pos == 7) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 101, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.println("PACKET MONITOR");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     PACKET MONITOR");
+      }
+  tft.setCursor(0, 114);
+  if (root_pos == 8) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 113, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(0xE800, TFT_WHITE);  
+    tft.println("REBOOT");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     REBOOT");
+      }
       updateDisplay = false;
     }
     tft.startWrite();
@@ -201,7 +273,7 @@ void page_SubMenu1(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(10, 10);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("SCAN");
@@ -285,7 +357,7 @@ void page_SubMenu2(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(10, 10);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("SNIFFER");
@@ -371,7 +443,7 @@ void page_SubMenu3(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(10, 10);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("ATTACKs");
@@ -474,7 +546,7 @@ void page_MyMenu2(void){
     delay(25);
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(8, 8);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("SSIDs");
@@ -583,7 +655,7 @@ void page_MyMenu3(void){
 while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 118, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
     tft.setCursor(8, 8);
     tft.setTextColor(TFT_BLACK, 0x0410);
     tft.print("INFORMATION");
