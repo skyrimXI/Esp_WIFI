@@ -113,7 +113,6 @@ void page_RootMenu(void){
   }
   if (updateDisplay) { 
   tft.fillRect(0, 28, 150, 98, TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 30);
   if (root_pos == 1) {
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -280,14 +279,37 @@ void page_SubMenu1(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 30, 128, 100, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 30);
-  if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
-  tft.setCursor(0, 40);
-  if (sub_pos == 2) {  tft.print("|>> "); tft.println("SCAN FOR APs");} else {  tft.println("     SCAN FOR APs");}
-  tft.setCursor(0, 50);
-  if (sub_pos == 3) {  tft.print("|>> ");  tft.println("SCAN STATIONs");} else { tft.println("     SCAN STATIONs");}
+  if (sub_pos == 1) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("BACK");
+    } else {
+      tft.println("     BACK");
+      }
+  tft.setCursor(0, 42);
+  if (sub_pos == 2) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("SCAN FOR APs");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     SCAN FOR APs");
+      }
+  tft.setCursor(0, 54);
+  if (sub_pos == 3) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("SCAN STATIONs");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     SCAN STATIONs");
+      }
   updateDisplay = false;
     }
     tft.startWrite();
@@ -364,18 +386,58 @@ void page_SubMenu2(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
   tft.setCursor(0, 30);
-  if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
-  tft.setCursor(0, 40);
-  if (sub_pos == 2) {  tft.print("|>> "); tft.println("BEACON SNIFF");} else {  tft.println("     BEACON SNIFF");}
-  tft.setCursor(0, 50);
-  if (sub_pos == 3) {  tft.print("|>> ");  tft.println("PROBE SNIFF");} else { tft.println("     PROBE SNIFF");}
-  tft.setCursor(0, 60);
-  if (sub_pos ==4 ) {  tft.print("|>> ");  tft.println("PMKID");} else { tft.println("     PMKID");}
-  tft.setCursor(0, 70);
-  if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("RAW SNIFF");} else { tft.println("     RAW SNIFF");}
+  if (sub_pos == 1) {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("BACK");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     BACK");
+      }
+  tft.setCursor(0, 42);
+  if (sub_pos == 2) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("BEACON SNIFF");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     BEACON SNIFF");
+      }
+  tft.setCursor(0, 54);
+  if (sub_pos == 3) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("PROBE SNIFF");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     PROBE SNIFF");
+      }
+  tft.setCursor(0, 66);
+  if (sub_pos ==4 ) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("PMKID");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     PMKID");
+      }
+  tft.setCursor(0, 78);
+  if (sub_pos ==5 ) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("RAW SNIFF");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     RAW SNIFF");
+      }
   updateDisplay = false;
     }
     tft.startWrite();
@@ -450,20 +512,68 @@ void page_SubMenu3(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 30, 128, 138, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.setCursor(0, 30);
-  if (sub_pos == 1) {  tft.print("|>> ");  tft.println("BACK");} else {  tft.println("     BACK");}
-  tft.setCursor(0, 40);
-  if (sub_pos == 2) {  tft.print("|>> "); tft.println("DEAUTH");} else {  tft.println("     DEAUTH");}
-  tft.setCursor(0, 50);
-  if (sub_pos == 3) {  tft.print("|>> ");  tft.println("PHISHING");} else { tft.println("     PHISHING");}
-  tft.setCursor(0, 60);
-  if (sub_pos ==4 ) {  tft.print("|>> ");  tft.println("MITM");} else { tft.println("     MITM");}
-  tft.setCursor(0, 70);
-  if (sub_pos ==5 ) {  tft.print("|>> ");  tft.println("BEACON FLOOD");} else { tft.println("     BEACON FLOOD");}
-  tft.setCursor(0, 80);
-  if (sub_pos ==6 ) {  tft.print("|>> ");  tft.println("PROBE FLOOD");} else { tft.println("     PROBE FLOOD");}
+  if (sub_pos == 1) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("BACK");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     BACK");
+      }
+  tft.setCursor(0, 42);
+  if (sub_pos == 2) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("DEAUTH");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     DEAUTH");
+      }
+  tft.setCursor(0, 54);
+  if (sub_pos == 3) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("PHISHING");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     PHISHING");
+      }
+  tft.setCursor(0, 66);
+  if (sub_pos ==4 ) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("MITM");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     MITM");
+      }
+  tft.setCursor(0, 78);
+  if (sub_pos ==5 ) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("BEACON FLOOD");
+    } else {
+      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.println("     BEACON FLOOD");
+      }
+  tft.setCursor(0, 90);
+  if (sub_pos ==6 ) {
+    tft.print("|>> ");
+    tft.fillRoundRect(22, 89, 120, 10, 2, TFT_WHITE);
+    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.println("PROBE FLOOD");
+  } else {
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.println("     PROBE FLOOD");
+    }
   updateDisplay = false;
     }
     tft.startWrite();
