@@ -126,7 +126,6 @@ void page_RootMenu(void){
     }
   tft.setCursor(0, 42);
   if (root_pos == 2) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFA28, TFT_WHITE);
@@ -137,7 +136,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 54);
   if (root_pos == 3) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFC1F, TFT_WHITE);
@@ -148,7 +146,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 66);
   if (root_pos == 4) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFC1F, TFT_WHITE);
@@ -159,7 +156,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 78);
   if (root_pos == 5) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFC1F, TFT_WHITE);
@@ -170,7 +166,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 90);
   if (root_pos == 6) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 89, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFC1F, TFT_WHITE);
@@ -181,7 +176,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 102);
   if (root_pos == 7) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 101, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xFC1F, TFT_WHITE);
@@ -192,7 +186,6 @@ void page_RootMenu(void){
       }
   tft.setCursor(0, 114);
   if (root_pos == 8) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
     tft.print("|>> ");
     tft.fillRoundRect(22, 113, 120, 10, 2, TFT_WHITE);
     tft.setTextColor(0xE800, TFT_WHITE);  
