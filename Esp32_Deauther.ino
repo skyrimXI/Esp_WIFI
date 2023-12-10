@@ -34,6 +34,10 @@ boolean isDownButtonPressed = false;
 boolean wasDownButtonPressed = false;
 boolean isAcceptButtonPressed = false;
 boolean wasAcceptButtonPressed = false;
+boolean isRightButtonPressed = false;
+boolean wasRightButtonPressed = false;
+boolean isLeftButtonPressed = false;
+boolean wasLeftButtonPressed = false;
 //=====================================================================================//
 //||                                Colour Setting                                   ||//
 //=====================================================================================//
@@ -220,15 +224,16 @@ void page_RootMenu(void){
       updateDisplay = false;
     }
     tft.startWrite();
-//=============================Update buttons===========================//
     UP->update();
     isUpButtonPressed = UP->clicked();
     DOWN->update();
     isDownButtonPressed = DOWN->clicked();
-    RIGHT->update();
-    LEFT->update();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
+    LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //=========================UP button handling===========================//
     if (isUpButtonPressed && !wasUpButtonPressed) {
       root_pos--;
@@ -244,8 +249,16 @@ void page_RootMenu(void){
         root_pos = 1;
       }
       updateDisplay = true;  
-        }  
-//======================ACCEPT BUTTON HANDLING=========================//
+        }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
+        }
+//======================ACCEPT BUTTON HANDLING==========================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
@@ -266,6 +279,8 @@ void page_RootMenu(void){
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -329,10 +344,12 @@ void page_SubMenu1(void){
     isUpButtonPressed = UP->clicked();
     DOWN->update();
     isDownButtonPressed = DOWN->clicked();
-    RIGHT->update();
-    LEFT->update();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
+    LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //========================UP button handling========================//
     if (isUpButtonPressed && !wasUpButtonPressed) {
       sub_pos--;
@@ -348,7 +365,15 @@ void page_SubMenu1(void){
         sub_pos = 1;
       }
       updateDisplay = true;  
-        }  
+        }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
+        }   
 //=====================ACCEPT BUTTON HANDLING=====================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
@@ -372,6 +397,8 @@ void page_SubMenu1(void){
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -457,10 +484,12 @@ void page_SubMenu2(void){
     isUpButtonPressed = UP->clicked();
     DOWN->update();
     isDownButtonPressed = DOWN->clicked();
-    RIGHT->update();
-    LEFT->update();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
+    LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //========================UP button handling========================//
     if (isUpButtonPressed && !wasUpButtonPressed) {
       sub_pos--;
@@ -476,7 +505,15 @@ void page_SubMenu2(void){
         sub_pos = 1;
       }
       updateDisplay = true;  
-        }  
+        }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
+        } 
 //=====================ACCEPT BUTTON HANDLING====================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
@@ -495,6 +532,8 @@ void page_SubMenu2(void){
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -591,10 +630,12 @@ void page_SubMenu3(void){
     isUpButtonPressed = UP->clicked();
     DOWN->update();
     isDownButtonPressed = DOWN->clicked();
-    RIGHT->update();
-    LEFT->update();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
+    LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //==========================UP button handling========================//
     if (isUpButtonPressed && !wasUpButtonPressed) {
       sub_pos--;
@@ -610,6 +651,14 @@ void page_SubMenu3(void){
         sub_pos = 1;
       }
       updateDisplay = true;  
+        }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
         }  
 //========================ACCEPT BUTTON HANDLING=======================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
@@ -629,6 +678,8 @@ void page_SubMenu3(void){
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -655,7 +706,6 @@ void page_MyMenu2(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-//  int sub_posA = 0;
   while (currPage == MY_MENU2) {
     loopStartMs = millis();
     delay(25);
@@ -711,7 +761,9 @@ void page_MyMenu2(void){
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //===============================Up button handing==========================//
   if (isUpButtonPressed && !wasUpButtonPressed) {
     sub_posA--;
@@ -728,6 +780,14 @@ if (isDownButtonPressed && !wasDownButtonPressed) {
   }
   updateDisplay = true;
 }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
+        }
 //==========================ACCEPT BUTTON HANDLING========================//
 if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
   if (sub_posA == 0){
@@ -746,6 +806,8 @@ if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);
   }
 }
@@ -785,6 +847,10 @@ while (currPage == MY_MENU3){
     isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    isRightButtonPressed = RIGHT->clicked();
+    LEFT->update();
+    isLeftButtonPressed = LEFT->clicked();
 //=======================UP BUTTON HANDLING=====================//
         if (isUpButtonPressed && !wasUpButtonPressed) {
           currPage = MY_MENU2; //Back to 2nd Menu
@@ -792,6 +858,14 @@ while (currPage == MY_MENU3){
 //=======================DOWN BUTTON HANDING====================//
         if (isDownButtonPressed && !wasDownButtonPressed) {
           currPage = MY_MENU2; //Back to 2nd Menu
+        }
+//======================RIGHT button handling===========================//
+     if (isRightButtonPressed && !wasRightButtonPressed) {
+
+        }
+//======================LEFT button handling============================//
+    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+
         }
 //==========================ACCEPT BUTTON HANDLING==============//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
@@ -801,6 +875,8 @@ while (currPage == MY_MENU3){
     wasUpButtonPressed = isUpButtonPressed;
     wasDownButtonPressed = isDownButtonPressed;
     wasAcceptButtonPressed = isAcceptButtonPressed;
+    wasLeftButtonPressed = isLeftButtonPressed;
+    wasRightButtonPressed = isRightButtonPressed;
     delay(10);
     }
 }
