@@ -23,6 +23,19 @@ public:
   int encryptionType;
 };
 SimpleList<NetworkData> scannedNetworks; 
+//===============================Color Setting==========================================//
+int StatusBarbg = 0x0410;
+int StatusBarTX = TFT_BLACK;
+int MenuBlock = TFT_BLACK;
+int Cursor = TFT_WHITE;
+int MenuItemTX = TFT_WHITE;
+int SelectedMenuTX = TFT_BLACK;
+int SelectedMenuBG = TFT_WHITE;
+
+
+
+
+
 
 //====================================MENUs-Items=================================================//
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
@@ -105,100 +118,100 @@ void page_RootMenu(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("MENUs");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, MenuBlock);
   tft.setCursor(0, 30);
   if (root_pos == 1) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);  
+    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
     tft.println("SCAN");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     SCAN");
     }
   tft.setCursor(0, 42);
   if (root_pos == 2) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFA28, TFT_WHITE);
+    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("SNIFFER");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);  
+      tft.setTextColor(MenuItemTX, MenuBlock);  
       tft.println("     SNIFFER");
       }
   tft.setCursor(0, 54);
   if (root_pos == 3) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("ATTACKs");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     ATTACKs");
       }
   tft.setCursor(0, 66);
   if (root_pos == 4) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("HOTSPOT");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     HOTSPOT");
       }
   tft.setCursor(0, 78);
   if (root_pos == 5) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("WAR DRIVE");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     WAR DRIVE");
       }
   tft.setCursor(0, 90);
   if (root_pos == 6) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 89, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.fillRoundRect(22, 89, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("SIGNAL STRENTGH");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     SIGNAL STRENTGH");
       }
   tft.setCursor(0, 102);
   if (root_pos == 7) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 101, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xFC1F, TFT_WHITE);
+    tft.fillRoundRect(22, 101, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("PACKET MONITOR");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     PACKET MONITOR");
       }
   tft.setCursor(0, 114);
   if (root_pos == 8) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 113, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(0xE800, TFT_WHITE);  
+    tft.fillRoundRect(22, 113, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
     tft.println("REBOOT");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     REBOOT");
       }
       updateDisplay = false;
@@ -272,42 +285,45 @@ void page_SubMenu1(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("SCAN");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.setTextColor(Cursor, MenuBlock);
   tft.setCursor(0, 30);
   if (sub_pos == 1) {
     tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("BACK");
     } else {
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     BACK");
       }
   tft.setCursor(0, 42);
   if (sub_pos == 2) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("SCAN FOR APs");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     SCAN FOR APs");
       }
   tft.setCursor(0, 54);
   if (sub_pos == 3) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("SCAN STATIONs");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     SCAN STATIONs");
       }
   updateDisplay = false;
@@ -379,63 +395,67 @@ void page_SubMenu2(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("SNIFFER");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, MenuBlock);
   tft.setCursor(0, 30);
   if (sub_pos == 1) {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("BACK");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     BACK");
       }
   tft.setCursor(0, 42);
   if (sub_pos == 2) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("BEACON SNIFF");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     BEACON SNIFF");
       }
   tft.setCursor(0, 54);
   if (sub_pos == 3) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("PROBE SNIFF");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     PROBE SNIFF");
       }
   tft.setCursor(0, 66);
   if (sub_pos ==4 ) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("PMKID");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     PMKID");
       }
   tft.setCursor(0, 78);
   if (sub_pos ==5 ) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("RAW SNIFF");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     RAW SNIFF");
       }
   updateDisplay = false;
@@ -505,73 +525,78 @@ void page_SubMenu3(void){
     loopStartMs = millis();
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("ATTACKs");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, TFT_BLACK);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  tft.fillRect(0, 28, 150, 98, MenuBlock);
   tft.setCursor(0, 30);
   if (sub_pos == 1) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("BACK");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     BACK");
       }
   tft.setCursor(0, 42);
   if (sub_pos == 2) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("DEAUTH");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     DEAUTH");
       }
   tft.setCursor(0, 54);
   if (sub_pos == 3) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("PHISHING");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     PHISHING");
       }
   tft.setCursor(0, 66);
   if (sub_pos ==4 ) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("MITM");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     MITM");
       }
   tft.setCursor(0, 78);
   if (sub_pos ==5 ) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("BEACON FLOOD");
     } else {
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
+      tft.setTextColor(MenuItemTX, MenuBlock);
       tft.println("     BEACON FLOOD");
       }
   tft.setCursor(0, 90);
   if (sub_pos ==6 ) {
+    tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, 89, 120, 10, 2, TFT_WHITE);
-    tft.setTextColor(TFT_BLACK, TFT_WHITE);
+    tft.fillRoundRect(22, 89, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
     tft.println("PROBE FLOOD");
   } else {
-    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.setTextColor(MenuItemTX, MenuBlock);
     tft.println("     PROBE FLOOD");
     }
   updateDisplay = false;
@@ -639,7 +664,7 @@ void page_TestMenu2(void){
 void page_MyMenu1(void){
 
 }
-//====================================================================================//
+//================================================SSIDs=====================================================//
 void page_MyMenu2(void){
    boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
@@ -656,40 +681,41 @@ void page_MyMenu2(void){
     delay(25);
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
-    tft.setCursor(8, 8);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
+    tft.setCursor(10, 10);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("SSIDs");
-    staticElementsDrawn = true; // Set the flag to indicate that static elements have been drawn
+    staticElementsDrawn = true;
   }
     if (updateDisplay) {
-      tft.fillRect(0, 30, 160, 98, TFT_BLACK);
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
-      tft.setCursor(5, 30);
+      tft.fillRect(0, 28, 160, 98, MenuBlock);
+      tft.setCursor(0, 30);
       if (sub_pos == 0) {
-        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+        tft.setTextColor(Cursor, MenuBlock);
         tft.print("|>> ");
-        tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+        tft.fillRoundRect(22, 29, 130, 10, 2, SelectedMenuBG);
+        tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
         tft.println("BACK");
       } else {
-        tft.setTextColor(TFT_WHITE, TFT_BLACK);
+        tft.setTextColor(MenuItemTX, MenuBlock);
         tft.print("     BACK");
       }
 
       if (scannedNetworks.size() == 0) {
-        tft.setCursor(5, 40);
-        tft.setTextColor(0xE800, TFT_BLACK);
+        tft.setCursor(5, 60);
+        tft.setTextColor(0xE800, MenuBlock);
         tft.println("No Network Found");
       } else {
         for (int i = 0; i < scannedNetworks.size(); i++) {
-          tft.setCursor(5, 40 + i * 10);
+          tft.setCursor(0, 42 + i * 12);
           if (sub_pos == i + 1) {
-            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setTextColor(Cursor, MenuBlock);
             tft.print("|>> ");
-            tft.setTextColor(TFT_YELLOW  , TFT_BLACK);
+            tft.fillRoundRect(22, 41 + i * 12, 130, 10, 2, SelectedMenuBG);
+            tft.setTextColor(SelectedMenuTX  , SelectedMenuBG);
             tft.println(  scannedNetworks.get(i).ssid);
           } else {
-            tft.setTextColor(TFT_WHITE, TFT_BLACK);
+            tft.setTextColor(MenuItemTX, MenuBlock);
             tft.print("     ");
             tft.println(  scannedNetworks.get(i).ssid);
           }
@@ -752,7 +778,7 @@ if (!isAcceptButtonPressed && wasAcceptButtonPressed) {
   }
 } 
 
-//====================================================================================//
+//========================================INFORMATION============================================//
 void page_MyMenu3(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
@@ -765,24 +791,24 @@ void page_MyMenu3(void){
 while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, 0x0410);
-    tft.setCursor(8, 8);
-    tft.setTextColor(TFT_BLACK, 0x0410);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
+    tft.setCursor(10, 10);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print("INFORMATION");
-    staticElementsDrawn = true; // Set the flag to indicate that static elements have been drawn
+    staticElementsDrawn = true;
   }
     if (updateDisplay){
-      tft.fillRect(0, 30, 160, 98, TFT_BLACK);
-      tft.setTextColor(TFT_WHITE, TFT_BLACK);
-      tft.setCursor(10, 30);
+      tft.fillRect(0, 30, 160, 98, MenuBlock);
+      tft.setTextColor(MenuItemTX, MenuBlock);
+      tft.setCursor(5, 30);
       tft.println("SSID: " + scannedNetworks.get(test - 1).ssid);
-      tft.setCursor(10, 40);
+      tft.setCursor(5, 40);
       tft.println("MAC: " + scannedNetworks.get(test - 1).mac);
-      tft.setCursor(10, 50);
+      tft.setCursor(5, 50);
       tft.println("Encryption Type: " + String(scannedNetworks.get(test - 1).encryptionType));
-      tft.setCursor(10, 60);
+      tft.setCursor(5, 60);
       tft.println("Channel: " + String(scannedNetworks.get(test - 1).channel));
-      tft.setCursor(10, 70);
+      tft.setCursor(5, 70);
       tft.println("RSSI: " + String(scannedNetworks.get(test - 1).rssi));
       updateDisplay = false; 
      }
