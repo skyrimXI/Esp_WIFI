@@ -3,7 +3,9 @@
 #include <WiFi.h>
 #include <esp_wifi.h>
 #include <SimpleList.h>
-//======================================Button & TFT ===================================//
+//=====================================================================================//
+//||                                Buttons & TFT                                    ||//
+//=====================================================================================//
 using namespace simplebutton;
 Button* UP = NULL;
 Button* DOWN = NULL;
@@ -11,9 +13,9 @@ Button* RIGHT = NULL;
 Button* LEFT = NULL;
 Button* ACCEPT = NULL;
 TFT_eSPI tft;
-//=======================================Global Variables===============================//
-int test;
-uint8_t root_pos = 1;
+//=====================================================================================//
+//||                                Global Variables                                 ||//
+//=====================================================================================//
 class NetworkData {
 public:
   String ssid;
@@ -22,10 +24,19 @@ public:
   int channel;
   int encryptionType;
 };
-SimpleList<NetworkData> scannedNetworks; 
-//======================================================================================//
-//=====================================Color Setting====================================//
-//======================================================================================//
+SimpleList<NetworkData> scannedNetworks;
+int test;
+uint8_t root_pos = 1;
+int sub_pos = 1;
+  boolean isUpButtonPressed = false;
+  boolean wasUpButtonPressed = false;
+  boolean isDownButtonPressed = false;
+  boolean wasDownButtonPressed = false;
+  boolean isAcceptButtonPressed = false;
+  boolean wasAcceptButtonPressed = false;
+//=====================================================================================//
+//||                                Colour Setting                                   ||//
+//=====================================================================================//
 int StatusBarbg = 0x0410;
 int StatusBarTX = TFT_BLACK;
 int MenuBlock = TFT_BLACK;
@@ -34,20 +45,21 @@ int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
 int SelectedMenuBG = TFT_WHITE;
 //=====================================================================================//
-//====================================MENUs-Items======================================//
+//||                                   Menu Items                                    ||//
+//=====================================================================================//
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
 enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
 //=====================================================================================//
 //||                        ScanNetwork & Add Data to List                           ||//
 //=====================================================================================//
 void scanNetworks() {
-  scannedNetworks.clear();                                // Clear the existing list of scanned networks
-  int networksFound = WiFi.scanNetworks();                // Scan for Wi-Fi networks
-  if (networksFound == -1) {                              // Check if scanning was successful
+  scannedNetworks.clear();                          // Clear the existing list of scanned networks
+  int networksFound = WiFi.scanNetworks();          // Scan for Wi-Fi networks
+  if (networksFound == -1) {                        // Check if scanning was successful
     Serial.println("Failed to scan networks.");
     return;
   }
-  for (int i = 0; i < networksFound; ++i) {               // Retrieve and add network data to the list
+  for (int i = 0; i < networksFound; ++i) {        // Retrieve and add network data to the list
     NetworkData data;
     data.ssid = WiFi.SSID(i);
     data.mac = WiFi.BSSIDstr(i);
@@ -61,17 +73,17 @@ void scanNetworks() {
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
-  Serial.begin(115200);                     //SERIAL SETUP
-  UP = new ButtonPullup(27);                //Creat a button named UP and its connected to P32
-  DOWN = new ButtonPullup(14);              //Creat a button named DOWN and its connected to P33
-  RIGHT = new ButtonPullup(33);             //Creat a button named RIGHT and its connected to P14
-  LEFT = new ButtonPullup(32);              //Creat a button named LEFT and its connected to P27
-  ACCEPT = new ButtonPullup(25);            //Creat a button named OK and its connected to P25
-  tft.begin();                              //Initialize TFT
-  tft.setRotation(3);                       //Rotation of tft
-  tft.fillScreen(TFT_BLACK);                //Background Of tft
-  tft.setTextSize(1);                       //Text Size
-  tft.startWrite();                         // Begin manual display update
+  Serial.begin(115200);                              //SERIAL SETUP
+  UP = new ButtonPullup(27);                         //Creat a button named UP and its connected to P32
+  DOWN = new ButtonPullup(14);                       //Creat a button named DOWN and its connected to P33
+  RIGHT = new ButtonPullup(33);                      //Creat a button named RIGHT and its connected to P14
+  LEFT = new ButtonPullup(32);                       //Creat a button named LEFT and its connected to P27
+  ACCEPT = new ButtonPullup(25);                     //Creat a button named OK and its connected to P25
+  tft.begin();                                       //Initialize TFT
+  tft.setRotation(3);                                //Rotation of tft
+  tft.fillScreen(TFT_BLACK);                         //Background Of tft
+  tft.setTextSize(1);                                //Text Size
+  tft.startWrite();                                  // Begin manual display update
 }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
@@ -105,12 +117,6 @@ void page_RootMenu(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
     while (currPage == ROOT_MENU) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
@@ -231,7 +237,7 @@ void page_RootMenu(void){
       }
       updateDisplay = true;
         }
-//======================DOWN button handling========================//
+//======================DOWN button handling===========================//
     if (isDownButtonPressed && !wasDownButtonPressed) {
       root_pos++;
       if (root_pos > 8) {
@@ -239,7 +245,7 @@ void page_RootMenu(void){
       }
       updateDisplay = true;  
         }  
-//==========================ACCEPT BUTTON HANDLING=================//
+//======================ACCEPT BUTTON HANDLING=========================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
@@ -263,21 +269,13 @@ void page_RootMenu(void){
     delay(10);  
   }
 }
-
-//=======================================================================================//
-//||                                    Submenu1 = Scan option                         ||// 
-//=======================================================================================//
+//==============================================================================================//
+//||                                    Submenu1 = Scan option                                ||// 
+//==============================================================================================//
 void page_SubMenu1(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-  int sub_pos = 1;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
     while (currPage == SUB_MENU1) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
@@ -351,15 +349,18 @@ void page_SubMenu1(void){
       }
       updateDisplay = true;  
         }  
-//==========================ACCEPT BUTTON HANDLING==============//
+//=====================ACCEPT BUTTON HANDLING=====================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
-        case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
+        case 1:
+          currPage = ROOT_MENU;   
+          break;                                  //RETURN TO BACK MENU
         case 2:
           scanNetworks();
           currPage = MY_MENU2;                    //CODE TO SCAN FOR APs
           break;    
-        case 3: currPage = MY_MENU3;              //CODE TO SCAN FOR STATION
+        case 3:
+          currPage = MY_MENU3;                    //CODE TO SCAN FOR STATION
           break;    
       }
       updateDisplay = true;
@@ -374,20 +375,13 @@ void page_SubMenu1(void){
     delay(10);  
   }
 }
-//====================================================================================//
-//||                                    Submenu2 = SNIFF OPTION                       ||// 
-//====================================================================================//
+//==================================================================================================//
+//||                                    Submenu2 = SNIFF OPTION                                   ||// 
+//==================================================================================================//
 void page_SubMenu2(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-  int sub_pos = 1;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
     while (currPage == SUB_MENU2) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
@@ -483,7 +477,7 @@ void page_SubMenu2(void){
       }
       updateDisplay = true;  
         }  
-//==========================ACCEPT BUTTON HANDLING==============//
+//=====================ACCEPT BUTTON HANDLING====================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
@@ -511,13 +505,6 @@ void page_SubMenu3(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-  int sub_pos = 1;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
     while (currPage == SUB_MENU3) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
@@ -599,7 +586,7 @@ void page_SubMenu3(void){
   updateDisplay = false;
     }
     tft.startWrite();
-//=============================Update buttons=======================//
+//=============================Update buttons=========================//
     UP->update();
     isUpButtonPressed = UP->clicked();
     DOWN->update();
@@ -608,7 +595,7 @@ void page_SubMenu3(void){
     LEFT->update();
     ACCEPT->update();
     isAcceptButtonPressed = ACCEPT->clicked();
-//========================UP button handling========================//
+//==========================UP button handling========================//
     if (isUpButtonPressed && !wasUpButtonPressed) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -616,7 +603,7 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;
         }
-//======================DOWN button handling========================//
+//=========================DOWN button handling========================//
     if (isDownButtonPressed && !wasDownButtonPressed) {
       sub_pos++;
       if (sub_pos > 6) {
@@ -624,7 +611,7 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;  
         }  
-//==========================ACCEPT BUTTON HANDLING==============//
+//========================ACCEPT BUTTON HANDLING=======================//
         if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
@@ -661,18 +648,14 @@ void page_TestMenu2(void){
 void page_MyMenu1(void){
 
 }
-//================================================SSIDs=====================================================//
+//=========================================================================================================//
+//||                                         MyMenu2 = SSIDs                                             ||// 
+//=========================================================================================================//
 void page_MyMenu2(void){
-   boolean updateDisplay = true;
+  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-  int sub_pos = 0;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
+  int sub_posA = 0;
   while (currPage == MY_MENU2) {
     loopStartMs = millis();
     delay(25);
@@ -687,7 +670,7 @@ void page_MyMenu2(void){
     if (updateDisplay) {
       tft.fillRect(0, 28, 160, 98, MenuBlock);
       tft.setCursor(0, 30);
-      if (sub_pos == 0) {
+      if (sub_posA == 0) {
         tft.setTextColor(Cursor, MenuBlock);
         tft.print("|>> ");
         tft.fillRoundRect(22, 29, 130, 10, 2, SelectedMenuBG);
@@ -697,7 +680,6 @@ void page_MyMenu2(void){
         tft.setTextColor(MenuItemTX, MenuBlock);
         tft.print("     BACK");
       }
-
       if (scannedNetworks.size() == 0) {
         tft.setCursor(5, 60);
         tft.setTextColor(0xE800, MenuBlock);
@@ -705,7 +687,7 @@ void page_MyMenu2(void){
       } else {
         for (int i = 0; i < scannedNetworks.size(); i++) {
           tft.setCursor(0, 42 + i * 12);
-          if (sub_pos == i + 1) {
+          if (sub_posA == i + 1) {
             tft.setTextColor(Cursor, MenuBlock);
             tft.print("|>> ");
             tft.fillRoundRect(22, 41 + i * 12, 130, 10, 2, SelectedMenuBG);
@@ -716,75 +698,64 @@ void page_MyMenu2(void){
             tft.print("     ");
             tft.println(  scannedNetworks.get(i).ssid);
           }
-         
         }
       }
       updateDisplay = false;
     }
-    tft.startWrite(); 
+    tft.startWrite();
+//===============================Update buttons===========================//    
     UP->update();
-    DOWN->update();
-    ACCEPT->update();
-//===============================Up button handing============================//
     isUpButtonPressed = UP->clicked();
-    if (isUpButtonPressed && !wasUpButtonPressed) {
-      wasUpButtonPressed = true;
-    }
-    if (!isUpButtonPressed && wasUpButtonPressed) {
-      wasUpButtonPressed = false;
-      sub_pos--;
-      if (sub_pos < 0) {
-        sub_pos = scannedNetworks.size();
-      }
-      updateDisplay = true;
-    }
-//==============================Down Button handling===========================//
+    DOWN->update();
     isDownButtonPressed = DOWN->clicked();
-    if (isDownButtonPressed && !wasDownButtonPressed) {
-      wasDownButtonPressed = true;
+    ACCEPT->update();
+    isAcceptButtonPressed = ACCEPT->clicked();
+    RIGHT->update();
+    LEFT->update();
+//===============================Up button handing==========================//
+  if (isUpButtonPressed && !wasUpButtonPressed) {
+    sub_posA--;
+    if (sub_posA < 0) {
+    sub_posA = scannedNetworks.size();  
     }
-    if (!isDownButtonPressed && wasDownButtonPressed) {
-      wasDownButtonPressed = false;
-      sub_pos++;
-      if (sub_pos > scannedNetworks.size()) {
-        sub_pos = 0;
-      }
-      updateDisplay = true;
-    }
-test = sub_pos;
-//================================Accept Button Handling============================//
-isAcceptButtonPressed = ACCEPT->clicked();
-if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
-  wasAcceptButtonPressed = true;
+   updateDisplay = true; 
+  }
+//============================DOWN button handling===========================//
+if (isDownButtonPressed && !wasDownButtonPressed) {
+  sub_posA++;
+  if (sub_posA > scannedNetworks.size()) {
+    sub_posA = 0;
+  }
+  updateDisplay = true;
 }
-if (!isAcceptButtonPressed && wasAcceptButtonPressed) {
-  wasAcceptButtonPressed = false;
-  if (sub_pos == 0){
+test = sub_posA;
+//==========================ACCEPT BUTTON HANDLING========================//
+if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+  if (sub_posA == 0){
     currPage = SUB_MENU1;
     WiFi.scanDelete();
   } else {
-    if (sub_pos > 0 && sub_pos <= scannedNetworks.size()) {
-    currPage = MY_MENU3;
-  }
+    if (sub_posA > 0 && sub_posA <= scannedNetworks.size()) {
+      currPage = MY_MENU3;
+    }
   }
   updateDisplay = true;
 }
      while (millis() - loopStartMs < 25) {
-      delay(10);
+      delay(20);
     }
+    wasUpButtonPressed = isUpButtonPressed;
+    wasDownButtonPressed = isDownButtonPressed;
+    wasAcceptButtonPressed = isAcceptButtonPressed;
+    delay(10);
   }
-} 
-
-//========================================INFORMATION============================================//
+}
+//=========================================================================================================//
+//||                                    MyMenu3 = Informations                                           ||// 
+//=========================================================================================================//
 void page_MyMenu3(void){
   boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
-  boolean isUpButtonPressed = false;
-  boolean wasUpButtonPressed = false;
-  boolean isDownButtonPressed = false;
-  boolean wasDownButtonPressed = false;
-  boolean isAcceptButtonPressed = false;
-  boolean wasAcceptButtonPressed = false;
 while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
     tft.fillScreen(TFT_BLACK);
