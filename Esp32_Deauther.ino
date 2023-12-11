@@ -39,6 +39,11 @@ boolean wasRightButtonPressed = false;
 boolean isLeftButtonPressed = false;
 boolean wasLeftButtonPressed = false;
 //=====================================================================================//
+//||                                   Menu Items                                    ||//
+//=====================================================================================//
+enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
+enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
+//=====================================================================================//
 //||                                Colour Setting                                   ||//
 //=====================================================================================//
 int StatusBarbg = 0x0410;
@@ -49,10 +54,13 @@ int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
 int SelectedMenuBG = TFT_WHITE;
 //=====================================================================================//
-//||                                   Menu Items                                    ||//
+//||                                CUSTOM & FUNCTION                                ||//
 //=====================================================================================//
-enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
+//scanNetworks();    THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
+//StatusBar(CHAR);   THIS IS USED TO PRINT A STATUS BAR AT TOP OF THE DISPLAY WITH PAGE NAME
+
+
+
 //=====================================================================================//
 //||                        ScanNetwork & Add Data to List                           ||//
 //=====================================================================================//
@@ -124,11 +132,7 @@ void page_RootMenu(void){
     while (currPage == ROOT_MENU) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("MENUs");
+    StatusBar ("MENUs");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
@@ -294,11 +298,7 @@ void page_SubMenu1(void){
     while (currPage == SUB_MENU1) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("SCAN");
+    StatusBar ("SCAN");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
@@ -412,11 +412,7 @@ void page_SubMenu2(void){
     while (currPage == SUB_MENU2) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("SNIFFER");
+    StatusBar ("SNIFFER");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
@@ -547,11 +543,7 @@ void page_SubMenu3(void){
     while (currPage == SUB_MENU3) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("ATTACKs");
+    StatusBar ("ATTACKs");
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
@@ -710,11 +702,7 @@ void page_MyMenu2(void){
     loopStartMs = millis();
     delay(25);
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("SSIDs");
+    StatusBar ("SSIDs");
     staticElementsDrawn = true;
   }
     if (updateDisplay) {
@@ -819,11 +807,7 @@ void page_MyMenu3(void){
   boolean staticElementsDrawn = false;
 while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print("INFORMATION");
+    StatusBar ("INFORMATION");
     staticElementsDrawn = true;
   }
     if (updateDisplay){
@@ -911,4 +895,16 @@ void page_MyMenu10(void){
 //====================================================================================//
 void page_MyMenu11(void){
 
+}
+
+//=========================================================================================================//
+//||                                    DISPLAY PRINT TOOLS                                              ||// 
+//=========================================================================================================//
+
+void StatusBar (const char* Status){
+    tft.fillScreen(TFT_BLACK);
+    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
+    tft.setCursor(10, 10);
+    tft.setTextColor(StatusBarTX, StatusBarbg);
+    tft.print(Status);
 }
