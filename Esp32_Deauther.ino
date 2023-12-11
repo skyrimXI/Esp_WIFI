@@ -26,18 +26,10 @@ public:
 };
 SimpleList<NetworkData> scannedNetworks;
 uint8_t root_pos = 1;
-int sub_pos = 1;
+uint8_t sub_pos = 1;
 int sub_posA = 0;
-boolean isUpButtonPressed = false;
-boolean wasUpButtonPressed = false;
-boolean isDownButtonPressed = false;
-boolean wasDownButtonPressed = false;
-boolean isAcceptButtonPressed = false;
-boolean wasAcceptButtonPressed = false;
-boolean isRightButtonPressed = false;
-boolean wasRightButtonPressed = false;
-boolean isLeftButtonPressed = false;
-boolean wasLeftButtonPressed = false;
+boolean updateDisplay = true;
+uint8_t HoldingInterval = 120;
 //=====================================================================================//
 //||                                   Menu Items                                    ||//
 //=====================================================================================//
@@ -126,7 +118,6 @@ void loop(){
 //||                                    ROOT_MENU = MAIN_MENU                            ||// 
 //=========================================================================================//             
 void page_RootMenu(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
     while (currPage == ROOT_MENU) {
@@ -229,17 +220,20 @@ void page_RootMenu(void){
     }
     tft.startWrite();
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
-//=========================UP button handling===========================//
-    if (isUpButtonPressed && !wasUpButtonPressed) {
+//=========================UP-CLICKED button handling===========================//
+    if (UP->clicked()) {
+      root_pos--;
+      if (root_pos < 1) {
+        root_pos =8;
+      }
+      updateDisplay = true;
+        }
+//=========================UP-HOLDING button handling===========================//
+    if (UP->holding(HoldingInterval)) {
       root_pos--;
       if (root_pos < 1) {
         root_pos =8;
@@ -247,7 +241,15 @@ void page_RootMenu(void){
       updateDisplay = true;
         }
 //======================DOWN button handling===========================//
-    if (isDownButtonPressed && !wasDownButtonPressed) {
+    if (DOWN->clicked()) {
+      root_pos++;
+      if (root_pos > 8) {
+        root_pos = 1;
+      }
+      updateDisplay = true;  
+        }
+//======================DOWN-HOLDING button handling===========================//
+    if (DOWN->holding(HoldingInterval)) {
       root_pos++;
       if (root_pos > 8) {
         root_pos = 1;
@@ -255,15 +257,15 @@ void page_RootMenu(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         }
 //======================ACCEPT BUTTON HANDLING==========================//
-        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        if (ACCEPT->clicked()) {
         switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
         case 2: currPage = SUB_MENU2;   break;
@@ -280,11 +282,7 @@ void page_RootMenu(void){
       delay(20);
     }
     tft.endWrite();
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
+
     delay(10);  
   }
 }
@@ -292,7 +290,6 @@ void page_RootMenu(void){
 //||                                    Submenu1 = Scan option                                ||// 
 //==============================================================================================//
 void page_SubMenu1(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
     while (currPage == SUB_MENU1) {
@@ -339,19 +336,21 @@ void page_SubMenu1(void){
   updateDisplay = false;
     }
     tft.startWrite();
-//=============================Update buttons=======================//
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
 //========================UP button handling========================//
-    if (isUpButtonPressed && !wasUpButtonPressed) {
+    if (UP->clicked()) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =3;
+      }
+      updateDisplay = true;
+        }
+//=========================UP-HOLDING button handling===========================//
+    if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =3;
@@ -359,7 +358,15 @@ void page_SubMenu1(void){
       updateDisplay = true;
         }
 //======================DOWN button handling========================//
-    if (isDownButtonPressed && !wasDownButtonPressed) {
+    if (DOWN->clicked()) {
+      sub_pos++;
+      if (sub_pos > 3) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }
+//======================DOWN-HOLDING button handling===========================//
+    if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 3) {
         sub_pos = 1;
@@ -367,15 +374,15 @@ void page_SubMenu1(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         }   
 //=====================ACCEPT BUTTON HANDLING=====================//
-        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1:
           currPage = ROOT_MENU;   
@@ -394,11 +401,6 @@ void page_SubMenu1(void){
       delay(20);
     }
     tft.endWrite();
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -406,7 +408,6 @@ void page_SubMenu1(void){
 //||                                    Submenu2 = SNIFF OPTION                                   ||// 
 //==================================================================================================//
 void page_SubMenu2(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
     while (currPage == SUB_MENU2) {
@@ -475,19 +476,21 @@ void page_SubMenu2(void){
   updateDisplay = false;
     }
     tft.startWrite();
-//=============================Update buttons=======================//
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
 //========================UP button handling========================//
-    if (isUpButtonPressed && !wasUpButtonPressed) {
+    if (UP->clicked()) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =5;
+      }
+      updateDisplay = true;
+        }
+//=========================UP-HOLDING button handling===========================//
+    if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =5;
@@ -495,7 +498,15 @@ void page_SubMenu2(void){
       updateDisplay = true;
         }
 //======================DOWN button handling========================//
-    if (isDownButtonPressed && !wasDownButtonPressed) {
+    if (DOWN->clicked()) {
+      sub_pos++;
+      if (sub_pos > 5) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }
+//======================DOWN-HOLDING button handling===========================//
+    if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 5) {
         sub_pos = 1;
@@ -503,15 +514,15 @@ void page_SubMenu2(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         } 
 //=====================ACCEPT BUTTON HANDLING====================//
-        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
         case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
@@ -525,11 +536,6 @@ void page_SubMenu2(void){
       delay(20);
     }
     tft.endWrite();
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -537,7 +543,6 @@ void page_SubMenu2(void){
 //||                                    Submenu3 = ATTACKs OPTION                                        ||// 
 //=========================================================================================================//
 void page_SubMenu3(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
     while (currPage == SUB_MENU3) {
@@ -617,19 +622,21 @@ void page_SubMenu3(void){
   updateDisplay = false;
     }
     tft.startWrite();
-//=============================Update buttons=========================//
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
 //==========================UP button handling========================//
-    if (isUpButtonPressed && !wasUpButtonPressed) {
+    if (UP->clicked()) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =6;
+      }
+      updateDisplay = true;
+        }
+//=========================UP-HOLDING button handling===========================//
+    if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =6;
@@ -637,7 +644,15 @@ void page_SubMenu3(void){
       updateDisplay = true;
         }
 //=========================DOWN button handling========================//
-    if (isDownButtonPressed && !wasDownButtonPressed) {
+    if (DOWN->clicked()) {
+      sub_pos++;
+      if (sub_pos > 6) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }
+//======================DOWN-HOLDING button handling===========================//
+    if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 6) {
         sub_pos = 1;
@@ -645,15 +660,15 @@ void page_SubMenu3(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         }  
 //========================ACCEPT BUTTON HANDLING=======================//
-        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
         case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
@@ -667,11 +682,6 @@ void page_SubMenu3(void){
       delay(20);
     }
     tft.endWrite();
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
     delay(10);  
   }
 }
@@ -695,7 +705,6 @@ void page_MyMenu1(void){
 //||                                         MyMenu2 = SSIDs                                             ||// 
 //=========================================================================================================//
 void page_MyMenu2(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
   while (currPage == MY_MENU2) {
@@ -741,19 +750,21 @@ void page_MyMenu2(void){
       updateDisplay = false;
     }
     tft.startWrite();
-//===============================Update buttons===========================//    
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
 //===============================Up button handing==========================//
-  if (isUpButtonPressed && !wasUpButtonPressed) {
+  if (UP->clicked()) {
+    sub_posA--;
+    if (sub_posA < 0) {
+    sub_posA = scannedNetworks.size();  
+    }
+   updateDisplay = true; 
+  }
+//=========================UP-HOLDING button handling===========================//
+  if (UP->holding(HoldingInterval)) {
     sub_posA--;
     if (sub_posA < 0) {
     sub_posA = scannedNetworks.size();  
@@ -761,7 +772,15 @@ void page_MyMenu2(void){
    updateDisplay = true; 
   }
 //============================DOWN button handling===========================//
-if (isDownButtonPressed && !wasDownButtonPressed) {
+if (DOWN->clicked()) {
+  sub_posA++;
+  if (sub_posA > scannedNetworks.size()) {
+    sub_posA = 0;
+  }
+  updateDisplay = true;
+}
+//======================DOWN-HOLDING button handling===========================//
+if (DOWN->holding(HoldingInterval)) {
   sub_posA++;
   if (sub_posA > scannedNetworks.size()) {
     sub_posA = 0;
@@ -769,15 +788,15 @@ if (isDownButtonPressed && !wasDownButtonPressed) {
   updateDisplay = true;
 }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         }
 //==========================ACCEPT BUTTON HANDLING========================//
-if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+if (ACCEPT->clicked()) {
   if (sub_posA == 0){
     currPage = SUB_MENU1;
     WiFi.scanDelete();
@@ -791,19 +810,12 @@ if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
      while (millis() - loopStartMs < 25) {
       delay(20);
     }
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
-    delay(10);
   }
 }
 //=========================================================================================================//
 //||                                    MyMenu3 = Informations                                           ||// 
 //=========================================================================================================//
 void page_MyMenu3(void){
-  boolean updateDisplay = true;
   boolean staticElementsDrawn = false;
 while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
@@ -826,41 +838,31 @@ while (currPage == MY_MENU3){
       updateDisplay = false; 
      }
     UP->update();
-    isUpButtonPressed = UP->clicked();
     DOWN->update();
-    isDownButtonPressed = DOWN->clicked();
     ACCEPT->update();
-    isAcceptButtonPressed = ACCEPT->clicked();
     RIGHT->update();
-    isRightButtonPressed = RIGHT->clicked();
     LEFT->update();
-    isLeftButtonPressed = LEFT->clicked();
 //=======================UP BUTTON HANDLING=====================//
-        if (isUpButtonPressed && !wasUpButtonPressed) {
+        if (UP->clicked()) {
           currPage = MY_MENU2; //Back to 2nd Menu
         }
 //=======================DOWN BUTTON HANDING====================//
-        if (isDownButtonPressed && !wasDownButtonPressed) {
+        if (DOWN->clicked()) {
           currPage = MY_MENU2; //Back to 2nd Menu
         }
 //======================RIGHT button handling===========================//
-     if (isRightButtonPressed && !wasRightButtonPressed) {
+     if (RIGHT->clicked()) {
 
         }
 //======================LEFT button handling============================//
-    if (isLeftButtonPressed && !wasLeftButtonPressed) {
+    if (LEFT->clicked()) {
 
         }
 //==========================ACCEPT BUTTON HANDLING==============//
-        if (isAcceptButtonPressed && !wasAcceptButtonPressed) {
+        if (ACCEPT->clicked()) {
           updateDisplay = true; //update just Display
       return;
         }
-    wasUpButtonPressed = isUpButtonPressed;
-    wasDownButtonPressed = isDownButtonPressed;
-    wasAcceptButtonPressed = isAcceptButtonPressed;
-    wasLeftButtonPressed = isLeftButtonPressed;
-    wasRightButtonPressed = isRightButtonPressed;
     delay(10);
     }
 }
