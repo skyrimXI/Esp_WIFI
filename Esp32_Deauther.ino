@@ -126,97 +126,17 @@ void page_RootMenu(void){
     StatusBar ("MENUs");
     staticElementsDrawn = true; 
   }
-  if (updateDisplay) { 
+  if (updateDisplay) {
   tft.fillRect(0, 28, 150, 98, MenuBlock);
-  tft.setCursor(0, 30);
-  if (root_pos == 1) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
-    tft.println("SCAN");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     SCAN");
-    }
-  tft.setCursor(0, 42);
-  if (root_pos == 2) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("SNIFFER");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);  
-      tft.println("     SNIFFER");
-      }
-  tft.setCursor(0, 54);
-  if (root_pos == 3) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("ATTACKs");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     ATTACKs");
-      }
-  tft.setCursor(0, 66);
-  if (root_pos == 4) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("HOTSPOT");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     HOTSPOT");
-      }
-  tft.setCursor(0, 78);
-  if (root_pos == 5) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("WAR DRIVE");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     WAR DRIVE");
-      }
-  tft.setCursor(0, 90);
-  if (root_pos == 6) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 89, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("SIGNAL STRENTGH");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     SIGNAL STRENTGH");
-      }
-  tft.setCursor(0, 102);
-  if (root_pos == 7) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 101, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("PACKET MONITOR");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     PACKET MONITOR");
-      }
-  tft.setCursor(0, 114);
-  if (root_pos == 8) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 113, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
-    tft.println("REBOOT");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     REBOOT");
-      }
-      updateDisplay = false;
+  MenuItems ("SCAN", 30, 1, root_pos);
+  MenuItems ("SNIFFER", 42, 2, root_pos);
+  MenuItems ("ATTACKs", 54, 3, root_pos);
+  MenuItems ("HOTSPOT", 66, 4, root_pos);
+  MenuItems ("WAR DRIVE", 78, 5, root_pos);
+  MenuItems ("PACKET MONITOR", 90, 6, root_pos);
+  MenuItems ("SIGNAL STRENTGH", 102, 7, root_pos);
+  MenuItems ("REBOOT", 114, 8, root_pos);
+  updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -300,39 +220,9 @@ void page_SubMenu1(void){
   }
   if (updateDisplay) { 
   tft.fillRect(0, 28, 150, 98, MenuBlock);
-  tft.setTextColor(Cursor, MenuBlock);
-  tft.setCursor(0, 30);
-  if (sub_pos == 1) {
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("BACK");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     BACK");
-      }
-  tft.setCursor(0, 42);
-  if (sub_pos == 2) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("SCAN FOR APs");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     SCAN FOR APs");
-      }
-  tft.setCursor(0, 54);
-  if (sub_pos == 3) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("SCAN STATIONs");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     SCAN STATIONs");
-      }
+  MenuItems ("BACK", 30, 1, sub_pos);
+  MenuItems ("SCAN FOR APs", 42, 2, sub_pos);
+  MenuItems ("SCAN STATIONs", 54, 3, sub_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -418,61 +308,11 @@ void page_SubMenu2(void){
   }
   if (updateDisplay) { 
   tft.fillRect(0, 28, 150, 98, MenuBlock);
-  tft.setCursor(0, 30);
-  if (sub_pos == 1) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("BACK");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     BACK");
-      }
-  tft.setCursor(0, 42);
-  if (sub_pos == 2) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("BEACON SNIFF");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     BEACON SNIFF");
-      }
-  tft.setCursor(0, 54);
-  if (sub_pos == 3) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("PROBE SNIFF");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     PROBE SNIFF");
-      }
-  tft.setCursor(0, 66);
-  if (sub_pos ==4 ) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("PMKID");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     PMKID");
-      }
-  tft.setCursor(0, 78);
-  if (sub_pos ==5 ) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("RAW SNIFF");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     RAW SNIFF");
-      }
+  MenuItems ("BACK", 30, 1, sub_pos);
+  MenuItems ("BEACON SNIFF", 42, 2, sub_pos);
+  MenuItems ("PROBE SNIFF", 54, 3, sub_pos);
+  MenuItems ("PMKID SNIFF", 66, 4, sub_pos);
+  MenuItems ("RAW SNIFF", 78, 5, sub_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -553,72 +393,12 @@ void page_SubMenu3(void){
   }
   if (updateDisplay) { 
   tft.fillRect(0, 28, 150, 98, MenuBlock);
-  tft.setCursor(0, 30);
-  if (sub_pos == 1) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 29, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("BACK");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     BACK");
-      }
-  tft.setCursor(0, 42);
-  if (sub_pos == 2) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 41, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("DEAUTH");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     DEAUTH");
-      }
-  tft.setCursor(0, 54);
-  if (sub_pos == 3) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 53, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("PHISHING");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     PHISHING");
-      }
-  tft.setCursor(0, 66);
-  if (sub_pos ==4 ) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 65, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("MITM");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     MITM");
-      }
-  tft.setCursor(0, 78);
-  if (sub_pos ==5 ) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 77, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("BEACON FLOOD");
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.println("     BEACON FLOOD");
-      }
-  tft.setCursor(0, 90);
-  if (sub_pos ==6 ) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, 89, 120, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.println("PROBE FLOOD");
-  } else {
-    tft.setTextColor(MenuItemTX, MenuBlock);
-    tft.println("     PROBE FLOOD");
-    }
+  MenuItems ("BACK", 30, 1, sub_pos);
+  MenuItems ("DEAUTH", 42, 2, sub_pos);
+  MenuItems ("PHISHING", 54, 3, sub_pos);
+  MenuItems ("MITM", 66, 4, sub_pos);
+  MenuItems ("BEACON FLOOD", 78, 5, sub_pos);
+  MenuItems ("PROBE FLOOD", 90, 6, sub_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -909,4 +689,19 @@ void StatusBar (const char* Status){
     tft.setCursor(10, 10);
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
+}
+
+void MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3){
+  tft.setCursor(0, p1);
+  if (p2 == p3) {
+    tft.setTextColor(Cursor, MenuBlock);
+    tft.print("|>> ");
+    tft.fillRoundRect(22, p1-1, 120, 10, 2, SelectedMenuBG);
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
+    tft.println(Item);
+    } else {
+      tft.setTextColor(MenuItemTX, MenuBlock);
+      tft.print("     ");
+      tft.print(Item);
+    }
 }
