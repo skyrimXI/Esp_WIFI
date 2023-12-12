@@ -625,10 +625,12 @@ while (currPage == MY_MENU3){
 //=======================UP BUTTON HANDLING=====================//
         if (UP->clicked()) {
           currPage = MY_MENU2; //Back to 2nd Menu
+          updateDisplay = true;
         }
 //=======================DOWN BUTTON HANDING====================//
         if (DOWN->clicked()) {
           currPage = MY_MENU2; //Back to 2nd Menu
+          updateDisplay = true;
         }
 //======================RIGHT button handling===========================//
      if (RIGHT->clicked()) {
