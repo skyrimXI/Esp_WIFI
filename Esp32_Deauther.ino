@@ -48,10 +48,15 @@ int SelectedMenuBG = TFT_WHITE;
 //=====================================================================================//
 //||                                CUSTOM & FUNCTION                                ||//
 //=====================================================================================//
-//scanNetworks();    THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
-//StatusBar(CHAR);   THIS IS USED TO PRINT A STATUS BAR AT TOP OF THE DISPLAY WITH PAGE NAME
-
-
+//scanNetworks();
+//           THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
+//StatusBar(const char* Status);  
+//           Status = Title of Page
+//MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3); 
+//           Item = Menu Items                                                               
+//           p1   = 'Y' Value for Cursor Point
+//           p2   = Value that will compare with Sub_pos
+//           p3   = 'sub_pos'
 
 //=====================================================================================//
 //||                        ScanNetwork & Add Data to List                           ||//
@@ -496,39 +501,18 @@ void page_MyMenu2(void){
   }
     if (updateDisplay) {
       tft.fillRect(0, 28, 160, 98, MenuBlock);
-      tft.setCursor(0, 30);
-      if (sub_posA == 0) {
-        tft.setTextColor(Cursor, MenuBlock);
-        tft.print("|>> ");
-        tft.fillRoundRect(22, 29, 130, 10, 2, SelectedMenuBG);
-        tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-        tft.println("BACK");
-      } else {
-        tft.setTextColor(MenuItemTX, MenuBlock);
-        tft.print("     BACK");
-      }
-      if (scannedNetworks.size() == 0) {
-        tft.setCursor(5, 60);
-        tft.setTextColor(0xE800, MenuBlock);
-        tft.println("No Network Found");
-      } else {
-        for (int i = 0; i < scannedNetworks.size(); i++) {
-          tft.setCursor(0, 42 + i * 12);
-          if (sub_posA == i + 1) {
-            tft.setTextColor(Cursor, MenuBlock);
-            tft.print("|>> ");
-            tft.fillRoundRect(22, 41 + i * 12, 130, 10, 2, SelectedMenuBG);
-            tft.setTextColor(SelectedMenuTX  , SelectedMenuBG);
-            tft.println(  scannedNetworks.get(i).ssid);
-          } else {
-            tft.setTextColor(MenuItemTX, MenuBlock);
-            tft.print("     ");
-            tft.println(  scannedNetworks.get(i).ssid);
-          }
-        }
-      }
-      updateDisplay = false;
+      MenuItems("BACK", 30, 0, sub_posA);
+  if (scannedNetworks.size() == 0) {
+    tft.setCursor(5, 60);
+    tft.setTextColor(0xE800, MenuBlock);
+    tft.println("No Network Found");
+  } else {
+    for (int i = 0; i < scannedNetworks.size(); i++) {
+      MenuItems(scannedNetworks.get(i).ssid, 42 + i * 12, i + 1, sub_posA);
     }
+  }
+  updateDisplay = false;
+}
     tft.startWrite();
     UP->update();
     DOWN->update();
@@ -693,7 +677,7 @@ void StatusBar (const char* Status){
     tft.print(Status);
 }
 
-void MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3){
+void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
   tft.setCursor(0, p1);
   if (p2 == p3) {
     tft.setTextColor(Cursor, MenuBlock);
