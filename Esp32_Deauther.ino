@@ -93,6 +93,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);                         //Background Of tft
   tft.setTextSize(1);                                //Text Size
   tft.startWrite();                                  // Begin manual display update
+  tft.setTextWrap(false);
 }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
@@ -589,15 +590,15 @@ while (currPage == MY_MENU3){
     if (updateDisplay){
       tft.fillRect(0, 30, 160, 98, MenuBlock);
       tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.setCursor(5, 30);
+      tft.setCursor(8, 30);
       tft.println("SSID: " + scannedNetworks.get(sub_posA - 1).ssid);
-      tft.setCursor(5, 40);
+      tft.setCursor(8, 42);
       tft.println("MAC: " + scannedNetworks.get(sub_posA - 1).mac);
-      tft.setCursor(5, 50);
+      tft.setCursor(8, 54);
       tft.println("Encryption Type: " + String(scannedNetworks.get(sub_posA - 1).encryptionType));
-      tft.setCursor(5, 60);
+      tft.setCursor(8, 66);
       tft.println("Channel: " + String(scannedNetworks.get(sub_posA - 1).channel));
-      tft.setCursor(5, 70);
+      tft.setCursor(8, 78);
       tft.println("RSSI: " + String(scannedNetworks.get(sub_posA - 1).rssi));
       updateDisplay = false; 
      }
