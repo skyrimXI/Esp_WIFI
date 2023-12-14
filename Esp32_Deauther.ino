@@ -29,14 +29,14 @@ uint8_t root_pos = 1;
 uint8_t sub_pos = 1;
 int sub_posA = 0;
 boolean updateDisplay = true;
-uint8_t HoldingInterval = 120;
+
 //=====================================================================================//
 //||                                   Menu Items                                    ||//
 //=====================================================================================//
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
 enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
 //=====================================================================================//
-//||                                Colour Setting                                   ||//
+//||                                 UI Setting                                      ||//
 //=====================================================================================//
 int StatusBarbg = 0x0410;
 int StatusBarTX = TFT_BLACK;
@@ -45,6 +45,7 @@ int Cursor = TFT_WHITE;
 int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
 int SelectedMenuBG = TFT_WHITE;
+uint8_t HoldingInterval = 120;
 //=====================================================================================//
 //||                                CUSTOM & FUNCTION                                ||//
 //=====================================================================================//
@@ -57,7 +58,6 @@ int SelectedMenuBG = TFT_WHITE;
 //           p1   = 'Y' Value for Cursor Point
 //           p2   = Value that will compare with Sub_pos
 //           p3   = 'sub_pos'
-
 //=====================================================================================//
 //||                        ScanNetwork & Add Data to List                           ||//
 //=====================================================================================//
@@ -92,9 +92,9 @@ void setup() {
   tft.setRotation(3);                                //Rotation of tft
   tft.fillScreen(TFT_BLACK);                         //Background Of tft
   tft.setTextSize(1);                                //Text Size
-  tft.startWrite();                                  // Begin manual display update
   tft.setTextWrap(false);
-}
+  tft.startWrite();                                  // Begin manual display update
+  }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
 //==========================================================================================//
@@ -671,19 +671,23 @@ void page_MyMenu11(void){
 //=========================================================================================================//
 
 void StatusBar (const char* Status){
+    uint8_t StatusBarWidth = tft.width() - 10;
+  
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, 150, 20, 2, StatusBarbg);
+    tft.fillRoundRect(5, 5, StatusBarWidth, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
 }
 
 void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
+  uint8_t SelectedMenuWidth = tft.width() - 40;
+  
   tft.setCursor(0, p1);
   if (p2 == p3) {
     tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, p1-1, 120, 10, 2, SelectedMenuBG);
+    tft.fillRoundRect(22, p1-1, SelectedMenuWidth, 10, 2, SelectedMenuBG);
     tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
     tft.println(Item);
     } else {
