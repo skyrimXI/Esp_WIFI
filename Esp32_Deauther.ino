@@ -1,3 +1,23 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Github - https://github.com/skyrimXI/Esp_WIFI
+// Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
+// 
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//||                                           CUSTOM & FUNCTION                                         ||//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//scanNetworks();
+//           THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
+//StatusBar(const char* Status);  
+//           Status = Title of Page
+//MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3); 
+//           Item = Menu Items                                                               
+//           p1   = 'Y' Value for Cursor Point
+//           p2   = Value that will compare with Sub_pos
+//           p3   = 'sub_pos'
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <SimpleButton.h>
 #include <TFT_eSPI.h>
 #include <WiFi.h>
@@ -31,13 +51,11 @@ int sub_posA = 0;
 boolean updateDisplay = true;
 
 //=====================================================================================//
-//||                                   Menu Items                                    ||//
-//=====================================================================================//
-enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
-//=====================================================================================//
 //||                                 UI Setting                                      ||//
 //=====================================================================================//
+enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
+enum pageType currPage = ROOT_MENU;            //holds which page is currently selected
+
 int StatusBarbg = 0x0410;
 int StatusBarTX = TFT_BLACK;
 int MenuBlock = TFT_BLACK;
@@ -45,39 +63,7 @@ int Cursor = TFT_WHITE;
 int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
 int SelectedMenuBG = TFT_WHITE;
-uint8_t HoldingInterval = 120;
-//=====================================================================================//
-//||                                CUSTOM & FUNCTION                                ||//
-//=====================================================================================//
-//scanNetworks();
-//           THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
-//StatusBar(const char* Status);  
-//           Status = Title of Page
-//MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3); 
-//           Item = Menu Items                                                               
-//           p1   = 'Y' Value for Cursor Point
-//           p2   = Value that will compare with Sub_pos
-//           p3   = 'sub_pos'
-//=====================================================================================//
-//||                        ScanNetwork & Add Data to List                           ||//
-//=====================================================================================//
-void scanNetworks() {
-  scannedNetworks.clear();                          // Clear the existing list of scanned networks
-  int networksFound = WiFi.scanNetworks();          // Scan for Wi-Fi networks
-  if (networksFound == -1) {                        // Check if scanning was successful
-    Serial.println("Failed to scan networks.");
-    return;
-  }
-  for (int i = 0; i < networksFound; ++i) {        // Retrieve and add network data to the list
-    NetworkData data;
-    data.ssid = WiFi.SSID(i);
-    data.mac = WiFi.BSSIDstr(i);
-    data.rssi = WiFi.RSSI(i);
-    data.channel = WiFi.channel(i);
-    data.encryptionType = WiFi.encryptionType(i);
-    scannedNetworks.add(data);
-  }
-}
+uint8_t HoldingInterval = 120;                 //INTERVAL BETWEEN ACTION AFTER HOLDING A BUTTON
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
@@ -92,7 +78,7 @@ void setup() {
   tft.setRotation(3);                                //Rotation of tft
   tft.fillScreen(TFT_BLACK);                         //Background Of tft
   tft.setTextSize(1);                                //Text Size
-  tft.setTextWrap(false);
+  tft.setTextWrap(false);                            // Text Wrapping true/false
   tft.startWrite();                                  // Begin manual display update
   }
 //==========================================================================================//
@@ -150,7 +136,7 @@ void page_RootMenu(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=========================UP-CLICKED button handling===========================//
+//====================UP-CLICKED button handling=======================//
     if (UP->clicked()) {
       root_pos--;
       if (root_pos < 1) {
@@ -158,7 +144,7 @@ void page_RootMenu(void){
       }
       updateDisplay = true;
         }
-//=========================UP-HOLDING button handling===========================//
+//====================UP-HOLDING button handling=======================//
     if (UP->holding(HoldingInterval)) {
       root_pos--;
       if (root_pos < 1) {
@@ -174,7 +160,7 @@ void page_RootMenu(void){
       }
       updateDisplay = true;  
         }
-//======================DOWN-HOLDING button handling===========================//
+//=================DOWN-HOLDING button handling=========================//
     if (DOWN->holding(HoldingInterval)) {
       root_pos++;
       if (root_pos > 8) {
@@ -237,7 +223,7 @@ void page_SubMenu1(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//========================UP button handling========================//
+//===========================UP button handling===========================//
     if (UP->clicked()) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -245,7 +231,7 @@ void page_SubMenu1(void){
       }
       updateDisplay = true;
         }
-//=========================UP-HOLDING button handling===========================//
+//===================UP-HOLDING button handling==========================//
     if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -253,7 +239,7 @@ void page_SubMenu1(void){
       }
       updateDisplay = true;
         }
-//======================DOWN button handling========================//
+//========================DOWN button handling===========================//
     if (DOWN->clicked()) {
       sub_pos++;
       if (sub_pos > 3) {
@@ -261,7 +247,7 @@ void page_SubMenu1(void){
       }
       updateDisplay = true;  
         }
-//======================DOWN-HOLDING button handling===========================//
+//====================DOWN-HOLDING button handling=======================//
     if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 3) {
@@ -273,11 +259,11 @@ void page_SubMenu1(void){
      if (RIGHT->clicked()) {
 
         }
-//======================LEFT button handling============================//
+//======================LEFT button handling=============================//
     if (LEFT->clicked()) {
 
         }   
-//=====================ACCEPT BUTTON HANDLING=====================//
+//=======================ACCEPT BUTTON HANDLING=========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1:
@@ -327,15 +313,15 @@ void page_SubMenu2(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//========================UP button handling========================//
+//==========================UP button handling============================//
     if (UP->clicked()) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =5;
       }
       updateDisplay = true;
-        }
-//=========================UP-HOLDING button handling===========================//
+       
+//====================UP-HOLDING button handling=========================//
     if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -343,7 +329,7 @@ void page_SubMenu2(void){
       }
       updateDisplay = true;
         }
-//======================DOWN button handling========================//
+//=========================DOWN button handling==========================//
     if (DOWN->clicked()) {
       sub_pos++;
       if (sub_pos > 5) {
@@ -351,7 +337,7 @@ void page_SubMenu2(void){
       }
       updateDisplay = true;  
         }
-//======================DOWN-HOLDING button handling===========================//
+//====================DOWN-HOLDING button handling=======================//
     if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 5) {
@@ -367,7 +353,7 @@ void page_SubMenu2(void){
     if (LEFT->clicked()) {
 
         } 
-//=====================ACCEPT BUTTON HANDLING====================//
+//========================ACCEPT BUTTON HANDLING========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
@@ -413,7 +399,7 @@ void page_SubMenu3(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//==========================UP button handling========================//
+//==========================UP button handling==========================//
     if (UP->clicked()) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -421,7 +407,7 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;
         }
-//=========================UP-HOLDING button handling===========================//
+//====================UP-HOLDING button handling========================//
     if (UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
@@ -429,7 +415,7 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;
         }
-//=========================DOWN button handling========================//
+//=========================DOWN button handling=========================//
     if (DOWN->clicked()) {
       sub_pos++;
       if (sub_pos > 6) {
@@ -437,7 +423,7 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;  
         }
-//======================DOWN-HOLDING button handling===========================//
+//===================DOWN-HOLDING button handling=======================//
     if (DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 6) {
@@ -453,7 +439,7 @@ void page_SubMenu3(void){
     if (LEFT->clicked()) {
 
         }  
-//========================ACCEPT BUTTON HANDLING=======================//
+//========================ACCEPT BUTTON HANDLING========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
@@ -528,7 +514,7 @@ void page_MyMenu2(void){
     }
    updateDisplay = true; 
   }
-//=========================UP-HOLDING button handling===========================//
+//======================UP-HOLDING button handling=========================//
   if (UP->holding(HoldingInterval)) {
     sub_posA--;
     if (sub_posA < 0) {
@@ -536,7 +522,7 @@ void page_MyMenu2(void){
     }
    updateDisplay = true; 
   }
-//============================DOWN button handling===========================//
+//============================DOWN button handling=========================//
 if (DOWN->clicked()) {
   sub_posA++;
   if (sub_posA > scannedNetworks.size()) {
@@ -544,7 +530,7 @@ if (DOWN->clicked()) {
   }
   updateDisplay = true;
 }
-//======================DOWN-HOLDING button handling===========================//
+//===================DOWN-HOLDING button handling==========================//
 if (DOWN->holding(HoldingInterval)) {
   sub_posA++;
   if (sub_posA > scannedNetworks.size()) {
@@ -552,11 +538,11 @@ if (DOWN->holding(HoldingInterval)) {
   }
   updateDisplay = true;
 }
-//======================RIGHT button handling===========================//
+//======================RIGHT button handling=============================//
      if (RIGHT->clicked()) {
 
         }
-//======================LEFT button handling============================//
+//========================LEFT button handling============================//
     if (LEFT->clicked()) {
 
         }
@@ -617,11 +603,11 @@ while (currPage == MY_MENU3){
           currPage = MY_MENU2; //Back to 2nd Menu
           updateDisplay = true;
         }
-//======================RIGHT button handling===========================//
+//==================RIGHT button handling=======================//
      if (RIGHT->clicked()) {
 
         }
-//======================LEFT button handling============================//
+//================LEFT button handling==========================//
     if (LEFT->clicked()) {
 
         }
@@ -667,9 +653,8 @@ void page_MyMenu11(void){
 }
 
 //=========================================================================================================//
-//||                                    DISPLAY PRINT TOOLS                                              ||// 
+//||                                      CUSTOM FUNCTION                                                ||// 
 //=========================================================================================================//
-
 void StatusBar (const char* Status){
     uint8_t StatusBarWidth = tft.width() - 10;
   
@@ -679,7 +664,7 @@ void StatusBar (const char* Status){
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
 }
-
+//=========================================================================================================//
 void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
   uint8_t SelectedMenuWidth = tft.width() - 40;
   
@@ -695,4 +680,22 @@ void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
       tft.print("     ");
       tft.print(Item);
     }
+}
+//=========================================================================================================//
+void scanNetworks() {
+  scannedNetworks.clear();                          // Clear the existing list of scanned networks
+  int networksFound = WiFi.scanNetworks();          // Scan for Wi-Fi networks
+  if (networksFound == -1) {                        // Check if scanning was successful
+    Serial.println("Failed to scan networks.");
+    return;
+  }
+  for (int i = 0; i < networksFound; ++i) {        // Retrieve and add network data to the list
+    NetworkData data;
+    data.ssid = WiFi.SSID(i);
+    data.mac = WiFi.BSSIDstr(i);
+    data.rssi = WiFi.RSSI(i);
+    data.channel = WiFi.channel(i);
+    data.encryptionType = WiFi.encryptionType(i);
+    scannedNetworks.add(data);
+  }
 }
