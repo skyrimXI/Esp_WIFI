@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Github - https://github.com/skyrimXI/Esp_WIFI
 // Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
-// 
+//               - RGB565
 //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,30 +56,35 @@ boolean updateDisplay = true;
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
 enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
 
-int StatusBarbg = 0x0410;
-int StatusBarTX = TFT_BLACK;
+int StatusBarbg = 0x10D1;
+int StatusBarTX = 0xFFFF;
 int MenuBlock = TFT_BLACK;
-int Cursor = TFT_WHITE;
+int Cursor = 0xF81F;
 int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
-int SelectedMenuBG = TFT_WHITE;
+int SelectedMenuBG = 0xFFF0;
 uint8_t HoldingInterval = 120;
+uint8_t tftHight;
+uint8_t tftWidth;
+
 
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
-  UP = new ButtonPullup(27);                         //Creat a button named UP and its connected to P32
-  DOWN = new ButtonPullup(14);                       //Creat a button named DOWN and its connected to P33
-  RIGHT = new ButtonPullup(33);                      //Creat a button named RIGHT and its connected to P14
-  LEFT = new ButtonPullup(32);                       //Creat a button named LEFT and its connected to P27
+  UP = new ButtonPullup(27);                         //Creat a button named UP and its connected to P27
+  DOWN = new ButtonPullup(14);                       //Creat a button named DOWN and its connected to P14
+  RIGHT = new ButtonPullup(33);                      //Creat a button named RIGHT and its connected to P33
+  LEFT = new ButtonPullup(32);                       //Creat a button named LEFT and its connected to P32
   ACCEPT = new ButtonPullup(25);                     //Creat a button named OK and its connected to P25
   tft.begin();                                       //Initialize TFT
-  tft.setRotation(3);                                //Rotation of tft
-  tft.fillScreen(TFT_BLACK);                         //Background Of tft
-  tft.setTextSize(1);                                //Text Size
-  tft.setTextWrap(false);
+  tft.setRotation(0);                                //Rotation of tft (0/1/2/3)
+  tft.fillScreen(TFT_BLACK);                         //Clear tft by fill Color Black
+  tft.setTextSize(1);                                //Text Size (1/2/3)
+  tft.setTextWrap(false);                            //Text Wrapping (true/false)
+  tftHight = tft.height();
+  tftWidth = tft.width();
   tft.startWrite();                                  // Begin manual display update
   }
 //==========================================================================================//
@@ -353,7 +358,7 @@ void page_SubMenu3(void){
     RIGHT->update();
     LEFT->update();
 //==========================UP button handling============================//
-    if (UP->clicked() || UP->holding(HoldingInterval) {
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =6;
@@ -577,23 +582,19 @@ void page_MyMenu11(void){
 //||                                        CUSTOM FUNCTION                                             ||// 
 //=========================================================================================================//
 void StatusBar (const char* Status){
-    uint8_t StatusBarWidth = tft.width() - 10;
-  
     tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, StatusBarWidth, 20, 2, StatusBarbg);
+    tft.fillRoundRect(5, 5, tftWidth - 10, 20, 2, StatusBarbg);
     tft.setCursor(10, 10);
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
 }
 //=========================================================================================================//
 void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
-  uint8_t SelectedMenuWidth = tft.width() - 40;
-  
   tft.setCursor(0, p1);
   if (p2 == p3) {
     tft.setTextColor(Cursor, MenuBlock);
     tft.print("|>> ");
-    tft.fillRoundRect(22, p1-1, SelectedMenuWidth, 10, 2, SelectedMenuBG);
+    tft.fillRoundRect(22, p1-1, tftWidth - 40, 10, 2, SelectedMenuBG);
     tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
     tft.println(Item);
     } else {
