@@ -137,16 +137,8 @@ void page_RootMenu(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=======================UP-CLICKED button handling========================//
-    if (UP->clicked()) {
-      root_pos--;
-      if (root_pos < 1) {
-        root_pos =8;
-      }
-      updateDisplay = true;
-        }
-//====================UP-HOLDING button handling===========================//
-    if (UP->holding(HoldingInterval)) {
+//=======================UP button handling========================//
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
       root_pos--;
       if (root_pos < 1) {
         root_pos =8;
@@ -154,15 +146,7 @@ void page_RootMenu(void){
       updateDisplay = true;
         }
 //=========================DOWN button handling===========================//
-    if (DOWN->clicked()) {
-      root_pos++;
-      if (root_pos > 8) {
-        root_pos = 1;
-      }
-      updateDisplay = true;  
-        }
-//===================DOWN-HOLDING button handling========================//
-    if (DOWN->holding(HoldingInterval)) {
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       root_pos++;
       if (root_pos > 8) {
         root_pos = 1;
@@ -225,15 +209,7 @@ void page_SubMenu1(void){
     RIGHT->update();
     LEFT->update();
 //========================UP button handling================================//
-    if (UP->clicked()) {
-      sub_pos--;
-      if (sub_pos < 1) {
-        sub_pos =3;
-      }
-      updateDisplay = true;
-        }
-//=====================UP-HOLDING button handling==========================//
-    if (UP->holding(HoldingInterval)) {
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =3;
@@ -241,15 +217,7 @@ void page_SubMenu1(void){
       updateDisplay = true;
         }
 //=========================DOWN button handling===========================//
-    if (DOWN->clicked()) {
-      sub_pos++;
-      if (sub_pos > 3) {
-        sub_pos = 1;
-      }
-      updateDisplay = true;  
-        }
-//======================DOWN-HOLDING button handling=====================//
-    if (DOWN->holding(HoldingInterval)) {
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 3) {
         sub_pos = 1;
@@ -315,15 +283,7 @@ void page_SubMenu2(void){
     RIGHT->update();
     LEFT->update();
 //==========================UP button handling============================//
-    if (UP->clicked()) {
-      sub_pos--;
-      if (sub_pos < 1) {
-        sub_pos =5;
-      }
-      updateDisplay = true;
-        }
-//===================UP-HOLDING button handling==========================//
-    if (UP->holding(HoldingInterval)) {
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =5;
@@ -331,15 +291,7 @@ void page_SubMenu2(void){
       updateDisplay = true;
         }
 //======================DOWN button handling=============================//
-    if (DOWN->clicked()) {
-      sub_pos++;
-      if (sub_pos > 5) {
-        sub_pos = 1;
-      }
-      updateDisplay = true;  
-        }
-//====================DOWN-HOLDING button handling======================//
-    if (DOWN->holding(HoldingInterval)) {
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 5) {
         sub_pos = 1;
@@ -401,15 +353,7 @@ void page_SubMenu3(void){
     RIGHT->update();
     LEFT->update();
 //==========================UP button handling============================//
-    if (UP->clicked()) {
-      sub_pos--;
-      if (sub_pos < 1) {
-        sub_pos =6;
-      }
-      updateDisplay = true;
-        }
-//=======================UP-HOLDING button handling=======================//
-    if (UP->holding(HoldingInterval)) {
+    if (UP->clicked() || UP->holding(HoldingInterval) {
       sub_pos--;
       if (sub_pos < 1) {
         sub_pos =6;
@@ -417,15 +361,7 @@ void page_SubMenu3(void){
       updateDisplay = true;
         }
 //============================DOWN button handling========================//
-    if (DOWN->clicked()) {
-      sub_pos++;
-      if (sub_pos > 6) {
-        sub_pos = 1;
-      }
-      updateDisplay = true;  
-        }
-//================DOWN-HOLDING button handling===========================//
-    if (DOWN->holding(HoldingInterval)) {
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 6) {
         sub_pos = 1;
@@ -508,15 +444,7 @@ void page_MyMenu2(void){
     RIGHT->update();
     LEFT->update();
 //=============================Up button handing==========================//
-  if (UP->clicked()) {
-    sub_posA--;
-    if (sub_posA < 0) {
-    sub_posA = scannedNetworks.size();  
-    }
-   updateDisplay = true; 
-  }
-//===================UP-HOLDING button handling===========================//
-  if (UP->holding(HoldingInterval)) {
+  if (UP->clicked() || UP->holding(HoldingInterval)) {
     sub_posA--;
     if (sub_posA < 0) {
     sub_posA = scannedNetworks.size();  
@@ -524,15 +452,7 @@ void page_MyMenu2(void){
    updateDisplay = true; 
   }
 //========================DOWN button handling===========================//
-if (DOWN->clicked()) {
-  sub_posA++;
-  if (sub_posA > scannedNetworks.size()) {
-    sub_posA = 0;
-  }
-  updateDisplay = true;
-}
-//================DOWN-HOLDING button handling===========================//
-if (DOWN->holding(HoldingInterval)) {
+if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
   sub_posA++;
   if (sub_posA > scannedNetworks.size()) {
     sub_posA = 0;
