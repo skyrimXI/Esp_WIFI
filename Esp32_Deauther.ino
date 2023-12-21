@@ -86,10 +86,6 @@ void setup() {
   tftHight = tft.height();
   tftWidth = tft.width();
   tft.startWrite();                                  // Begin manual display update
-  Serial.print("TFT Height: ");
-  Serial.println(tftHight);
-  Serial.print("TFT Width: ");
-  Serial.println(tftWidth);
   }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
