@@ -17,12 +17,14 @@
 //           p1   = 'Y' Value for Cursor Point
 //           p2   = Value that will compare with Sub_pos
 //           p3   = 'sub_pos'
+//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <SimpleButton.h>
 #include <TFT_eSPI.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
 #include <SimpleList.h>
+#include <EEPROM.h>
 //=====================================================================================//
 //||                                Buttons & TFT                                    ||//
 //=====================================================================================//
@@ -49,7 +51,7 @@ uint8_t root_pos = 1;
 uint8_t sub_pos = 1;
 int sub_posA = 0;
 boolean updateDisplay = true;
-
+int EPPROMwrite = 0;
 //=======================================================================================//
 //||                                   UI Setting                                      ||//
 //=======================================================================================//
@@ -62,29 +64,28 @@ int MenuBlock = TFT_BLACK;
 int Cursor = 0xF81F;
 int MenuItemTX = TFT_WHITE;
 int SelectedMenuTX = TFT_BLACK;
-int SelectedMenuBG = 0xFFF0;
+int SelectedMenuBG = 0xFFE4;
 uint8_t HoldingInterval = 120;
 uint8_t tftHight;
 uint8_t tftWidth;
-
-
+uint8_t textHight;
+int rotation;
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
-  UP = new ButtonPullup(27);                         //Creat a button named UP and its connected to P27
-  DOWN = new ButtonPullup(14);                       //Creat a button named DOWN and its connected to P14
-  RIGHT = new ButtonPullup(33);                      //Creat a button named RIGHT and its connected to P33
-  LEFT = new ButtonPullup(32);                       //Creat a button named LEFT and its connected to P32
-  ACCEPT = new ButtonPullup(25);                     //Creat a button named OK and its connected to P25
+  EEPROM.begin(512);                                 //Initialization Of EPPROM
+  rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
+  configureButtons(rotation);                        //This is a function For Button SetUp
   tft.begin();                                       //Initialize TFT
-  tft.setRotation(3);                                //Rotation of tft (0/1/2/3)
+  tft.setRotation(rotation);                         //Rotation of tft (0/1/2/3)
   tft.fillScreen(TFT_BLACK);                         //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
   tft.setTextWrap(false);                            //Text Wrapping (true/false)
-  tftHight = tft.height();
-  tftWidth = tft.width();
+  tftHight = tft.height();                           //Set Tft Hight Dynamically according to Oriantation
+  tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
+  textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
   }
 //==========================================================================================//
@@ -133,7 +134,7 @@ void page_RootMenu(void){
   MenuItems ("WAR DRIVE", 78, 5, root_pos);
   MenuItems ("PACKET MONITOR", 90, 6, root_pos);
   MenuItems ("SIGNAL STRENTGH", 102, 7, root_pos);
-  MenuItems ("REBOOT", 114, 8, root_pos);
+  MenuItems ("SETTING", 114, 8, root_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -176,7 +177,7 @@ void page_RootMenu(void){
         case 5: currPage = TEST_MENU1;  break;
         case 6: currPage = TEST_MENU2;  break;
         case 7: currPage = MY_MENU1;    break;
-        case 8: ESP.restart();          break;
+        case 8: currPage = MY_MENU11;    break;
       }
       updateDisplay = true;
     }
@@ -575,9 +576,98 @@ void page_MyMenu10(void){
 }
 //====================================================================================//
 void page_MyMenu11(void){
-
+    boolean staticElementsDrawn = false;
+    uint32_t loopStartMs;
+    while (currPage == MY_MENU11) {
+    loopStartMs = millis();
+    if (!staticElementsDrawn) {
+    StatusBar ("SETTINGs");
+    staticElementsDrawn = true; 
+  }
+  if (updateDisplay) { 
+  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  MenuItems ("BACK", 30, 1, sub_pos);
+  MenuItems ("ROTATION : ", 42, 2, sub_pos);
+  tft.setCursor(54, 54);
+  if (sub_pos == 2){
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
+    tft.print("-< ");
+    tft.print(EPPROMwrite);
+    tft.print(" >+");
+  } else {
+    tft.setTextColor(MenuItemTX, MenuBlock);
+    tft.print("<< ");
+    tft.print(EPPROMwrite);
+    tft.print(" >>");
+  }
+  MenuItems ("SAVE SETTING", 102, 3, sub_pos);
+  MenuItems ("REBOOT", 114, 4, sub_pos);
+  updateDisplay = false;
+    }
+    tft.startWrite();
+    UP->update();
+    DOWN->update();
+    ACCEPT->update();
+    RIGHT->update();
+    LEFT->update();
+//========================UP button handling================================//
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos =4;
+      }
+      updateDisplay = true;
+        }
+//=========================DOWN button handling===========================//
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
+      sub_pos++;
+      if (sub_pos > 4) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;  
+        }
+//======================RIGHT button handling===========================//
+     if (sub_pos == 2 && RIGHT->clicked()) {
+      EPPROMwrite++;
+      if (EPPROMwrite > 3) {
+        EPPROMwrite = 0;
+      }
+      updateDisplay = true;  
+     }
+//======================LEFT button handling============================//
+    if (sub_pos == 2 && LEFT->clicked()) {
+      EPPROMwrite--;
+      if (EPPROMwrite < 0) {
+        EPPROMwrite =3;
+      }
+      updateDisplay = true;  
+    }
+//=====================ACCEPT BUTTON HANDLING===========================//
+        if (ACCEPT->clicked()) {
+        switch (sub_pos) {
+        case 1:
+          currPage = ROOT_MENU;   
+          break;
+        case 2:
+          //SETTINGS NEED TO CHANGE                             
+          break;    
+        case 3:
+          EEPROM.write(0, EPPROMwrite);
+          EEPROM.commit();
+          break; 
+        case 4:
+          ESP.restart();
+          break;   
+      }
+      updateDisplay = true;
+    }
+      while (millis() - loopStartMs < 25) {
+      delay(20);
+    }
+    tft.endWrite();
+    delay(10);  
+  }
 }
-
 //=========================================================================================================//
 //||                                        CUSTOM FUNCTION                                             ||// 
 //=========================================================================================================//
@@ -619,5 +709,38 @@ void scanNetworks() {
     data.channel = WiFi.channel(i);
     data.encryptionType = WiFi.encryptionType(i);
     scannedNetworks.add(data);
+  }
+}
+//=========================================================================================================//
+void configureButtons(int rotation) {
+    switch (rotation) {
+    case 0:
+      UP = new ButtonPullup(32);
+      DOWN = new ButtonPullup(33);
+      RIGHT = new ButtonPullup(14);
+      LEFT = new ButtonPullup(27);
+      ACCEPT = new ButtonPullup(25);
+      break;
+    case 1:
+      UP = new ButtonPullup(14);
+      DOWN = new ButtonPullup(27);
+      RIGHT = new ButtonPullup(33);
+      LEFT = new ButtonPullup(32);
+      ACCEPT = new ButtonPullup(25);
+      break;
+    case 2:
+      UP = new ButtonPullup(33);
+      DOWN = new ButtonPullup(32);
+      RIGHT = new ButtonPullup(27);
+      LEFT = new ButtonPullup(14);
+      ACCEPT = new ButtonPullup(25);
+      break;
+    case 3:
+      UP = new ButtonPullup(27);
+      DOWN = new ButtonPullup(14);
+      RIGHT = new ButtonPullup(32);
+      LEFT = new ButtonPullup(33);
+      ACCEPT = new ButtonPullup(25);
+      break;
   }
 }
