@@ -79,13 +79,17 @@ void setup() {
   LEFT = new ButtonPullup(32);                       //Creat a button named LEFT and its connected to P32
   ACCEPT = new ButtonPullup(25);                     //Creat a button named OK and its connected to P25
   tft.begin();                                       //Initialize TFT
-  tft.setRotation(0);                                //Rotation of tft (0/1/2/3)
+  tft.setRotation(3);                                //Rotation of tft (0/1/2/3)
   tft.fillScreen(TFT_BLACK);                         //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
   tft.setTextWrap(false);                            //Text Wrapping (true/false)
   tftHight = tft.height();
   tftWidth = tft.width();
   tft.startWrite();                                  // Begin manual display update
+  Serial.print("TFT Height: ");
+  Serial.println(tftHight);
+  Serial.print("TFT Width: ");
+  Serial.println(tftWidth);
   }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
