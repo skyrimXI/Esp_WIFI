@@ -672,7 +672,14 @@ void StatusBar (const char* Status){
     tft.setCursor(10, 10);
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
+      if(rotation == 0 || rotation == 2){
+        tft.setCursor(90, 10);
+      } else {
+        tft.setCursor(121, 10);
+      }
+    tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
 }
+
 //=========================================================================================================//
 void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
   tft.setCursor(0, p1);
