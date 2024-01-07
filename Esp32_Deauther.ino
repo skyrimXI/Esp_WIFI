@@ -1,19 +1,9 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Github - https://github.com/skyrimXI/Esp_WIFI
-// Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
-//               - RGB565
-///////////////////////////////////////////////CUSTOM & FUNCTION////////////////////////////////////////////
-//scanNetworks();
-//           THIS IS USED TO SCAN NEARBY WIFI NETWORK AND STORE DATA ON A CLASS
-//StatusBar(const char* Status);  
-//           Status = Title of Page
-//MenuItems (const char* Item, uint8_t p1, uint8_t p2, uint8_t p3); 
-//           Item = Menu Items                                                               
-//           p1   = 'Y' Value for Cursor Point
-//           p2   = Value that will compare with Sub_pos
-//           p3   = 'sub_pos'
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+  Github - https://github.com/skyrimXI/Esp_WIFI
+  Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
+               - RGB565
+  Default Board - LoLIN D32
+*/
 #include <SimpleButton.h>
 #include <TFT_eSPI.h>
 #include <WiFi.h>
@@ -46,25 +36,28 @@ uint8_t root_pos = 1;
 uint8_t sub_pos = 1;
 int sub_posA = 0;
 boolean updateDisplay = true;
-int EPPROMwrite = 0;
-//=======================================================================================//
-//||                                   UI Setting                                      ||//
-//=======================================================================================//
-enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;                       //holds which page is currently selected
-
-int StatusBarbg = 0x10D1;
-int StatusBarTX = 0xFFFF;
-int MenuBlock = TFT_BLACK;
-int Cursor = 0xF81F;
-int MenuItemTX = TFT_WHITE;
-int SelectedMenuTX = TFT_BLACK;
-int SelectedMenuBG = 0xFFE4;
-uint8_t HoldingInterval = 120;
 uint8_t tftHight;
 uint8_t tftWidth;
 uint8_t textHight;
 int rotation;
+int Brightness;
+//=======================================================================================//
+//||                                   UI Setting                                      ||//
+//=======================================================================================//
+enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
+enum pageType currPage = ROOT_MENU;                  //holds which page is currently selected
+
+int StatusBarbg = 0x10D1;                            //Back Ground Of Status Bar
+int StatusBarTX = 0xFFFF;                            //Status Bar Text Color
+int MenuBlock = TFT_BLACK;                           //Back Ground Colour of Menu's Block 
+int Cursor = 0xF81F;                                 //Cursor Color
+int MenuItemTX = TFT_WHITE;                          //Menu's Text Color
+int SelectedMenuTX = TFT_BLACK;                      //Menu's Text When Selected 
+int SelectedMenuBG = 0xFFE4;                         //Back Ground When Menu is selected
+uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
+int EPPROMwrite = 0;                                 //Default Value Of Rotation
+int BackLight = 12;                                  //PWM/BackLight PIN of Display 
+int PWM = 0;                                         //Default Value Of Brightness
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
@@ -82,11 +75,14 @@ void setup() {
   tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
   textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
+  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
 //==========================================================================================//
 void loop(){
+  Brightness = map(PWM, -3, 3, 1, 255);
+  analogWrite(BackLight, Brightness);
   switch (currPage){
     case ROOT_MENU:    page_RootMenu(); break;
     case SUB_MENU1:    page_SubMenu1(); break;
@@ -155,13 +151,9 @@ void page_RootMenu(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        }
+    if (LEFT->clicked()) {}
 //======================ACCEPT BUTTON HANDLING==========================//
         if (ACCEPT->clicked()) {
         switch (root_pos) {
@@ -226,13 +218,9 @@ void page_SubMenu1(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        }   
+    if (LEFT->clicked()) {}
 //=====================ACCEPT BUTTON HANDLING===========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
@@ -300,13 +288,9 @@ void page_SubMenu2(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        } 
+    if (LEFT->clicked()) {}
 //=====================ACCEPT BUTTON HANDLING==========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
@@ -370,13 +354,9 @@ void page_SubMenu3(void){
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        }  
+    if (LEFT->clicked()) {}
 //========================ACCEPT BUTTON HANDLING=======================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
@@ -453,13 +433,9 @@ if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
   updateDisplay = true;
 }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        }
+    if (LEFT->clicked()) {}
 //========================ACCEPT BUTTON HANDLING========================//
 if (ACCEPT->clicked()) {
   if (sub_posA == 0){
@@ -482,7 +458,7 @@ if (ACCEPT->clicked()) {
 //=========================================================================================================//
 void page_MyMenu3(void){
   boolean staticElementsDrawn = false;
-while (currPage == MY_MENU3){
+  while (currPage == MY_MENU3){
     if (!staticElementsDrawn) {
     StatusBar ("INFORMATION");
     staticElementsDrawn = true;
@@ -518,13 +494,9 @@ while (currPage == MY_MENU3){
           updateDisplay = true;
         }
 //======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {
-
-        }
+     if (RIGHT->clicked()) {}
 //======================LEFT button handling============================//
-    if (LEFT->clicked()) {
-
-        }
+    if (LEFT->clicked()) {}
 //==========================ACCEPT BUTTON HANDLING======================//
         if (ACCEPT->clicked()) {
           updateDisplay = true; //update just Display
@@ -560,21 +532,26 @@ void page_MyMenu11(void){
   if (updateDisplay) { 
   tft.fillRect(0, 28, 150, 98, MenuBlock);
   MenuItems ("BACK", 30, 1, sub_pos);
-  MenuItems ("ROTATION : ", 42, 2, sub_pos);
-  tft.setCursor(54, 54);
+  MenuItems ("ROTATION: ", 42, 2, sub_pos);
+  tft.setCursor(90,42);
   if (sub_pos == 2){
     tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.print("-< ");
     tft.print(EPPROMwrite);
-    tft.print(" >+");
   } else {
     tft.setTextColor(MenuItemTX, MenuBlock);
-    tft.print("<< ");
     tft.print(EPPROMwrite);
-    tft.print(" >>");
   }
-  MenuItems ("SAVE SETTING", 102, 3, sub_pos);
-  MenuItems ("REBOOT", 114, 4, sub_pos);
+  MenuItems ("BRIGHTNESS: ", 54, 3, sub_pos);
+  tft.setCursor(98,54);
+  if (sub_pos == 3){
+    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
+    tft.print(PWM);
+  } else {
+    tft.setTextColor(MenuItemTX, MenuBlock);
+    tft.print(PWM);
+  }
+  MenuItems ("SAVE SETTING", 102, 4, sub_pos);
+  MenuItems ("REBOOT", 114, 5, sub_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -587,33 +564,75 @@ void page_MyMenu11(void){
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =4;
+        sub_pos =5;
       }
       updateDisplay = true;
         }
 //=========================DOWN button handling===========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
-      if (sub_pos > 4) {
+      if (sub_pos > 5) {
         sub_pos = 1;
       }
       updateDisplay = true;  
         }
 //======================RIGHT button handling===========================//
-     if (sub_pos == 2 && RIGHT->clicked()) {
-      EPPROMwrite++;
-      if (EPPROMwrite > 3) {
-        EPPROMwrite = 0;
+    if (RIGHT->clicked()) {
+        switch (sub_pos) {
+        case 1:
+          //   
+          break;
+        case 2:
+        EPPROMwrite++;
+          if (EPPROMwrite > 3) {
+             EPPROMwrite = 0;
+            }
+          updateDisplay = true;
+          break;
+        case 3:
+          if (PWM < 3) {
+             PWM ++;
+            }
+            Brightness = map(PWM, -3, 3, 1, 255);
+            analogWrite(BackLight, Brightness);
+            updateDisplay = true;
+          break;
+        case 4:
+          //
+          break; 
+        case 5:
+          //
+          break;   
       }
-      updateDisplay = true;  
-     }
+    }
 //======================LEFT button handling============================//
-    if (sub_pos == 2 && LEFT->clicked()) {
-      EPPROMwrite--;
-      if (EPPROMwrite < 0) {
-        EPPROMwrite =3;
+    if (LEFT->clicked()) {
+        switch (sub_pos) {
+        case 1:
+          //   
+          break;
+        case 2:
+        EPPROMwrite--;
+          if (EPPROMwrite < 0) {
+             EPPROMwrite = 3;
+            }
+            updateDisplay = true;
+          break;
+        case 3:
+          if (PWM > -3) {
+             PWM --;
+            }
+            Brightness = map(PWM, -3, 3, 1, 255);
+            analogWrite(BackLight, Brightness);
+            updateDisplay = true;
+          break;
+        case 4:
+          //
+          break; 
+        case 5:
+          //
+          break;   
       }
-      updateDisplay = true;  
     }
 //=====================ACCEPT BUTTON HANDLING===========================//
         if (ACCEPT->clicked()) {
@@ -623,12 +642,15 @@ void page_MyMenu11(void){
           break;
         case 2:
           //SETTINGS NEED TO CHANGE                             
-          break;    
+          break;
         case 3:
+          //SETTINGS NEED TO CHANGE                             
+          break;
+        case 4:
           EEPROM.write(0, EPPROMwrite);
           EEPROM.commit();
           break; 
-        case 4:
+        case 5:
           ESP.restart();
           break;   
       }
