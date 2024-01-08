@@ -50,7 +50,7 @@ enum pageType currPage = ROOT_MENU;                  //holds which page is curre
 int StatusBarbg = 0x10D1;                            //Back Ground Of Status Bar
 int StatusBarTX = 0xFFFF;                            //Status Bar Text Color
 int MenuBlock = TFT_BLACK;                           //Back Ground Colour of Menu's Block 
-int Cursor = 0xF81F;                                 //Cursor Color
+int Cursor = TFT_WHITE;                              //Cursor Color
 int MenuItemTX = TFT_WHITE;                          //Menu's Text Color
 int SelectedMenuTX = TFT_BLACK;                      //Menu's Text When Selected 
 int SelectedMenuBG = 0xFFE4;                         //Back Ground When Menu is selected
@@ -672,7 +672,19 @@ void StatusBar (const char* Status){
     tft.setCursor(10, 10);
     tft.setTextColor(StatusBarTX, StatusBarbg);
     tft.print(Status);
-}
+      if(rotation == 0 || rotation == 2){
+//        tft.drawRoundRect(85, 7, 37, 13, 2, StatusBarTX);
+        tft.drawFastVLine(88, 8, 13, StatusBarTX);
+        tft.setCursor(92, 10);
+        tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
+      } else {
+//        tft.drawRoundRect(116, 7, 37, 13, 2, StatusBarTX);
+        tft.drawFastVLine(119, 8, 13, StatusBarTX);
+        tft.setCursor(123, 10);
+        tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
+      }
+ }
+
 //=========================================================================================================//
 void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
   tft.setCursor(0, p1);
