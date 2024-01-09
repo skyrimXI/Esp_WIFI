@@ -44,9 +44,8 @@ int Brightness;
 //=======================================================================================//
 //||                                   UI Setting                                      ||//
 //=======================================================================================//
-enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};   //SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;                  //holds which page is currently selected
-
+enum pageType {SPLASH_SCREEN, ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};//SETUP THE enum with all the menu page option
+enum pageType currPage = ROOT_MENU;               //holds which page is currently selected
 int StatusBarbg = 0x10D1;                            //Back Ground Of Status Bar
 int StatusBarTX = 0xFFFF;                            //Status Bar Text Color
 int MenuBlock = TFT_BLACK;                           //Back Ground Colour of Menu's Block 
@@ -63,47 +62,60 @@ int PWM = 0;                                         //Default Value Of Brightne
 //========================================================================================//
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
+  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
+  Brightness = map(PWM, -3, 3, 1, 255);
+  analogWrite(BackLight, Brightness);
   EEPROM.begin(512);                                 //Initialization Of EPPROM
   rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
   configureButtons(rotation);                        //This is a function For Button SetUp
   tft.begin();                                       //Initialize TFT
   tft.setRotation(rotation);                         //Rotation of tft (0/1/2/3)
-  tft.fillScreen(TFT_BLACK);                         //Clear tft by fill Color Black
+  tft.fillScreen(MenuBlock);                         //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
   tft.setTextWrap(false);                            //Text Wrapping (true/false)
   tftHight = tft.height();                           //Set Tft Hight Dynamically according to Oriantation
   tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
   textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
-  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
 //==========================================================================================//
 void loop(){
-  Brightness = map(PWM, -3, 3, 1, 255);
-  analogWrite(BackLight, Brightness);
   switch (currPage){
-    case ROOT_MENU:    page_RootMenu(); break;
-    case SUB_MENU1:    page_SubMenu1(); break;
-    case SUB_MENU2:    page_SubMenu2(); break;
-    case SUB_MENU3:    page_SubMenu3(); break;
-    case SCAN_MENU:    page_ScanMenu(); break;
-    case TEST_MENU1:   page_TestMenu1(); break;
-    case TEST_MENU2:   page_TestMenu2(); break;
-    case MY_MENU1:     page_MyMenu1(); break;
-    case MY_MENU2:     page_MyMenu2(); break;
-    case MY_MENU3:     page_MyMenu3(); break;
-    case MY_MENU4:     page_MyMenu4(); break;
-    case MY_MENU5:     page_MyMenu5(); break;
-    case MY_MENU6:     page_MyMenu6(); break;
-    case MY_MENU7:     page_MyMenu7(); break;
-    case MY_MENU8:     page_MyMenu8(); break;
-    case MY_MENU9:     page_MyMenu9(); break;
-    case MY_MENU10:    page_MyMenu10(); break;
-    case MY_MENU11:    page_MyMenu11(); break;
+    case SPLASH_SCREEN:   page_SplashScreen(); break;   //Splash Screen
+    case ROOT_MENU:       page_RootMenu(); break;       //Main/Root Menu
+    case SUB_MENU1:       page_SubMenu1(); break;       //Menus For Scan Option
+    case SUB_MENU2:       page_SubMenu2(); break;       //Menus Sniffer Option
+    case SUB_MENU3:       page_SubMenu3(); break;       //Menus Attack Option
+    case SCAN_MENU:       page_ScanMenu(); break;       //
+    case TEST_MENU1:      page_TestMenu1(); break;      //
+    case TEST_MENU2:      page_TestMenu2(); break;      //
+    case MY_MENU1:        page_MyMenu1(); break;        //
+    case MY_MENU2:        page_MyMenu2(); break;        //List Of SSID
+    case MY_MENU3:        page_MyMenu3(); break;        //Information Page
+    case MY_MENU4:        page_MyMenu4(); break;        //
+    case MY_MENU5:        page_MyMenu5(); break;        //
+    case MY_MENU6:        page_MyMenu6(); break;        //
+    case MY_MENU7:        page_MyMenu7(); break;        //
+    case MY_MENU8:        page_MyMenu8(); break;        //
+    case MY_MENU9:        page_MyMenu9(); break;        //
+    case MY_MENU10:       page_MyMenu10(); break;       //
+    case MY_MENU11:       page_MyMenu11(); break;       //Setting Page
   }
 }
+//=========================================================================================//
+//||                             SPLASH_SCREEN = Splash Screen                           ||// 
+//=========================================================================================//
+void page_SplashScreen(void){
+  
+  }
+
+
+
+
+
+
 //=========================================================================================//
 //||                                    ROOT_MENU = MAIN_MENU                            ||// 
 //=========================================================================================//             
@@ -134,7 +146,7 @@ void page_RootMenu(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=======================UP button handling========================//
+//=======================UP button handling=============================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       root_pos--;
       if (root_pos < 1) {
@@ -142,7 +154,7 @@ void page_RootMenu(void){
       }
       updateDisplay = true;
         }
-//=========================DOWN button handling===========================//
+//=========================DOWN button handling==========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       root_pos++;
       if (root_pos > 8) {
@@ -720,34 +732,15 @@ void scanNetworks() {
 }
 //=========================================================================================================//
 void configureButtons(int rotation) {
-    switch (rotation) {
-    case 0:
-      UP = new ButtonPullup(32);
-      DOWN = new ButtonPullup(33);
-      RIGHT = new ButtonPullup(14);
-      LEFT = new ButtonPullup(27);
-      ACCEPT = new ButtonPullup(25);
-      break;
-    case 1:
-      UP = new ButtonPullup(14);
-      DOWN = new ButtonPullup(27);
-      RIGHT = new ButtonPullup(33);
-      LEFT = new ButtonPullup(32);
-      ACCEPT = new ButtonPullup(25);
-      break;
-    case 2:
-      UP = new ButtonPullup(33);
-      DOWN = new ButtonPullup(32);
-      RIGHT = new ButtonPullup(27);
-      LEFT = new ButtonPullup(14);
-      ACCEPT = new ButtonPullup(25);
-      break;
-    case 3:
-      UP = new ButtonPullup(27);
-      DOWN = new ButtonPullup(14);
-      RIGHT = new ButtonPullup(32);
-      LEFT = new ButtonPullup(33);
-      ACCEPT = new ButtonPullup(25);
-      break;
-  }
+    int buttonPins[][4] = {
+        {32, 33, 14, 27},
+        {14, 27, 33, 32},
+        {33, 32, 27, 14},
+        {27, 14, 32, 33}
+    };
+    UP = new ButtonPullup(buttonPins[rotation][0]);
+    DOWN = new ButtonPullup(buttonPins[rotation][1]);
+    RIGHT = new ButtonPullup(buttonPins[rotation][2]);
+    LEFT = new ButtonPullup(buttonPins[rotation][3]);
+    ACCEPT = new ButtonPullup(25); // Assuming ACCEPT has a fixed pin, in this case, 25
 }
