@@ -44,7 +44,7 @@ int Brightness;
 //=======================================================================================//
 //||                                   UI Setting                                      ||//
 //=======================================================================================//
-enum pageType {SPLASH_SCREEN, ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};//SETUP THE enum with all the menu page option
+enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};//SETUP THE enum with all the menu page option
 enum pageType currPage = ROOT_MENU;               //holds which page is currently selected
 int StatusBarbg = 0x10D1;                            //Back Ground Of Status Bar
 int StatusBarTX = 0xFFFF;                            //Status Bar Text Color
@@ -54,7 +54,6 @@ int MenuItemTX = TFT_WHITE;                          //Menu's Text Color
 int SelectedMenuTX = TFT_BLACK;                      //Menu's Text When Selected 
 int SelectedMenuBG = 0xFFE4;                         //Back Ground When Menu is selected
 uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
-int EPPROMwrite = 0;                                 //Default Value Of Rotation
 int BackLight = 12;                                  //PWM/BackLight PIN of Display 
 int PWM = 0;                                         //Default Value Of Brightness
 //========================================================================================//
@@ -63,12 +62,12 @@ int PWM = 0;                                         //Default Value Of Brightne
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
   pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
-  Brightness = map(PWM, -3, 3, 1, 255);
-  analogWrite(BackLight, Brightness);
+  Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness Initially
+  analogWrite(BackLight, Brightness);                //Turn ON display BackLight
+  tft.begin();                                       //Initialize TFT
   EEPROM.begin(512);                                 //Initialization Of EPPROM
   rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
   configureButtons(rotation);                        //This is a function For Button SetUp
-  tft.begin();                                       //Initialize TFT
   tft.setRotation(rotation);                         //Rotation of tft (0/1/2/3)
   tft.fillScreen(MenuBlock);                         //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
@@ -83,7 +82,6 @@ void setup() {
 //==========================================================================================//
 void loop(){
   switch (currPage){
-    case SPLASH_SCREEN:   page_SplashScreen(); break;   //Splash Screen
     case ROOT_MENU:       page_RootMenu(); break;       //Main/Root Menu
     case SUB_MENU1:       page_SubMenu1(); break;       //Menus For Scan Option
     case SUB_MENU2:       page_SubMenu2(); break;       //Menus Sniffer Option
@@ -104,18 +102,6 @@ void loop(){
     case MY_MENU11:       page_MyMenu11(); break;       //Setting Page
   }
 }
-//=========================================================================================//
-//||                             SPLASH_SCREEN = Splash Screen                           ||// 
-//=========================================================================================//
-void page_SplashScreen(void){
-  
-  }
-
-
-
-
-
-
 //=========================================================================================//
 //||                                    ROOT_MENU = MAIN_MENU                            ||// 
 //=========================================================================================//             
@@ -548,10 +534,10 @@ void page_MyMenu11(void){
   tft.setCursor(90,42);
   if (sub_pos == 2){
     tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
-    tft.print(EPPROMwrite);
+    tft.print(rotation);
   } else {
     tft.setTextColor(MenuItemTX, MenuBlock);
-    tft.print(EPPROMwrite);
+    tft.print(rotation);
   }
   MenuItems ("BRIGHTNESS: ", 54, 3, sub_pos);
   tft.setCursor(98,54);
@@ -595,9 +581,9 @@ void page_MyMenu11(void){
           //   
           break;
         case 2:
-        EPPROMwrite++;
-          if (EPPROMwrite > 3) {
-             EPPROMwrite = 0;
+        rotation++;
+          if (rotation > 3) {
+             rotation = 0;
             }
           updateDisplay = true;
           break;
@@ -605,7 +591,7 @@ void page_MyMenu11(void){
           if (PWM < 3) {
              PWM ++;
             }
-            Brightness = map(PWM, -3, 3, 1, 255);
+            Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
           break;
@@ -624,9 +610,9 @@ void page_MyMenu11(void){
           //   
           break;
         case 2:
-        EPPROMwrite--;
-          if (EPPROMwrite < 0) {
-             EPPROMwrite = 3;
+        rotation--;
+          if (rotation < 0) {
+             rotation = 3;
             }
             updateDisplay = true;
           break;
@@ -634,7 +620,7 @@ void page_MyMenu11(void){
           if (PWM > -3) {
              PWM --;
             }
-            Brightness = map(PWM, -3, 3, 1, 255);
+            Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
           break;
@@ -659,7 +645,7 @@ void page_MyMenu11(void){
           //SETTINGS NEED TO CHANGE                             
           break;
         case 4:
-          EEPROM.write(0, EPPROMwrite);
+          EEPROM.write(0, rotation);
           EEPROM.commit();
           break; 
         case 5:
@@ -678,39 +664,26 @@ void page_MyMenu11(void){
 //=========================================================================================================//
 //||                                        CUSTOM FUNCTION                                             ||// 
 //=========================================================================================================//
-void StatusBar (const char* Status){
-    tft.fillScreen(TFT_BLACK);
-    tft.fillRoundRect(5, 5, tftWidth - 10, 20, 2, StatusBarbg);
-    tft.setCursor(10, 10);
-    tft.setTextColor(StatusBarTX, StatusBarbg);
-    tft.print(Status);
-      if(rotation == 0 || rotation == 2){
-//        tft.drawRoundRect(85, 7, 37, 13, 2, StatusBarTX);
-        tft.drawFastVLine(88, 8, 13, StatusBarTX);
-        tft.setCursor(92, 10);
-        tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
-      } else {
-//        tft.drawRoundRect(116, 7, 37, 13, 2, StatusBarTX);
-        tft.drawFastVLine(119, 8, 13, StatusBarTX);
-        tft.setCursor(123, 10);
-        tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
-      }
- }
-
+void StatusBar(const char* Status) {
+  tft.fillScreen(MenuBlock);
+  tft.fillRoundRect(5, 5, tftWidth - 10, 20, 2, StatusBarbg);
+  tft.setCursor(10, 10);
+  tft.setTextColor(StatusBarTX, StatusBarbg);
+  tft.print(Status);
+  int vLineX = (rotation == 0 || rotation == 2) ? 88 : 119;
+  tft.drawFastVLine(vLineX, 8, 13, StatusBarTX);
+  int cursorX = (rotation == 0 || rotation == 2) ? 92 : 123;
+  tft.setCursor(cursorX, 10);
+  tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
+}
 //=========================================================================================================//
-void MenuItems (const String& Item, uint8_t p1, uint8_t p2, uint8_t p3){
+void MenuItems(const String& Item, uint8_t p1, uint8_t p2, uint8_t p3) {
   tft.setCursor(0, p1);
-  if (p2 == p3) {
-    tft.setTextColor(Cursor, MenuBlock);
-    tft.print("|>> ");
-    tft.fillRoundRect(22, p1-1, tftWidth - 40, 10, 2, SelectedMenuBG);
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);  
-    tft.println(Item);
-    } else {
-      tft.setTextColor(MenuItemTX, MenuBlock);
-      tft.print("     ");
-      tft.print(Item);
-    }
+  tft.setTextColor((p2 == p3) ? Cursor : MenuItemTX, MenuBlock);
+  tft.print((p2 == p3) ? " >> " : "     ");
+  tft.fillRoundRect(22, p1 - 2, tftWidth - 40, 11, 2, (p2 == p3) ? SelectedMenuBG : MenuBlock);
+  tft.setTextColor((p2 == p3) ? SelectedMenuTX : MenuItemTX, (p2 == p3) ? SelectedMenuBG : MenuBlock);
+  tft.println(Item);
 }
 //=========================================================================================================//
 void scanNetworks() {
