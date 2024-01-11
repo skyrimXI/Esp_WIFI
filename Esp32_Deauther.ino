@@ -41,35 +41,44 @@ uint8_t tftWidth;
 uint8_t textHight;
 int rotation;
 int Brightness;
+int Themes;
 //=======================================================================================//
 //||                                   UI Setting                                      ||//
 //=======================================================================================//
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};//SETUP THE enum with all the menu page option
-enum pageType currPage = ROOT_MENU;               //holds which page is currently selected
-int StatusBarbg = 0x10D1;                            //Back Ground Of Status Bar
-int StatusBarTX = 0xFFFF;                            //Status Bar Text Color
-int MenuBlock = TFT_BLACK;                           //Back Ground Colour of Menu's Block 
-int Cursor = TFT_WHITE;                              //Cursor Color
-int MenuItemTX = TFT_WHITE;                          //Menu's Text Color
-int SelectedMenuTX = TFT_BLACK;                      //Menu's Text When Selected 
-int SelectedMenuBG = 0xFFE4;                         //Back Ground When Menu is selected
+enum pageType currPage = ROOT_MENU;              //holds which page is currently selected
+uint16_t colors[][5] = {
+// column---column---column---column--------------------ROW----------------------------------------------------------
+//   0        1       2         3       4
+// DARK     LIGHT   Light1    DARK1
+  {0x10D1, 0x19E7,  0xFFFF,  0x0000,  0x4A8A},       //  0    StatusBarbg = Back Ground Of Status Bar
+  {0xFFFF, 0xFFFF,  0x0000,  0xFFFF,  0x2CF2},       //  1    StatusBarTX = Status Bar Text Color
+  {0x0000, 0xFFFF,  0x19E7,  0x10D1,  0x4242},       //  2    BackGround = Back Ground Colour
+  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0xFEA0},       //  3    Cursor = Cursor Color
+  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0xB4B4},       //  4    MenuItemTX = Menu's Text Color
+  {0x0000, 0xD69A,  0xD69A,  0x0000,  0xDB28},       //  5    SelectedMenuTX = Menu's Text When Selected
+  {0xFFE4, 0x8208,  0x8208,  0xFFE4,  0xF18A}        //  6    SelectedMenuBG = Back Ground When Menu is selected
+};
+//------------------------------------------------------------------------------------------------------------------
 uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
 int BackLight = 12;                                  //PWM/BackLight PIN of Display 
 int PWM = 0;                                         //Default Value Of Brightness
+int MaxTheme = sizeof(colors[0])/sizeof(colors[0][0]) - 1;
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
   pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
-  Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness Initially
-  analogWrite(BackLight, Brightness);                //Turn ON display BackLight
   tft.begin();                                       //Initialize TFT
   EEPROM.begin(512);                                 //Initialization Of EPPROM
+  Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness According to Brightness Value
+  analogWrite(BackLight, Brightness);                //initilize BackLight according to Brightness Value
   rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
-  configureButtons(rotation);                        //This is a function For Button SetUp
+  Themes = EEPROM.read(8);                           //Read Value stoted From "8" this Address of EEPROM
+  configureButtons(rotation);                        //Initialization of Buttons
   tft.setRotation(rotation);                         //Rotation of tft (0/1/2/3)
-  tft.fillScreen(MenuBlock);                         //Clear tft by fill Color Black
+  tft.fillScreen(colors[2][Themes]);                 //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
   tft.setTextWrap(false);                            //Text Wrapping (true/false)
   tftHight = tft.height();                           //Set Tft Hight Dynamically according to Oriantation
@@ -115,7 +124,7 @@ void page_RootMenu(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) {
-  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
   MenuItems ("SCAN", 30, 1, root_pos);
   MenuItems ("SNIFFER", 42, 2, root_pos);
   MenuItems ("ATTACKs", 54, 3, root_pos);
@@ -187,7 +196,7 @@ void page_SubMenu1(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
   MenuItems ("BACK", 30, 1, sub_pos);
   MenuItems ("SCAN FOR APs", 42, 2, sub_pos);
   MenuItems ("SCAN STATIONs", 54, 3, sub_pos);
@@ -255,7 +264,7 @@ void page_SubMenu2(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
   MenuItems ("BACK", 30, 1, sub_pos);
   MenuItems ("BEACON SNIFF", 42, 2, sub_pos);
   MenuItems ("PROBE SNIFF", 54, 3, sub_pos);
@@ -320,7 +329,7 @@ void page_SubMenu3(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
   MenuItems ("BACK", 30, 1, sub_pos);
   MenuItems ("DEAUTH", 42, 2, sub_pos);
   MenuItems ("PHISHING", 54, 3, sub_pos);
@@ -395,11 +404,11 @@ void page_MyMenu2(void){
     staticElementsDrawn = true;
   }
     if (updateDisplay) {
-      tft.fillRect(0, 28, 160, 98, MenuBlock);
+      tft.fillRect(0, 28, 160, 98, colors[2][Themes]);
       MenuItems("BACK", 30, 0, sub_posA);
   if (scannedNetworks.size() == 0) {
     tft.setCursor(5, 60);
-    tft.setTextColor(0xE800, MenuBlock);
+    tft.setTextColor(0xE800, colors[2][Themes]);
     tft.println("No Network Found");
   } else {
     for (int i = 0; i < scannedNetworks.size(); i++) {
@@ -462,8 +471,8 @@ void page_MyMenu3(void){
     staticElementsDrawn = true;
   }
     if (updateDisplay){
-      tft.fillRect(0, 30, 160, 98, MenuBlock);
-      tft.setTextColor(MenuItemTX, MenuBlock);
+      tft.fillRect(0, 30, 160, 98, colors[2][Themes]);
+      tft.setTextColor(colors[4][Themes], colors[2][Themes]);
       tft.setCursor(8, 30);
       tft.println("SSID: " + scannedNetworks.get(sub_posA - 1).ssid);
       tft.setCursor(8, 42);
@@ -528,28 +537,37 @@ void page_MyMenu11(void){
     staticElementsDrawn = true; 
   }
   if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, MenuBlock);
+  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
   MenuItems ("BACK", 30, 1, sub_pos);
   MenuItems ("ROTATION: ", 42, 2, sub_pos);
   tft.setCursor(90,42);
   if (sub_pos == 2){
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
+    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
     tft.print(rotation);
   } else {
-    tft.setTextColor(MenuItemTX, MenuBlock);
+    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
     tft.print(rotation);
   }
   MenuItems ("BRIGHTNESS: ", 54, 3, sub_pos);
   tft.setCursor(98,54);
   if (sub_pos == 3){
-    tft.setTextColor(SelectedMenuTX, SelectedMenuBG);
+    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
     tft.print(PWM);
   } else {
-    tft.setTextColor(MenuItemTX, MenuBlock);
+    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
     tft.print(PWM);
   }
-  MenuItems ("SAVE SETTING", 102, 4, sub_pos);
-  MenuItems ("REBOOT", 114, 5, sub_pos);
+    MenuItems ("THEMES: ", 66, 4, sub_pos);
+  tft.setCursor(76,66);
+  if (sub_pos == 4){
+    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
+    tft.print(Themes);
+  } else {
+    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
+    tft.print(Themes);
+  }
+  MenuItems ("SAVE SETTING", 102, 5, sub_pos);
+  MenuItems ("REBOOT", 114, 6, sub_pos);
   updateDisplay = false;
     }
     tft.startWrite();
@@ -562,14 +580,14 @@ void page_MyMenu11(void){
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =5;
+        sub_pos =6;
       }
       updateDisplay = true;
         }
 //=========================DOWN button handling===========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
-      if (sub_pos > 5) {
+      if (sub_pos > 6) {
         sub_pos = 1;
       }
       updateDisplay = true;  
@@ -577,9 +595,7 @@ void page_MyMenu11(void){
 //======================RIGHT button handling===========================//
     if (RIGHT->clicked()) {
         switch (sub_pos) {
-        case 1:
-          //   
-          break;
+        case 1:          break;
         case 2:
         rotation++;
           if (rotation > 3) {
@@ -589,26 +605,27 @@ void page_MyMenu11(void){
           break;
         case 3:
           if (PWM < 3) {
-             PWM ++;
-            }
+            PWM ++;
             Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
+            }
           break;
         case 4:
-          //
-          break; 
-        case 5:
-          //
-          break;   
+        if (Themes < MaxTheme){
+          Themes ++;
+          staticElementsDrawn = false;
+          updateDisplay = true;
+        }
+         break;
+        case 5:          break;
+        case 6:          break;
       }
     }
 //======================LEFT button handling============================//
     if (LEFT->clicked()) {
         switch (sub_pos) {
-        case 1:
-          //   
-          break;
+        case 1:          break;
         case 2:
         rotation--;
           if (rotation < 0) {
@@ -618,39 +635,38 @@ void page_MyMenu11(void){
           break;
         case 3:
           if (PWM > -3) {
-             PWM --;
-            }
+            PWM --;
             Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
+            }
           break;
         case 4:
-          //
-          break; 
-        case 5:
-          //
-          break;   
+        if (Themes > 0){
+        Themes --;
+        staticElementsDrawn = false;
+        updateDisplay = true;
+        }
+        break;
+        case 5:          break;
+        case 6:          break;
       }
     }
 //=====================ACCEPT BUTTON HANDLING===========================//
         if (ACCEPT->clicked()) {
         switch (sub_pos) {
-        case 1:
-          currPage = ROOT_MENU;   
-          break;
-        case 2:
-          //SETTINGS NEED TO CHANGE                             
-          break;
-        case 3:
-          //SETTINGS NEED TO CHANGE                             
-          break;
-        case 4:
-          EEPROM.write(0, rotation);
-          EEPROM.commit();
-          break; 
+        case 1: currPage = ROOT_MENU;                       break;
+        case 2:                                             break;
+        case 3:                                             break;
+        case 4:                                             break;
         case 5:
-          ESP.restart();
-          break;   
+        EEPROM.write(0, rotation);
+        EEPROM.write(8, Themes);
+        EEPROM.commit();
+        break;
+        case 6:
+        ESP.restart();
+        break;  
       }
       updateDisplay = true;
     }
@@ -665,13 +681,13 @@ void page_MyMenu11(void){
 //||                                        CUSTOM FUNCTION                                             ||// 
 //=========================================================================================================//
 void StatusBar(const char* Status) {
-  tft.fillScreen(MenuBlock);
-  tft.fillRoundRect(5, 5, tftWidth - 10, 20, 2, StatusBarbg);
+  tft.fillScreen(colors[2][Themes]);
+  tft.fillRoundRect(5, 5, tftWidth - 10, 20, 2, colors[0][Themes]);
   tft.setCursor(10, 10);
-  tft.setTextColor(StatusBarTX, StatusBarbg);
+  tft.setTextColor(colors[1][Themes], colors[0][Themes]);
   tft.print(Status);
   int vLineX = (rotation == 0 || rotation == 2) ? 88 : 119;
-  tft.drawFastVLine(vLineX, 8, 13, StatusBarTX);
+  tft.drawFastVLine(vLineX, 8, 13, colors[1][Themes]);
   int cursorX = (rotation == 0 || rotation == 2) ? 92 : 123;
   tft.setCursor(cursorX, 10);
   tft.printf("%.1f%%", (static_cast<float>(ESP.getFreeHeap()) / ESP.getHeapSize()) * 100);
@@ -679,10 +695,10 @@ void StatusBar(const char* Status) {
 //=========================================================================================================//
 void MenuItems(const String& Item, uint8_t p1, uint8_t p2, uint8_t p3) {
   tft.setCursor(0, p1);
-  tft.setTextColor((p2 == p3) ? Cursor : MenuItemTX, MenuBlock);
+  tft.setTextColor((p2 == p3) ? colors[3][Themes] : colors[4][Themes], colors[2][Themes]);
   tft.print((p2 == p3) ? " >> " : "     ");
-  tft.fillRoundRect(22, p1 - 2, tftWidth - 40, 11, 2, (p2 == p3) ? SelectedMenuBG : MenuBlock);
-  tft.setTextColor((p2 == p3) ? SelectedMenuTX : MenuItemTX, (p2 == p3) ? SelectedMenuBG : MenuBlock);
+  tft.fillRoundRect(22, p1 - 2, tftWidth - 40, 11, 2, (p2 == p3) ? colors[6][Themes] : colors[2][Themes]);
+  tft.setTextColor((p2 == p3) ? colors[5][Themes] : colors[4][Themes], (p2 == p3) ? colors[6][Themes] : colors[2][Themes]);
   tft.println(Item);
 }
 //=========================================================================================================//
