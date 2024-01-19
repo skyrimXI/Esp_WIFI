@@ -51,13 +51,13 @@ uint16_t colors[][5] = {
 // column---column---column---column--------------------ROW----------------------------------------------------------
 //   0        1       2         3       4
 // DARK     LIGHT   Light1    DARK1
-  {0x10D1, 0x19E7,  0xFFFF,  0x0000,  0x4A8A},       //  0    StatusBarbg = Back Ground Of Status Bar
-  {0xFFFF, 0xFFFF,  0x0000,  0xFFFF,  0x2CF2},       //  1    StatusBarTX = Status Bar Text Color
-  {0x0000, 0xFFFF,  0x19E7,  0x10D1,  0x4242},       //  2    BackGround = Back Ground Colour
-  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0xFEA0},       //  3    Cursor = Cursor Color
-  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0xB4B4},       //  4    MenuItemTX = Menu's Text Color
-  {0x0000, 0xD69A,  0xD69A,  0x0000,  0xDB28},       //  5    SelectedMenuTX = Menu's Text When Selected
-  {0xFFE4, 0x8208,  0x8208,  0xFFE4,  0xF18A}        //  6    SelectedMenuBG = Back Ground When Menu is selected
+  {0x10D1, 0x94BF,  0xFFFF,  0xFC00,  0x0000},       //  0    StatusBarbg = Back Ground Of Status Bar
+  {0xFFFF, 0x0000,  0x0000,  0xFFFF,  0xFFFF},       //  1    StatusBarTX = Status Bar Text Color
+  {0x0000, 0xFFFF,  0x0000,  0x4008,  0xFFE4},       //  2    BackGround = Back Ground Colour
+  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0x0210},       //  3    Cursor = Cursor Color
+  {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0x0000},       //  4    MenuItemTX = Menu's Text Color
+  {0x0000, 0xD69A,  0xD69A,  0x0000,  0xFFFF},       //  5    SelectedMenuTX = Menu's Text When Selected
+  {0xFFE4, 0x8208,  0x8208,  0xFFFF,  0x801F}        //  6    SelectedMenuBG = Back Ground When Menu is selected
 };
 //------------------------------------------------------------------------------------------------------------------
 uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
@@ -70,7 +70,7 @@ int MaxTheme = sizeof(colors[0])/sizeof(colors[0][0]) - 1;
 void setup() {
   Serial.begin(115200);                              //SERIAL SETUP
   pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
-  tft.begin();                                       //Initialize TFT
+  tft.init();                                        //Initialize TFT
   EEPROM.begin(512);                                 //Initialization Of EPPROM
   Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness According to Brightness Value
   analogWrite(BackLight, Brightness);                //initilize BackLight according to Brightness Value
