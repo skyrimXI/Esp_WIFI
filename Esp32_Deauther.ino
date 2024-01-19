@@ -24,12 +24,12 @@ TFT_eSPI tft;
 //||                                Global Variables                                 ||//
 //=====================================================================================//
 class NetworkData {
-public:
-  String ssid;
-  String mac;
-  int rssi;
-  int channel;
-  int encryptionType;
+  public:
+    String ssid;
+    String mac;
+    int rssi;
+    int channel;
+    int encryptionType;
 };
 SimpleList<NetworkData> scannedNetworks;
 uint8_t root_pos = 1;
@@ -48,9 +48,9 @@ int Themes;
 enum pageType {ROOT_MENU, SUB_MENU1, SUB_MENU2, SUB_MENU3, SCAN_MENU, TEST_MENU1, TEST_MENU2, MY_MENU1, MY_MENU2, MY_MENU3, MY_MENU4, MY_MENU5, MY_MENU6, MY_MENU7, MY_MENU8, MY_MENU9, MY_MENU10, MY_MENU11};//SETUP THE enum with all the menu page option
 enum pageType currPage = ROOT_MENU;              //holds which page is currently selected
 uint16_t colors[][5] = {
-// column---column---column---column--------------------ROW----------------------------------------------------------
-//   0        1       2         3       4
-// DARK     LIGHT   Light1    DARK1
+  // column---column---column---column--------------------ROW----------------------------------------------------------
+  //   0        1       2         3       4
+  // DARK     LIGHT   Light1    DARK1
   {0x10D1, 0x94BF,  0xFFFF,  0xFC00,  0x0000},       //  0    StatusBarbg = Back Ground Of Status Bar
   {0xFFFF, 0x0000,  0x0000,  0xFFFF,  0xFFFF},       //  1    StatusBarTX = Status Bar Text Color
   {0x0000, 0xFFFF,  0x0000,  0x4008,  0xFFE4},       //  2    BackGround = Back Ground Colour
@@ -61,9 +61,9 @@ uint16_t colors[][5] = {
 };
 //------------------------------------------------------------------------------------------------------------------
 uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
-int BackLight = 12;                                  //PWM/BackLight PIN of Display 
+int BackLight = 12;                                  //PWM/BackLight PIN of Display
 int PWM = 0;                                         //Default Value Of Brightness
-int MaxTheme = sizeof(colors[0])/sizeof(colors[0][0]) - 1;
+int MaxTheme = sizeof(colors[0]) / sizeof(colors[0][0]) - 1;
 //========================================================================================//
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
@@ -85,12 +85,12 @@ void setup() {
   tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
   textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
-  }
+}
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
 //==========================================================================================//
-void loop(){
-  switch (currPage){
+void loop() {
+  switch (currPage) {
     case ROOT_MENU:       page_RootMenu(); break;       //Main/Root Menu
     case SUB_MENU1:       page_SubMenu1(); break;       //Menus For Scan Option
     case SUB_MENU2:       page_SubMenu2(); break;       //Menus Sniffer Option
@@ -112,28 +112,28 @@ void loop(){
   }
 }
 //=========================================================================================//
-//||                                    ROOT_MENU = MAIN_MENU                            ||// 
-//=========================================================================================//             
-void page_RootMenu(void){
+//||                                    ROOT_MENU = MAIN_MENU                            ||//
+//=========================================================================================//
+void page_RootMenu(void) {
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-    while (currPage == ROOT_MENU) {
+  while (currPage == ROOT_MENU) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    StatusBar ("MENUs");
-    staticElementsDrawn = true; 
-  }
-  if (updateDisplay) {
-  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-  MenuItems ("SCAN", 30, 1, root_pos);
-  MenuItems ("SNIFFER", 42, 2, root_pos);
-  MenuItems ("ATTACKs", 54, 3, root_pos);
-  MenuItems ("HOTSPOT", 66, 4, root_pos);
-  MenuItems ("WAR DRIVE", 78, 5, root_pos);
-  MenuItems ("PACKET MONITOR", 90, 6, root_pos);
-  MenuItems ("SIGNAL STRENTGH", 102, 7, root_pos);
-  MenuItems ("SETTING", 114, 8, root_pos);
-  updateDisplay = false;
+      StatusBar ("MENUs");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("SCAN", 30, 1, root_pos);
+      MenuItems ("SNIFFER", 42, 2, root_pos);
+      MenuItems ("ATTACKs", 54, 3, root_pos);
+      MenuItems ("MONITORING", 66, 4, root_pos);
+      MenuItems ("HOTSPOT", 78, 5, root_pos);
+      MenuItems ("IR REMOTE", 90, 6, root_pos);
+      MenuItems ("TEMP/CLOCK", 102, 7, root_pos);
+      MenuItems ("SETTING", 114, 8, root_pos);
+      updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -141,29 +141,29 @@ void page_RootMenu(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=======================UP button handling=============================//
+    //=======================UP button handling=============================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       root_pos--;
       if (root_pos < 1) {
-        root_pos =8;
+        root_pos = 8;
       }
       updateDisplay = true;
-        }
-//=========================DOWN button handling==========================//
+    }
+    //=========================DOWN button handling==========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       root_pos++;
       if (root_pos > 8) {
         root_pos = 1;
       }
-      updateDisplay = true;  
-        }
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {}
-//======================ACCEPT BUTTON HANDLING==========================//
-        if (ACCEPT->clicked()) {
-        switch (root_pos) {
+    //======================ACCEPT BUTTON HANDLING==========================//
+    if (ACCEPT->clicked()) {
+      switch (root_pos) {
         case 1: currPage = SUB_MENU1;   break;
         case 2: currPage = SUB_MENU2;   break;
         case 3: currPage = SUB_MENU3;   break;
@@ -175,32 +175,32 @@ void page_RootMenu(void){
       }
       updateDisplay = true;
     }
-      while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
     tft.endWrite();
 
-    delay(10);  
+    delay(10);
   }
 }
 //==============================================================================================//
-//||                                    Submenu1 = Scan option                                ||// 
+//||                                    Submenu1 = Scan option                                ||//
 //==============================================================================================//
-void page_SubMenu1(void){
+void page_SubMenu1(void) {
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-    while (currPage == SUB_MENU1) {
+  while (currPage == SUB_MENU1) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    StatusBar ("SCAN");
-    staticElementsDrawn = true; 
-  }
-  if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-  MenuItems ("BACK", 30, 1, sub_pos);
-  MenuItems ("SCAN FOR APs", 42, 2, sub_pos);
-  MenuItems ("SCAN STATIONs", 54, 3, sub_pos);
-  updateDisplay = false;
+      StatusBar ("SCAN");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("BACK", 30, 1, sub_pos);
+      MenuItems ("SCAN FOR APs", 42, 2, sub_pos);
+      MenuItems ("SCAN STATIONs", 54, 3, sub_pos);
+      updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -208,69 +208,69 @@ void page_SubMenu1(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//========================UP button handling================================//
+    //========================UP button handling================================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =3;
+        sub_pos = 3;
       }
       updateDisplay = true;
-        }
-//=========================DOWN button handling===========================//
+    }
+    //=========================DOWN button handling===========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 3) {
         sub_pos = 1;
       }
-      updateDisplay = true;  
-        }
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {}
-//=====================ACCEPT BUTTON HANDLING===========================//
-        if (ACCEPT->clicked()) {
-        switch (sub_pos) {
+    //=====================ACCEPT BUTTON HANDLING===========================//
+    if (ACCEPT->clicked()) {
+      switch (sub_pos) {
         case 1:
-          currPage = ROOT_MENU;   
+          currPage = ROOT_MENU;
           break;                                  //RETURN TO BACK MENU
         case 2:
           scanNetworks();
           currPage = MY_MENU2;                    //CODE TO SCAN FOR APs
-          break;    
+          break;
         case 3:
           currPage = MY_MENU3;                    //CODE TO SCAN FOR STATION
-          break;    
+          break;
       }
       updateDisplay = true;
     }
-      while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
     tft.endWrite();
-    delay(10);  
+    delay(10);
   }
 }
 //==================================================================================================//
-//||                                    Submenu2 = SNIFF OPTION                                   ||// 
+//||                                    Submenu2 = SNIFF OPTION                                   ||//
 //==================================================================================================//
-void page_SubMenu2(void){
+void page_SubMenu2(void) {
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-    while (currPage == SUB_MENU2) {
+  while (currPage == SUB_MENU2) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    StatusBar ("SNIFFER");
-    staticElementsDrawn = true; 
-  }
-  if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-  MenuItems ("BACK", 30, 1, sub_pos);
-  MenuItems ("BEACON SNIFF", 42, 2, sub_pos);
-  MenuItems ("PROBE SNIFF", 54, 3, sub_pos);
-  MenuItems ("PMKID SNIFF", 66, 4, sub_pos);
-  MenuItems ("RAW SNIFF", 78, 5, sub_pos);
-  updateDisplay = false;
+      StatusBar ("SNIFFER");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("BACK", 30, 1, sub_pos);
+      MenuItems ("BEACON SNIFF", 42, 2, sub_pos);
+      MenuItems ("PROBE SNIFF", 54, 3, sub_pos);
+      MenuItems ("PMKID SNIFF", 66, 4, sub_pos);
+      MenuItems ("RAW SNIFF", 78, 5, sub_pos);
+      updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -278,29 +278,29 @@ void page_SubMenu2(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//==========================UP button handling============================//
+    //==========================UP button handling============================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =5;
+        sub_pos = 5;
       }
       updateDisplay = true;
-        }
-//======================DOWN button handling=============================//
+    }
+    //======================DOWN button handling=============================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 5) {
         sub_pos = 1;
       }
-      updateDisplay = true;  
-        }
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {}
-//=====================ACCEPT BUTTON HANDLING==========================//
-        if (ACCEPT->clicked()) {
-        switch (sub_pos) {
+    //=====================ACCEPT BUTTON HANDLING==========================//
+    if (ACCEPT->clicked()) {
+      switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
         case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
         case 3: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PROBE FRAME
@@ -309,34 +309,34 @@ void page_SubMenu2(void){
       }
       updateDisplay = true;
     }
-      while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
     tft.endWrite();
-    delay(10);  
+    delay(10);
   }
 }
 //=========================================================================================================//
-//||                                    Submenu3 = ATTACKs OPTION                                        ||// 
+//||                                    Submenu3 = ATTACKs OPTION                                        ||//
 //=========================================================================================================//
-void page_SubMenu3(void){
+void page_SubMenu3(void) {
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
-    while (currPage == SUB_MENU3) {
+  while (currPage == SUB_MENU3) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    StatusBar ("ATTACKs");
-    staticElementsDrawn = true; 
-  }
-  if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-  MenuItems ("BACK", 30, 1, sub_pos);
-  MenuItems ("DEAUTH", 42, 2, sub_pos);
-  MenuItems ("PHISHING", 54, 3, sub_pos);
-  MenuItems ("MITM", 66, 4, sub_pos);
-  MenuItems ("BEACON FLOOD", 78, 5, sub_pos);
-  MenuItems ("PROBE FLOOD", 90, 6, sub_pos);
-  updateDisplay = false;
+      StatusBar ("ATTACKs");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("BACK", 30, 1, sub_pos);
+      MenuItems ("DEAUTH", 42, 2, sub_pos);
+      MenuItems ("PHISHING", 54, 3, sub_pos);
+      MenuItems ("MITM", 66, 4, sub_pos);
+      MenuItems ("BEACON FLOOD", 78, 5, sub_pos);
+      MenuItems ("PROBE FLOOD", 90, 6, sub_pos);
+      updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -344,29 +344,29 @@ void page_SubMenu3(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//==========================UP button handling============================//
+    //==========================UP button handling============================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =6;
+        sub_pos = 6;
       }
       updateDisplay = true;
-        }
-//============================DOWN button handling========================//
+    }
+    //============================DOWN button handling========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 6) {
         sub_pos = 1;
       }
-      updateDisplay = true;  
-        }
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {}
-//========================ACCEPT BUTTON HANDLING=======================//
-        if (ACCEPT->clicked()) {
-        switch (sub_pos) {
+    //========================ACCEPT BUTTON HANDLING=======================//
+    if (ACCEPT->clicked()) {
+      switch (sub_pos) {
         case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
         case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
         case 3: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PROBE FRAME
@@ -375,102 +375,102 @@ void page_SubMenu3(void){
       }
       updateDisplay = true;
     }
-      while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
     tft.endWrite();
-    delay(10);  
+    delay(10);
   }
 }
 //====================================================================================//
-void page_ScanMenu(void){}
+void page_ScanMenu(void) {}
 //====================================================================================//
-void page_TestMenu1(void){}
+void page_TestMenu1(void) {}
 //====================================================================================//
-void page_TestMenu2(void){}
+void page_TestMenu2(void) {}
 //====================================================================================//
-void page_MyMenu1(void){}
+void page_MyMenu1(void) {}
 //=========================================================================================================//
-//||                                         MyMenu2 = SSIDs                                             ||// 
+//||                                         MyMenu2 = SSIDs                                             ||//
 //=========================================================================================================//
-void page_MyMenu2(void){
+void page_MyMenu2(void) {
   boolean staticElementsDrawn = false;
   uint32_t loopStartMs;
   while (currPage == MY_MENU2) {
     loopStartMs = millis();
     delay(25);
     if (!staticElementsDrawn) {
-    StatusBar ("SSIDs");
-    staticElementsDrawn = true;
-  }
+      StatusBar ("SSIDs");
+      staticElementsDrawn = true;
+    }
     if (updateDisplay) {
       tft.fillRect(0, 28, 160, 98, colors[2][Themes]);
       MenuItems("BACK", 30, 0, sub_posA);
-  if (scannedNetworks.size() == 0) {
-    tft.setCursor(5, 60);
-    tft.setTextColor(0xE800, colors[2][Themes]);
-    tft.println("No Network Found");
-  } else {
-    for (int i = 0; i < scannedNetworks.size(); i++) {
-      MenuItems(scannedNetworks.get(i).ssid, 42 + i * 12, i + 1, sub_posA);
+      if (scannedNetworks.size() == 0) {
+        tft.setCursor(5, 60);
+        tft.setTextColor(0xE800, colors[2][Themes]);
+        tft.println("No Network Found");
+      } else {
+        for (int i = 0; i < scannedNetworks.size(); i++) {
+          MenuItems(scannedNetworks.get(i).ssid, 42 + i * 12, i + 1, sub_posA);
+        }
+      }
+      updateDisplay = false;
     }
-  }
-  updateDisplay = false;
-}
     tft.startWrite();
     UP->update();
     DOWN->update();
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=============================Up button handing==========================//
-  if (UP->clicked() || UP->holding(HoldingInterval)) {
-    sub_posA--;
-    if (sub_posA < 0) {
-    sub_posA = scannedNetworks.size();  
+    //=============================Up button handing==========================//
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
+      sub_posA--;
+      if (sub_posA < 0) {
+        sub_posA = scannedNetworks.size();
+      }
+      updateDisplay = true;
     }
-   updateDisplay = true; 
-  }
-//========================DOWN button handling===========================//
-if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
-  sub_posA++;
-  if (sub_posA > scannedNetworks.size()) {
-    sub_posA = 0;
-  }
-  updateDisplay = true;
-}
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
+    //========================DOWN button handling===========================//
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
+      sub_posA++;
+      if (sub_posA > scannedNetworks.size()) {
+        sub_posA = 0;
+      }
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {}
-//========================ACCEPT BUTTON HANDLING========================//
-if (ACCEPT->clicked()) {
-  if (sub_posA == 0){
-    currPage = SUB_MENU1;
-    WiFi.scanDelete();
-  } else {
-    if (sub_posA > 0 && sub_posA <= scannedNetworks.size()) {
-      currPage = MY_MENU3;
+    //========================ACCEPT BUTTON HANDLING========================//
+    if (ACCEPT->clicked()) {
+      if (sub_posA == 0) {
+        currPage = SUB_MENU1;
+        WiFi.scanDelete();
+      } else {
+        if (sub_posA > 0 && sub_posA <= scannedNetworks.size()) {
+          currPage = MY_MENU3;
+        }
+      }
+      updateDisplay = true;
     }
-  }
-  updateDisplay = true;
-}
-     while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
   }
 }
 //=========================================================================================================//
-//||                                    MyMenu3 = Informations                                           ||// 
+//||                                    MyMenu3 = Informations                                           ||//
 //=========================================================================================================//
-void page_MyMenu3(void){
+void page_MyMenu3(void) {
   boolean staticElementsDrawn = false;
-  while (currPage == MY_MENU3){
+  while (currPage == MY_MENU3) {
     if (!staticElementsDrawn) {
-    StatusBar ("INFORMATION");
-    staticElementsDrawn = true;
-  }
-    if (updateDisplay){
+      StatusBar ("INFORMATION");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
       tft.fillRect(0, 30, 160, 98, colors[2][Themes]);
       tft.setTextColor(colors[4][Themes], colors[2][Themes]);
       tft.setCursor(8, 30);
@@ -483,92 +483,94 @@ void page_MyMenu3(void){
       tft.println("Channel: " + String(scannedNetworks.get(sub_posA - 1).channel));
       tft.setCursor(8, 78);
       tft.println("RSSI: " + String(scannedNetworks.get(sub_posA - 1).rssi));
-      updateDisplay = false; 
-     }
+      updateDisplay = false;
+    }
     UP->update();
     DOWN->update();
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//=======================UP BUTTON HANDLING=============================//
-        if (UP->clicked()) {
-          currPage = MY_MENU2; //Back to 2nd Menu
-          updateDisplay = true;
-        }
-//=======================DOWN BUTTON HANDING============================//
-        if (DOWN->clicked()) {
-          currPage = MY_MENU2; //Back to 2nd Menu
-          updateDisplay = true;
-        }
-//======================RIGHT button handling===========================//
-     if (RIGHT->clicked()) {}
-//======================LEFT button handling============================//
-    if (LEFT->clicked()) {}
-//==========================ACCEPT BUTTON HANDLING======================//
-        if (ACCEPT->clicked()) {
-          updateDisplay = true; //update just Display
-      return;
-        }
-    delay(10);
+    //=======================UP BUTTON HANDLING=============================//
+    if (UP->clicked()) {
+      currPage = MY_MENU2; //Back to 2nd Menu
+      updateDisplay = true;
     }
+    //=======================DOWN BUTTON HANDING============================//
+    if (DOWN->clicked()) {
+      currPage = MY_MENU2; //Back to 2nd Menu
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
+    if (LEFT->clicked()) {}
+    //==========================ACCEPT BUTTON HANDLING======================//
+    if (ACCEPT->clicked()) {
+      updateDisplay = true; //update just Display
+      return;
+    }
+    delay(10);
+  }
 }
 //====================================================================================//
-void page_MyMenu4(void){}
+void page_MyMenu4(void) {}
 //====================================================================================//
-void page_MyMenu5(void){}
+void page_MyMenu5(void) {}
 //====================================================================================//
-void page_MyMenu6(void){}
+void page_MyMenu6(void) {}
 //====================================================================================//
-void page_MyMenu7(void){}
+void page_MyMenu7(void) {}
 //====================================================================================//
-void page_MyMenu8(void){}
+void page_MyMenu8(void) {}
 //====================================================================================//
-void page_MyMenu9(void){}
+void page_MyMenu9(void) {}
 //====================================================================================//
-void page_MyMenu10(void){}
-//====================================================================================//
-void page_MyMenu11(void){
-    boolean staticElementsDrawn = false;
-    uint32_t loopStartMs;
-    while (currPage == MY_MENU11) {
+void page_MyMenu10(void) {}
+//=========================================================================================================//
+//||                                      MyMenu11 = Settings                                            ||//
+//=========================================================================================================//
+void page_MyMenu11(void) {
+  boolean staticElementsDrawn = false;
+  uint32_t loopStartMs;
+  while (currPage == MY_MENU11) {
     loopStartMs = millis();
     if (!staticElementsDrawn) {
-    StatusBar ("SETTINGs");
-    staticElementsDrawn = true; 
-  }
-  if (updateDisplay) { 
-  tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-  MenuItems ("BACK", 30, 1, sub_pos);
-  MenuItems ("ROTATION: ", 42, 2, sub_pos);
-  tft.setCursor(90,42);
-  if (sub_pos == 2){
-    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
-    tft.print(rotation);
-  } else {
-    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
-    tft.print(rotation);
-  }
-  MenuItems ("BRIGHTNESS: ", 54, 3, sub_pos);
-  tft.setCursor(98,54);
-  if (sub_pos == 3){
-    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
-    tft.print(PWM);
-  } else {
-    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
-    tft.print(PWM);
-  }
-    MenuItems ("THEMES: ", 66, 4, sub_pos);
-  tft.setCursor(76,66);
-  if (sub_pos == 4){
-    tft.setTextColor(colors[5][Themes], colors[6][Themes]);
-    tft.print(Themes);
-  } else {
-    tft.setTextColor(colors[4][Themes], colors[2][Themes]);
-    tft.print(Themes);
-  }
-  MenuItems ("SAVE SETTING", 102, 5, sub_pos);
-  MenuItems ("REBOOT", 114, 6, sub_pos);
-  updateDisplay = false;
+      StatusBar ("SETTINGs");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("BACK", 30, 1, sub_pos);
+      MenuItems ("ROTATION: ", 42, 2, sub_pos);
+      tft.setCursor(90, 42);
+      if (sub_pos == 2) {
+        tft.setTextColor(colors[5][Themes], colors[6][Themes]);
+        tft.print(rotation);
+      } else {
+        tft.setTextColor(colors[4][Themes], colors[2][Themes]);
+        tft.print(rotation);
+      }
+      MenuItems ("BRIGHTNESS: ", 54, 3, sub_pos);
+      tft.setCursor(98, 54);
+      if (sub_pos == 3) {
+        tft.setTextColor(colors[5][Themes], colors[6][Themes]);
+        tft.print(PWM);
+      } else {
+        tft.setTextColor(colors[4][Themes], colors[2][Themes]);
+        tft.print(PWM);
+      }
+      MenuItems ("THEMES: ", 66, 4, sub_pos);
+      tft.setCursor(76, 66);
+      if (sub_pos == 4) {
+        tft.setTextColor(colors[5][Themes], colors[6][Themes]);
+        tft.print(Themes);
+      } else {
+        tft.setTextColor(colors[4][Themes], colors[2][Themes]);
+        tft.print(Themes);
+      }
+      MenuItems ("SAVE SETTING", 102, 5, sub_pos);
+      MenuItems ("REBOOT", 114, 6, sub_pos);
+      updateDisplay = false;
     }
     tft.startWrite();
     UP->update();
@@ -576,31 +578,31 @@ void page_MyMenu11(void){
     ACCEPT->update();
     RIGHT->update();
     LEFT->update();
-//========================UP button handling================================//
+    //========================UP button handling================================//
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos =6;
+        sub_pos = 6;
       }
       updateDisplay = true;
-        }
-//=========================DOWN button handling===========================//
+    }
+    //=========================DOWN button handling===========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
       if (sub_pos > 6) {
         sub_pos = 1;
       }
-      updateDisplay = true;  
-        }
-//======================RIGHT button handling===========================//
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
     if (RIGHT->clicked()) {
-        switch (sub_pos) {
+      switch (sub_pos) {
         case 1:          break;
         case 2:
-        rotation++;
+          rotation++;
           if (rotation > 3) {
-             rotation = 0;
-            }
+            rotation = 0;
+          }
           updateDisplay = true;
           break;
         case 3:
@@ -609,29 +611,29 @@ void page_MyMenu11(void){
             Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
-            }
+          }
           break;
         case 4:
-        if (Themes < MaxTheme){
-          Themes ++;
-          staticElementsDrawn = false;
-          updateDisplay = true;
-        }
-         break;
+          if (Themes < MaxTheme) {
+            Themes ++;
+            staticElementsDrawn = false;
+            updateDisplay = true;
+          }
+          break;
         case 5:          break;
         case 6:          break;
       }
     }
-//======================LEFT button handling============================//
+    //======================LEFT button handling============================//
     if (LEFT->clicked()) {
-        switch (sub_pos) {
+      switch (sub_pos) {
         case 1:          break;
         case 2:
-        rotation--;
+          rotation--;
           if (rotation < 0) {
-             rotation = 3;
-            }
-            updateDisplay = true;
+            rotation = 3;
+          }
+          updateDisplay = true;
           break;
         case 3:
           if (PWM > -3) {
@@ -639,46 +641,46 @@ void page_MyMenu11(void){
             Brightness = map(PWM, -3, 3, 3, 255);
             analogWrite(BackLight, Brightness);
             updateDisplay = true;
-            }
+          }
           break;
         case 4:
-        if (Themes > 0){
-        Themes --;
-        staticElementsDrawn = false;
-        updateDisplay = true;
-        }
-        break;
+          if (Themes > 0) {
+            Themes --;
+            staticElementsDrawn = false;
+            updateDisplay = true;
+          }
+          break;
         case 5:          break;
         case 6:          break;
       }
     }
-//=====================ACCEPT BUTTON HANDLING===========================//
-        if (ACCEPT->clicked()) {
-        switch (sub_pos) {
+    //=====================ACCEPT BUTTON HANDLING===========================//
+    if (ACCEPT->clicked()) {
+      switch (sub_pos) {
         case 1: currPage = ROOT_MENU;                       break;
         case 2:                                             break;
         case 3:                                             break;
         case 4:                                             break;
         case 5:
-        EEPROM.write(0, rotation);
-        EEPROM.write(8, Themes);
-        EEPROM.commit();
-        break;
+          EEPROM.write(0, rotation);
+          EEPROM.write(8, Themes);
+          EEPROM.commit();
+          break;
         case 6:
-        ESP.restart();
-        break;  
+          ESP.restart();
+          break;
       }
       updateDisplay = true;
     }
-      while (millis() - loopStartMs < 25) {
+    while (millis() - loopStartMs < 25) {
       delay(20);
     }
     tft.endWrite();
-    delay(10);  
+    delay(10);
   }
 }
 //=========================================================================================================//
-//||                                        CUSTOM FUNCTION                                             ||// 
+//||                                        CUSTOM FUNCTION                                             ||//
 //=========================================================================================================//
 void StatusBar(const char* Status) {
   tft.fillScreen(colors[2][Themes]);
@@ -703,33 +705,41 @@ void MenuItems(const String& Item, uint8_t p1, uint8_t p2, uint8_t p3) {
 }
 //=========================================================================================================//
 void scanNetworks() {
-  scannedNetworks.clear();                          // Clear the existing list of scanned networks
-  int networksFound = WiFi.scanNetworks();          // Scan for Wi-Fi networks
-  if (networksFound == -1) {                        // Check if scanning was successful
-    Serial.println("Failed to scan networks.");
-    return;
+  scannedNetworks.clear();
+  WiFi.disconnect();
+  delay(100);
+  WiFi.scanNetworks(true);
+  while (WiFi.scanComplete() == WIFI_SCAN_RUNNING) {
+    tft.setCursor(10, 114);
+    tft.print("SCANNING");
+    for (int x = 65; x < tftWidth - 20; x += 3) {
+      tft.drawPixel(x, 120, colors[4][Themes]);
+      delay(10);
+    }
   }
-  for (int i = 0; i < networksFound; ++i) {        // Retrieve and add network data to the list
-    NetworkData data;
-    data.ssid = WiFi.SSID(i);
-    data.mac = WiFi.BSSIDstr(i);
-    data.rssi = WiFi.RSSI(i);
-    data.channel = WiFi.channel(i);
-    data.encryptionType = WiFi.encryptionType(i);
-    scannedNetworks.add(data);
+  if (WiFi.scanComplete() > 0) {
+    for (int i = 0; i < WiFi.scanComplete(); ++i) {
+      NetworkData data;
+      data.ssid = WiFi.SSID(i);
+      data.mac = WiFi.BSSIDstr(i);
+      data.rssi = WiFi.RSSI(i);
+      data.channel = WiFi.channel(i);
+      data.encryptionType = WiFi.encryptionType(i);
+      scannedNetworks.add(data);
+    }
   }
 }
 //=========================================================================================================//
 void configureButtons(int rotation) {
-    int buttonPins[][4] = {
-        {32, 33, 14, 27},
-        {14, 27, 33, 32},
-        {33, 32, 27, 14},
-        {27, 14, 32, 33}
-    };
-    UP = new ButtonPullup(buttonPins[rotation][0]);
-    DOWN = new ButtonPullup(buttonPins[rotation][1]);
-    RIGHT = new ButtonPullup(buttonPins[rotation][2]);
-    LEFT = new ButtonPullup(buttonPins[rotation][3]);
-    ACCEPT = new ButtonPullup(25); // Assuming ACCEPT has a fixed pin, in this case, 25
+  int buttonPins[][4] = {
+    {32, 33, 14, 27},
+    {14, 27, 33, 32},
+    {33, 32, 27, 14},
+    {27, 14, 32, 33}
+  };
+  UP = new ButtonPullup(buttonPins[rotation][0]);
+  DOWN = new ButtonPullup(buttonPins[rotation][1]);
+  RIGHT = new ButtonPullup(buttonPins[rotation][2]);
+  LEFT = new ButtonPullup(buttonPins[rotation][3]);
+  ACCEPT = new ButtonPullup(25); // Assuming ACCEPT has a fixed pin, in this case, 25
 }
