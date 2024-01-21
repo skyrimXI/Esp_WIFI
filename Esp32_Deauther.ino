@@ -78,13 +78,13 @@ void setup() {
   Themes = EEPROM.read(8);                           //Read Value stoted From "8" this Address of EEPROM
   configureButtons(rotation);                        //Initialization of Buttons
   tft.setRotation(rotation);                         //Rotation of tft (0/1/2/3)
-  tft.fillScreen(colors[2][Themes]);                 //Clear tft by fill Color Black
   tft.setTextSize(1);                                //Text Size (1/2/3)
   tft.setTextWrap(false);                            //Text Wrapping (true/false)
   tftHight = tft.height();                           //Set Tft Hight Dynamically according to Oriantation
   tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
   textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
+  SplashScreen();
 }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
@@ -742,4 +742,29 @@ void configureButtons(int rotation) {
   RIGHT = new ButtonPullup(buttonPins[rotation][2]);
   LEFT = new ButtonPullup(buttonPins[rotation][3]);
   ACCEPT = new ButtonPullup(25); // Assuming ACCEPT has a fixed pin, in this case, 25
+}
+//=========================================================================================================//
+void SplashScreen() {
+  tft.fillScreen(TFT_BLACK);
+  int textX, textY;
+  if (rotation == 0 || rotation == 2) {
+    textX = 50;
+    textY = 70;
+  } else {
+    textX = 65;
+    textY = 50;
+  }
+  tft.setCursor(textX, textY);
+  tft.print("ESP32");
+  if (rotation == 0 || rotation == 2) {
+    textX = 18;
+    textY = 80;
+  } else {
+    textX = 35;
+    textY = 60;
+  }
+  tft.setCursor(textX, textY);
+  tft.print("Made By SkyRimXI");
+  delay(random(1000, 4500));
+  tft.fillScreen(colors[2][Themes]); // Clear tft by filling it with Color Black
 }
