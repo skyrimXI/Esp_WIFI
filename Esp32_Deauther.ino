@@ -51,13 +51,13 @@ uint16_t colors[][5] = {
   // column---column---column---column--------------------ROW----------------------------------------------------------
   //   0        1       2         3       4
   // DARK     LIGHT   Light1    DARK1
-  {0x10D1, 0x94BF,  0xFFFF,  0xFC00,  0x0000},       //  0    StatusBarbg = Back Ground Of Status Bar
-  {0xFFFF, 0x0000,  0x0000,  0xFFFF,  0xFFFF},       //  1    StatusBarTX = Status Bar Text Color
+  {0x10D1, 0x0000,  0xFFFF,  0xFC00,  0x0000},       //  0    StatusBarbg = Back Ground Of Status Bar
+  {0xFFFF, 0xFFFF,  0x0000,  0xFFFF,  0xFFFF},       //  1    StatusBarTX = Status Bar Text Color
   {0x0000, 0xFFFF,  0x0000,  0x4008,  0xFFE4},       //  2    BackGround = Back Ground Colour
   {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0x0210},       //  3    Cursor = Cursor Color
   {0xFFFF, 0x0000,  0xFFFF,  0xFFFF,  0x0000},       //  4    MenuItemTX = Menu's Text Color
-  {0x0000, 0xD69A,  0xD69A,  0x0000,  0xFFFF},       //  5    SelectedMenuTX = Menu's Text When Selected
-  {0xFFE4, 0x8208,  0x8208,  0xFFFF,  0x801F}        //  6    SelectedMenuBG = Back Ground When Menu is selected
+  {0x0000, 0xFFFF,  0x0000,  0x0000,  0xFFFF},       //  5    SelectedMenuTX = Menu's Text When Selected
+  {0xFFE4, 0x0000,  0xFFFF,  0xFFFF,  0x801F}        //  6    SelectedMenuBG = Back Ground When Menu is selected
 };
 //------------------------------------------------------------------------------------------------------------------
 uint8_t HoldingInterval = 120;                       //Interval in Between Long Press Action
@@ -741,7 +741,7 @@ void configureButtons(int rotation) {
   DOWN = new ButtonPullup(buttonPins[rotation][1]);
   RIGHT = new ButtonPullup(buttonPins[rotation][2]);
   LEFT = new ButtonPullup(buttonPins[rotation][3]);
-  ACCEPT = new ButtonPullup(25); // Assuming ACCEPT has a fixed pin, in this case, 25
+  ACCEPT = new ButtonPullup(25);
 }
 //=========================================================================================================//
 void SplashScreen() {
