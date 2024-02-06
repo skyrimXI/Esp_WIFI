@@ -1,7 +1,7 @@
 /*
   Github - https://github.com/skyrimXI/Esp_WIFI
   Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
-               - RGB565
+                - RGB565
   Default Board - LoLIN D32
 */
 #include <SimpleButton.h>
@@ -68,12 +68,11 @@ int MaxTheme = sizeof(colors[0]) / sizeof(colors[0][0]) - 1;
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
-  Serial.begin(115200);                              //SERIAL SETUP
-  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   tft.init();                                        //Initialize TFT
-  EEPROM.begin(512);                                 //Initialization Of EPPROM
+  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness According to Brightness Value
   analogWrite(BackLight, Brightness);                //initilize BackLight according to Brightness Value
+  EEPROM.begin(512);                                 //Initialization Of EPPROM
   rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
   Themes = EEPROM.read(8);                           //Read Value stoted From "8" this Address of EEPROM
   configureButtons(rotation);                        //Initialization of Buttons
@@ -766,5 +765,5 @@ void SplashScreen() {
   tft.setCursor(textX, textY);
   tft.print("Made By SkyRimXI");
   delay(random(1000, 4500));
-  tft.fillScreen(colors[2][Themes]); // Clear tft by filling it with Color Black
+  tft.fillScreen(colors[2][Themes]);
 }
