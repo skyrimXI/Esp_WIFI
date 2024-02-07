@@ -26,7 +26,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
     - Brightness Controll 💡
     - Multiple Themes 🎨
     - Dynamic Rotations 📲
-UI Features missing or needs to Implemented (Needs help)
+- UI Features missing or needs to Implemented (Needs help)
     - Verticle Menus Scrolling
     - Horizontal Scrolling
     - Sroll Bar
