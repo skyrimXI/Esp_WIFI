@@ -20,9 +20,40 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
   - [SimpleList](https://github.com/spacehuhn/SimpleList)
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
-
-
-
+## Features :
+- UI
+    - Status Bar to show on which page is currently active
+    - Brightness Controll
+    - Multiple Themes
+    - Dynamic Rotations
+- Application
+    - Scan
+      - Scan For Aps
+      - Scan For Stations 
+    - Sniffer
+      - Beacon
+      - Probe
+      - Pmkid
+      - RAW 
+    - Attack
+      - Deauth
+      - Phishing
+      - Beacon Flood 
+    - Monitoring
+      - Packet Monitor
+      - Channel Monitor 
+    - Hotspot
+    - IR Remote
+      - IR Clone
+      - IR BruteForce 
+    - Temp/Clock
+      - Desk Clock With RealTime Temp, Humidity, Air Pressure 
+    - Setting
+      - Rotation Setting (Need Reboot to Effect)
+      - Brightness Setting
+      - Theme Setting
+      - Save Setting
+      - Reboot 
 
 
 
