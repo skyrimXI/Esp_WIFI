@@ -1,6 +1,5 @@
-# Esp32_WIFI
-Yet Another handheld Device with WIFI Information Gathering and Some Tricks 
 ## About this Project
+Yet Another handheld Device with WIFI Information Gathering and Some Tricks
 Main purpose of this Project is just to Get Better At Programming in general and Get familier with Esp/Arduino Micro-Controller
 ## Inspiration / Credits
 - [esp8266_deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
