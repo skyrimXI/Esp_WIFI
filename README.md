@@ -15,10 +15,10 @@ Main purpose of this Project is just to Get Better At Programming in general and
 - Arduino IDE (1.8.19)
 - Esp32 Core (2.0.10)
 - Libraries 
-- [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
-- [SimpleList](https://github.com/spacehuhn/SimpleList)
-- [SimpleButton](https://github.com/spacehuhn/SimpleButton)
-- EEPROM
+  - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+  - [SimpleList](https://github.com/spacehuhn/SimpleList)
+  - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
+  - EEPROM
 ## Feature am Thinking i should or not 
 - IR BruteForce/ IR Cloning
 - A Atmosphese Data Gathering (Temp/humidity/Pressure)
