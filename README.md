@@ -22,8 +22,6 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 
 
-![IMG_20240207_175812](https://github.com/skyrimXI/Esp_WIFI/assets/87582924/8e5b0ee1-bfa5-42ea-81be-fb9307af0c33)
-
 
 
 
