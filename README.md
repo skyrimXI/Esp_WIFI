@@ -8,18 +8,18 @@ Main purpose of this Project is just to Get Better At Programming in general and
 - [ForOurGood](https://www.youtube.com/@ForOurGood/featured)
 ## Getting Started
 ### Hardware - at this stage
-    - Esp32 Wroome Dev-board
-    - ST7735 160 x 128 1.8 TFT Module
-    - Tactile Push Module
-    - External Anttena for Esp32
+- Esp32 Wroome Dev-board
+- ST7735 160 x 128 1.8 TFT Module
+- Tactile Push Module
+- External Anttena for Esp32
 ### Software - at this stage
-    - Arduino IDE (1.8.19)
-    - Esp32 Core (2.0.10)
-    - Libraries 
-      - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
-      - [SimpleList](https://github.com/spacehuhn/SimpleList)
-      - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
-      - EEPROM
+- Arduino IDE (1.8.19)
+- Esp32 Core (2.0.10)
+- Libraries 
+- [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
+- [SimpleList](https://github.com/spacehuhn/SimpleList)
+- [SimpleButton](https://github.com/spacehuhn/SimpleButton)
+- EEPROM
 ## Feature am Thinking i should or not 
 - IR BruteForce/ IR Cloning
 - A Atmosphese Data Gathering (Temp/humidity/Pressure)
