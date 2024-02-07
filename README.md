@@ -1,4 +1,4 @@
-## 🧤 About this Project 🧤
+## About this Project 🧤
 Yet Another handheld Device with WIFI Information Gathering and Some Tricks.
 Main purpose of this Project is just to Get Better At Programming in general and Get familier with Esp/Arduino Micro-Controller.
 At this stage pls consider mySelf as NOOB and please correct my mistake and make this Project all together and consider changes frequently
@@ -69,6 +69,6 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - Save Setting
       - 📴 Reboot 
 
-<!--START_SECTION:buy-me-a-coffee-->
-<!--END_SECTION:buy-me-a-coffe-->
+
+<a href="https://www.buymeacoffee.com/riteshprado" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
