@@ -19,6 +19,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
 - Libraries 
   - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
   - [SimpleList](https://github.com/spacehuhn/SimpleList)
+  - [WiFiBox](https://github.com/cifertech/WiFiBox)
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## Features :
 - UI 💻
