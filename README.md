@@ -34,6 +34,7 @@ UI Features missing or needs to Implemented (Needs help)
       - Their is StatusBar UI element on a color and that StatusBar is used to show page name and also ther is a Element to show free heap memory available
         and as status is in a spefic color i want and this statusBar is A rountRect element on TFT and i want to change or Update color of this statusBar according
         to bettery level.
+  
   (Issue am facing as of now how to get Bettery Level and am just aware of Voltage Divider but but i think voltage Divider Circuit Consume Power just for this reason
   i discarded this approach and if anyone has any bettery way to measure voltage please let me know) 
 - Application
