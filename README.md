@@ -15,8 +15,10 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
 - Tactile Push Module
 - External Anttena for Esp32
 #### Software - at this stage
-- Arduino IDE (1.8.19)
+- [Arduino IDE (1.8.19)](https://downloads.arduino.cc/arduino-1.8.19-windows.exe)
 - Esp32 Core (2.0.10)
+  `https://dl.espressif.com/dl/package_esp32_index.json
+  https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json`
 - Libraries 
   - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
   - [SimpleList](https://github.com/spacehuhn/SimpleList)
@@ -51,7 +53,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - Deauth
       - Phishing
       - Beacon Flood 
-    - Monitoring
+    - 🪬 Monitoring
       - Packet Monitor
       - Channel Monitor 
     - Hotspot 
