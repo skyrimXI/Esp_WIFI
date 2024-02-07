@@ -1,10 +1,12 @@
-# Esp_WIFI
-Yet Another handheld Device with WIFI Information Gathering and Some Usefull WIFI Attack 
-concept Using a Low Cost Micro-Controller Like ESP32, Lets See Howfar I can go but i should 
-keep in mind its for Personal and education purpose only as it will help me understand and Learn 
-Concepts of WIFI and Micro-Controller, PCB Designing, Electronics, 
-## SOME noteable Feature 
-Most of code Already Written by lots of more capable and Intelligent people and with due respect i want to write same thing from ground up just coz either their user interface isnt suits me or i just want to and i think i can do
+# Esp32_WIFI
+Yet Another handheld Device with WIFI Information Gathering and Some Tricks 
+## Purpose
+Main purpose of this Project is just to Get Better At Programming in general and Get familier with Esp/Arduino Micro-Controller
+## Inspiration / Credits
+[esp8266_deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
+[ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder)
+[ForOurGood](https://www.youtube.com/@ForOurGood/featured)
+- Esp8266 Deauther
 - Packet Monitor
 - Deauther
 - Packet Capture(pcap)
