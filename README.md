@@ -67,9 +67,11 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - 💡 Brightness Setting 
       - 🎨 Theme Setting 
       - Save Setting
-      - 📴 Reboot 
+      - 📴 Reboot
 
+
+<p align="left">
 <a href="https://instagram.com/ritesh__pradhan_" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ritesh__pradhan_" height="30" width="40" /></a>
-
 <a href="https://www.buymeacoffee.com/riteshprado" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+</p>
 
