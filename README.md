@@ -69,5 +69,6 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - Save Setting
       - 📴 Reboot 
 
-
+<!--START_SECTION:buy-me-a-coffee-->
+<!--END_SECTION:buy-me-a-coffe-->
 
