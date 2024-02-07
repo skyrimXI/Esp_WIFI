@@ -7,12 +7,12 @@ Main purpose of this Project is just to Get Better At Programming in general and
 - [ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder)
 - [ForOurGood](https://www.youtube.com/@ForOurGood/featured)
 ## Getting Started
-### Hardware - at this stage
+#### Hardware - at this stage
 - Esp32 Wroome Dev-board
 - ST7735 160 x 128 1.8 TFT Module
 - Tactile Push Module
 - External Anttena for Esp32
-### Software - at this stage
+#### Software - at this stage
 - Arduino IDE (1.8.19)
 - Esp32 Core (2.0.10)
 - Libraries 
