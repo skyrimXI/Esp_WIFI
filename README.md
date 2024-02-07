@@ -7,6 +7,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
 - [esp8266_deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
 - [ESP32Marauder](https://github.com/justcallmekoko/ESP32Marauder)
 - [ForOurGood](https://www.youtube.com/@ForOurGood/featured)
+- [WiFiBox](https://github.com/cifertech/WiFiBox)
 ## 💼 Getting Started 
 #### Hardware - at this stage
 - Esp32 Wroome Dev-board
@@ -19,7 +20,6 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
 - Libraries 
   - [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI)
   - [SimpleList](https://github.com/spacehuhn/SimpleList)
-  - [WiFiBox](https://github.com/cifertech/WiFiBox)
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## 🎯 Features :
 - 💻 UI 
