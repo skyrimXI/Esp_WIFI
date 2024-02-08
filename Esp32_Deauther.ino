@@ -1,7 +1,7 @@
 /*
   Github - https://github.com/skyrimXI/Esp_WIFI
   Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
-               - RGB565
+                - RGB565
   Default Board - LoLIN D32
 */
 #include <SimpleButton.h>
@@ -68,12 +68,11 @@ int MaxTheme = sizeof(colors[0]) / sizeof(colors[0][0]) - 1;
 //||                                        VoidSetUP                                   ||//
 //========================================================================================//
 void setup() {
-  Serial.begin(115200);                              //SERIAL SETUP
-  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   tft.init();                                        //Initialize TFT
-  EEPROM.begin(512);                                 //Initialization Of EPPROM
+  pinMode(BackLight, OUTPUT);                        //Initialization of BackLight PWM Pin
   Brightness = map(PWM, -3, 3, 3, 255);              //Set Brightness According to Brightness Value
   analogWrite(BackLight, Brightness);                //initilize BackLight according to Brightness Value
+  EEPROM.begin(512);                                 //Initialization Of EPPROM
   rotation = EEPROM.read(0);                         //Read Value stoted From "0" this Address of EEPROM
   Themes = EEPROM.read(8);                           //Read Value stoted From "8" this Address of EEPROM
   configureButtons(rotation);                        //Initialization of Buttons
@@ -111,6 +110,7 @@ void loop() {
     case MY_MENU11:       page_MyMenu11(); break;       //Setting Page
   }
 }
+
 //=========================================================================================//
 //||                                    ROOT_MENU = MAIN_MENU                            ||//
 //=========================================================================================//
@@ -125,7 +125,7 @@ void page_RootMenu(void) {
     }
     if (updateDisplay) {
       tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
-      MenuItems ("SCAN", 30, 1, root_pos);
+      MenuItems ("SCAN & SELECT", 30, 1, root_pos);
       MenuItems ("SNIFFER", 42, 2, root_pos);
       MenuItems ("ATTACKs", 54, 3, root_pos);
       MenuItems ("MONITORING", 66, 4, root_pos);
@@ -333,9 +333,8 @@ void page_SubMenu3(void) {
       MenuItems ("BACK", 30, 1, sub_pos);
       MenuItems ("DEAUTH", 42, 2, sub_pos);
       MenuItems ("PHISHING", 54, 3, sub_pos);
-      MenuItems ("MITM", 66, 4, sub_pos);
+      MenuItems ("EVIL TWIN", 66, 4, sub_pos);
       MenuItems ("BEACON FLOOD", 78, 5, sub_pos);
-      MenuItems ("PROBE FLOOD", 90, 6, sub_pos);
       updateDisplay = false;
     }
     tft.startWrite();
@@ -348,14 +347,14 @@ void page_SubMenu3(void) {
     if (UP->clicked() || UP->holding(HoldingInterval)) {
       sub_pos--;
       if (sub_pos < 1) {
-        sub_pos = 6;
+        sub_pos = 5;
       }
       updateDisplay = true;
     }
     //============================DOWN button handling========================//
     if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
       sub_pos++;
-      if (sub_pos > 6) {
+      if (sub_pos > 5) {
         sub_pos = 1;
       }
       updateDisplay = true;
@@ -383,7 +382,67 @@ void page_SubMenu3(void) {
   }
 }
 //====================================================================================//
-void page_ScanMenu(void) {}
+void page_ScanMenu(void) {
+  boolean staticElementsDrawn = false;
+  uint32_t loopStartMs;
+  while (currPage == SCAN_MENU) {
+    loopStartMs = millis();
+    if (!staticElementsDrawn) {
+      StatusBar ("MONITORING");
+      staticElementsDrawn = true;
+    }
+    if (updateDisplay) {
+      tft.fillRect(0, 28, 150, 98, colors[2][Themes]);
+      MenuItems ("BACK", 30, 1, sub_pos);
+      MenuItems ("SIGNAL LEVEL", 42, 2, sub_pos);
+      MenuItems ("CHANNEL MONITOR", 54, 3, sub_pos);
+      MenuItems ("PACKET MONITOR", 66, 4, sub_pos);
+      updateDisplay = false;
+    }
+    tft.startWrite();
+    UP->update();
+    DOWN->update();
+    ACCEPT->update();
+    RIGHT->update();
+    LEFT->update();
+    //==========================UP button handling============================//
+    if (UP->clicked() || UP->holding(HoldingInterval)) {
+      sub_pos--;
+      if (sub_pos < 1) {
+        sub_pos = 4;
+      }
+      updateDisplay = true;
+    }
+    //============================DOWN button handling========================//
+    if (DOWN->clicked() || DOWN->holding(HoldingInterval)) {
+      sub_pos++;
+      if (sub_pos > 4) {
+        sub_pos = 1;
+      }
+      updateDisplay = true;
+    }
+    //======================RIGHT button handling===========================//
+    if (RIGHT->clicked()) {}
+    //======================LEFT button handling============================//
+    if (LEFT->clicked()) {}
+    //========================ACCEPT BUTTON HANDLING=======================//
+    if (ACCEPT->clicked()) {
+      switch (sub_pos) {
+        case 1: currPage = ROOT_MENU;   break;    //RETURN TO BACK MENU
+        case 2: currPage = SUB_MENU2;   break;    //CODE TO SNIFF BEACON FRAME
+        case 3: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PROBE FRAME
+        case 4: currPage = SUB_MENU3;   break;    //CODE TO SNIFF PMKID
+        case 5: currPage = SUB_MENU3;   break;    //CODE TO SNIFF RAW FILEs (PCAP)
+      }
+      updateDisplay = true;
+    }
+    while (millis() - loopStartMs < 25) {
+      delay(20);
+    }
+    tft.endWrite();
+    delay(10);
+  }
+  }
 //====================================================================================//
 void page_TestMenu1(void) {}
 //====================================================================================//
@@ -766,5 +825,5 @@ void SplashScreen() {
   tft.setCursor(textX, textY);
   tft.print("Made By SkyRimXI");
   delay(random(1000, 4500));
-  tft.fillScreen(colors[2][Themes]); // Clear tft by filling it with Color Black
+  tft.fillScreen(colors[2][Themes]);
 }
