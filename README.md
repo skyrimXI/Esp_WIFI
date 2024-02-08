@@ -25,10 +25,10 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## 🎯 Features :
 - 💻 UI 
-    - 🎰 Status Bar
-    - 💡 Brightness Controll 
-    - 🎨 Multiple Themes 
-    - 📲 Dynamic Rotations 
+    - 🎰 Status Bar 🤙
+    - 💡 Brightness Controll 🤙
+    - 🎨 Multiple Themes 🤙
+    - 📲 Dynamic Rotations 🤙
 - UI Features missing or needs to Implemented (Needs help)
     - Verticle Menus Scrolling
     - Horizontal Scrolling
@@ -64,11 +64,11 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
     - ⏰ Temp/Clock (still dont have Plans for Implemented)
       - Desk Clock With RealTime Temp, Humidity, Air Pressure 
     - 🛠 Setting 
-      - 📲 Rotation Setting (Need Reboot to Effect) 
-      - 💡 Brightness Setting 
-      - 🎨 Theme Setting 
-      - Save Setting
-      - 📴 Reboot
+      - 📲 Rotation Setting (Need Reboot to Effect) 🤙
+      - 💡 Brightness Setting 🤙
+      - 🎨 Theme Setting 🤙
+      - Save Setting 🤙
+      - 📴 Reboot 🤙
 
 
 
