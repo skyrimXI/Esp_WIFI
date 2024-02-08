@@ -25,7 +25,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## 🎯 Features :
 - 💻 UI 
-    - Status Bar
+    - 🎰 Status Bar
     - 💡 Brightness Controll 
     - 🎨 Multiple Themes 
     - 📲 Dynamic Rotations 
@@ -54,6 +54,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - Phishing
       - Beacon Flood 
     - 🪬 Monitoring
+      - Signal Level 
       - Packet Monitor
       - Channel Monitor 
     - Hotspot 
