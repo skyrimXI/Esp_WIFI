@@ -42,7 +42,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   i discarded this approach and if anyone has any bettery way to measure voltage please let me know) 
 - Application
     - 📡 Scan 
-      - 🤙 Scan For Aps 
+      - Scan For Aps 🤙
       - Scan For Stations 
     - Sniffer
       - Beacon
