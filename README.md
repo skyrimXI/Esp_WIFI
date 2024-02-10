@@ -41,7 +41,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   (Issue am facing as of now how to get Bettery Level and am just aware of Voltage Divider but but i think voltage Divider Circuit Consume Power just for this reason
   i discarded this approach and if anyone has any bettery way to measure voltage please let me know) 
 - Application
-    - 📡 Scan - [ ]
+    - [ ] 📡 Scan
       - Scan For Aps 🤙
       - Scan For Stations 
     - Sniffer
