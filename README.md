@@ -24,12 +24,41 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [SimpleList](https://github.com/spacehuhn/SimpleList)
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## 🎯 Features :
-- 💻 UI 
-    - 🎰 Status Bar 🤙
-    - 💡 Brightness Controll 🤙
-    - 🎨 Multiple Themes 🤙
-    - 📲 Dynamic Rotations 🤙
-- UI Features missing or needs to Implemented (Needs help)
+- 💻 **UI**
+    - [ ] Status Bar 🎰
+    - [ ] Brightness Controll 💡
+    - [ ] Multiple Themes 🎨
+    - [ ] Dynamic Rotations 📲
+ - Application
+  - 📡 **Scan**
+      - [ ] Scan For Aps
+      - [ ] Scan For Stations 
+    - **Sniffer**
+      - [ ] Beacon
+      - [ ] Probe
+      - [ ] Pmkid
+      - [ ] RAW 
+    - 💀 **Attack **
+      - [ ] Deauth
+      - [ ] Phishing
+      - [ ] Beacon Flood 
+    - 🪬 **Monitoring**
+      - [ ] Signal Level 
+      - [ ] Packet Monitor
+      - [ ] Channel Monitor 
+    - **Hotspot**
+    -  🖱 **IR Remote** (still dont have Plans for Implemented)
+      - [ ] IR Clone
+      - [ ] IR BruteForce 
+    - ⏰ **Temp/Clock** (still dont have Plans for Implemented)
+      - [ ] Desk Clock With RealTime Temp, Humidity, Air Pressure 
+    - 🛠 **Setting** 
+      - [ ] Rotation Setting (Need Reboot to Effect)
+      - [ ] Brightness Setting
+      - [ ] Theme Setting
+      - [ ] Save Setting
+      - [ ] Reboot
+- *UI Features missing or needs to Implemented* (Needs help)
     - Verticle Menus Scrolling
     - Horizontal Scrolling
     - Sroll Bar
@@ -39,37 +68,7 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
         to bettery level.
   
   (Issue am facing as of now how to get Bettery Level and am just aware of Voltage Divider but but i think voltage Divider Circuit Consume Power just for this reason
-  i discarded this approach and if anyone has any bettery way to measure voltage please let me know) 
-- Application
-    - [ ] 📡 Scan
-      - Scan For Aps 🤙
-      - Scan For Stations 
-    - Sniffer
-      - Beacon
-      - Probe
-      - Pmkid
-      - RAW 
-    - 💀 Attack 
-      - Deauth
-      - Phishing
-      - Beacon Flood 
-    - 🪬 Monitoring
-      - Signal Level 
-      - Packet Monitor
-      - Channel Monitor 
-    - Hotspot 
-    -  🖱 IR Remote (still dont have Plans for Implemented)
-      - IR Clone
-      - IR BruteForce 
-    - ⏰ Temp/Clock (still dont have Plans for Implemented)
-      - Desk Clock With RealTime Temp, Humidity, Air Pressure 
-    - 🛠 Setting 
-      - 📲 Rotation Setting (Need Reboot to Effect) 🤙
-      - 💡 Brightness Setting 🤙
-      - 🎨 Theme Setting 🤙
-      - Save Setting 🤙
-      - 📴 Reboot 🤙
-
+  i discarded this approach and if anyone has any bettery way to measure voltage please let me know)
 
 
 <a href="https://instagram.com/ritesh__pradhan_" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ritesh__pradhan_" height="30" width="40" /></a>
