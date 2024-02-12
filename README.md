@@ -25,20 +25,20 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
   - [SimpleButton](https://github.com/spacehuhn/SimpleButton)
 ## 🎯 Features :
 - 💻 **UI**
-    - [ ] Status Bar 🎰
-    - [ ] Brightness Controll 💡
-    - [ ] Multiple Themes 🎨
-    - [ ] Dynamic Rotations 📲
+    - [x] Status Bar 🎰
+    - [x] Brightness Controll 💡
+    - [x] Multiple Themes 🎨
+    - [x] Dynamic Rotations 📲
  - Application
   - 📡 **Scan**
-      - [ ] Scan For Aps
+      - [x] Scan For Aps
       - [ ] Scan For Stations 
     - **Sniffer**
       - [ ] Beacon
       - [ ] Probe
       - [ ] Pmkid
       - [ ] RAW 
-    - 💀 **Attack **
+    - 💀 **Attack**
       - [ ] Deauth
       - [ ] Phishing
       - [ ] Beacon Flood 
@@ -47,29 +47,27 @@ Lets keep in touch if anyone want to help me or have some other cool idea or any
       - [ ] Packet Monitor
       - [ ] Channel Monitor 
     - **Hotspot**
-    -  🖱 **IR Remote** (still dont have Plans for Implemented)
-      - [ ] IR Clone
-      - [ ] IR BruteForce 
-    - ⏰ **Temp/Clock** (still dont have Plans for Implemented)
-      - [ ] Desk Clock With RealTime Temp, Humidity, Air Pressure 
     - 🛠 **Setting** 
       - [ ] Rotation Setting (Need Reboot to Effect)
       - [ ] Brightness Setting
       - [ ] Theme Setting
       - [ ] Save Setting
       - [ ] Reboot
-- *UI Features missing or needs to Implemented* (Needs help)
-    - Verticle Menus Scrolling
-    - Horizontal Scrolling
-    - Sroll Bar
-    - 🔋 Bettery Level Monitor 
+  #### Features missing or needs to Implemented (Needs help)
+- [ ] **Verticle Menus Scrolling**
+- [ ] **Horizontal Scrolling**
+- [ ] **Sroll Bar**
+- [ ] **Bettery Level Monitor** 
       - Their is StatusBar UI element on a color and that StatusBar is used to show page name and also ther is a Element to show free heap memory available
         and as status is in a spefic color i want and this statusBar is A rountRect element on TFT and i want to change or Update color of this statusBar according
         to bettery level.
-  
-  (Issue am facing as of now how to get Bettery Level and am just aware of Voltage Divider but but i think voltage Divider Circuit Consume Power just for this reason
-  i discarded this approach and if anyone has any bettery way to measure voltage please let me know)
-
+     (Issue am facing as of now how to get Bettery Level and am just aware of Voltage Divider but but i think voltage Divider Circuit Consume Power just for this reason
+     i discarded this approach and if anyone has any bettery way to measure voltage please let me know)
+- 🖱 **IR Remote** (still dont have Plans for Implemented)
+      - [ ] IR Clone
+      - [ ] IR BruteForce
+- ⏰ **Temp/Clock** (still dont have Plans for Implemented)
+      - [ ] Desk Clock With RealTime Temp, Humidity, Air Pressure
 
 <a href="https://instagram.com/ritesh__pradhan_" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="ritesh__pradhan_" height="30" width="40" /></a>
 
