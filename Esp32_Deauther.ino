@@ -1,9 +1,3 @@
-/*
-  Github - https://github.com/skyrimXI/Esp_WIFI
-  Colour Picker - https://barth-dev.de/online/rgb565-color-picker/
-                - RGB565
-  Default Board - LoLIN D32
-*/
 #include <SimpleButton.h>
 #include <TFT_eSPI.h>
 #include <WiFi.h>
@@ -82,7 +76,7 @@ void setup() {
   tftWidth = tft.width();                            //Set tft width Dynamicall according to oriantation
   textHight = tft.fontHeight();                      //Set Font hight in pixel
   tft.startWrite();                                  // Begin manual display update
-  SplashScreen();
+  SplashScreen();                                    //Splash Screen Function
 }
 //==========================================================================================//
 //||                                       VoidLoop                                       ||//
